@@ -1,6 +1,7 @@
 package Logica;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class PersonajePrincipal extends Personaje {
@@ -12,7 +13,7 @@ public class PersonajePrincipal extends Personaje {
     private final int minimoSinMorir;
 
     //=====Constructor=====
-    public PersonajePrincipal(String nombre, String id, ImageIcon imagen, int popularidad, int dinero, int estudios, int cafeina, Map<String, Dialogo> dialogos, int maximoSinMorir, int minimoSinMorir) {
+    public PersonajePrincipal(String nombre, String id, ImageIcon imagen, int popularidad, int dinero, int estudios, int cafeina, ArrayList<Dialogo> dialogos, int maximoSinMorir, int minimoSinMorir) {
         super(id, nombre, imagen, dialogos);
         setPopularidad(popularidad);
         setDinero(dinero);
@@ -59,8 +60,8 @@ public class PersonajePrincipal extends Personaje {
     //========Metodos========
 
     //=== Asumo que cuando afecte se le pase un numero negativo y asi se evita hacer dos metodos de cada
-    public int variarCafeina(int delta) {
-        this.cafeina += delta;
+    public int variarCafeina(int valor) {
+        this.cafeina += valor;
         return this.cafeina;
     }
 
