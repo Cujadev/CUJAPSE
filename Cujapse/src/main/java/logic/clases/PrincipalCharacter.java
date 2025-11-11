@@ -4,93 +4,54 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class PrincipalCharacter extends Character {
-    private int cafeina;
-    private int popularidad;
-    private int dinero;
-    private int estudios;
-    private final int maximoSinMorir;
-    private final int minimoSinMorir;
+    private int caffeine;
+    private int popularity;
+    private int money;
+    private int study;
+    private ArrayList <Answer> answers;
 
-    //=====Constructor=====
-    public PrincipalCharacter(String nombre, String id, ImageIcon imagen, int popularidad, int dinero, int estudios, int cafeina, ArrayList<Dialogue> dialogos, int maximoSinMorir, int minimoSinMorir) {
+    /// Constructor Getters y Setters ///
+    public PrincipalCharacter(String id, String nombre, ImageIcon imagen, ArrayList<Dialogue> dialogos) {
         super(id, nombre, imagen, dialogos);
-        setPopularidad(popularidad);
-        setDinero(dinero);
-        setEstudios(estudios);
-        setCafeina(cafeina);
-        this.maximoSinMorir = maximoSinMorir;
-        this.minimoSinMorir = minimoSinMorir;
+        setCaffeine(50);
+        setPopularity(50);
+        setMoney(50);
+        setStudy(50);
     }
 
-    //====Guetters y Setters====
-
-    public int getCafeina() {
-        return cafeina;
+    public int getCaffeine() {
+        return caffeine;
     }
 
-    public void setCafeina(int cafeina) {
-        this.cafeina = cafeina;
+    public void setCaffeine(int caffeine) {
+        this.caffeine = caffeine;
     }
 
-    public int getPopularidad() {
-        return popularidad;
+    public int getPopularity() {
+        return popularity;
     }
 
-    public void setPopularidad(int popularidad) {
-        this.popularidad = popularidad;
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
     }
 
-    public int getDinero() {
-        return dinero;
+    public int getMoney() {
+        return money;
     }
 
-    public void setDinero(int dinero) {
-        this.dinero = dinero;
+    public void setMoney(int money) {
+        this.money = money;
     }
 
-    public int getEstudios() {
-        return estudios;
+    public int getStudy() {
+        return study;
     }
 
-    public void setEstudios(int estudios) {
-        this.estudios = estudios;
+    public void setStudy(int study) {
+        this.study = study;
     }
 
-    //========Metodos========
+    public ArrayList<Answer> ChargeResponses (){
 
-    //=== Asumo que cuando afecte se le pase un numero negativo y asi se evita hacer dos metodos de cada
-    public int variarCafeina(int valor) {
-        this.cafeina += valor;
-        return this.cafeina;
     }
-
-    public int variarPopularidad(int valor) {
-        this.popularidad += valor;
-        return this.popularidad;
-    }
-
-    public int variarDinero(int valor) {
-        this.dinero += valor;
-        return this.dinero;
-    }
-
-    public int variarEstudios(int valor) {
-        this.estudios += valor;
-        return this.estudios;
-    }
-
-    public boolean murio() {
-        boolean murio = false;
-        if (cafeina >= maximoSinMorir || dinero >= maximoSinMorir || estudios >= maximoSinMorir || popularidad >= maximoSinMorir) {
-            murio = true;
-        }
-
-        if (cafeina <= minimoSinMorir || dinero <= minimoSinMorir || estudios <= minimoSinMorir || popularidad <= minimoSinMorir) {
-            murio = true;
-        }
-        return murio;
-    }
-
-
-
 }
