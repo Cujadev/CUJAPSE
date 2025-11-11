@@ -1,19 +1,20 @@
-package Logica;
+package logic.clases;
+
+import logic.auxiliars.chargers.CargadorMensaje;
 
 import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
 
-public class Personaje implements CargadorMensaje {
+public class Character implements CargadorMensaje {
     private String id;
     private  String nombre;
     private ImageIcon imagen;// ver tipo de dato a usar para las imagenes
-    private ArrayList<Dialogo> dialogos;// Supongo que lo que se quiere es esto
+    private ArrayList<Dialogue> dialogos;// Supongo que lo que se quiere es esto
     private File archivo;
 
     //=====Constructor=====
-    public Personaje(String id, String nombre, ImageIcon imagen, ArrayList<Dialogo> dialogos) {
+    public Character(String id, String nombre, ImageIcon imagen, ArrayList<Dialogue> dialogos) {
         setId(id);
         setNombre(nombre);
         setImagen(imagen);
@@ -49,20 +50,20 @@ public class Personaje implements CargadorMensaje {
         this.imagen = imagen;
     }
 
-    public ArrayList<Dialogo> getDialogos() {
+    public ArrayList<Dialogue> getDialogos() {
         return dialogos;
     }
 
-    public void setDialogos(ArrayList<Dialogo> dialogos) {
+    public void setDialogos(ArrayList<Dialogue> dialogos) {
         this.dialogos = dialogos;
     }
 
     //====== Asi se cumple la mierda de ellos de no romper for y eso ======
-    public Dialogo cargarDialogo(String id) {
+    public Dialogue cargarDialogo(String id) {
         boolean encontrado = false;
         int tope = dialogos.size();
         int contador = 0;
-        Dialogo dialogo = null;
+        Dialogue dialogo = null;
 
         while(!encontrado && contador < tope){
             if(dialogos.get(contador).getId().equals(id)){

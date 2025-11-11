@@ -1,11 +1,11 @@
-package Logica;
+package logic.clases;
 
-public class   Dialogo {
+public class Dialogue {
     private String id;
     private String contenido;
 
     //====Constructor=======
-    public Dialogo(String id, String contenido) {
+    public Dialogue(String id, String contenido) {
         setContenido(contenido);
         setId(id);
     }

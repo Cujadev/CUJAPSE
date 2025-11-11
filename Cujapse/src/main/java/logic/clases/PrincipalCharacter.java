@@ -1,10 +1,9 @@
-package Logica;
+package logic.clases;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Map;
 
-public class PersonajePrincipal extends Personaje {
+public class PrincipalCharacter extends Character {
     private int cafeina;
     private int popularidad;
     private int dinero;
@@ -13,7 +12,7 @@ public class PersonajePrincipal extends Personaje {
     private final int minimoSinMorir;
 
     //=====Constructor=====
-    public PersonajePrincipal(String nombre, String id, ImageIcon imagen, int popularidad, int dinero, int estudios, int cafeina, ArrayList<Dialogo> dialogos, int maximoSinMorir, int minimoSinMorir) {
+    public PrincipalCharacter(String nombre, String id, ImageIcon imagen, int popularidad, int dinero, int estudios, int cafeina, ArrayList<Dialogue> dialogos, int maximoSinMorir, int minimoSinMorir) {
         super(id, nombre, imagen, dialogos);
         setPopularidad(popularidad);
         setDinero(dinero);

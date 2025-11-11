@@ -1,11 +1,11 @@
-package Logica;
+package logic.clases;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class Juego {
+public class Game {
     private File personajes;
-    private ArrayList <Evento> eventos;
+    private ArrayList <Event> eventos;
     private ArrayList <Escenarios> escenarios;
 
     //Recorrer el file de personajes
