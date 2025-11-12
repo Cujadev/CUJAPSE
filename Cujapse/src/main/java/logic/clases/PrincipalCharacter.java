@@ -1,7 +1,11 @@
 package logic.clases;
 
-import javax.swing.*;
+import javafx.scene.image.Image;
+import logic.auxiliars.files.FileReaders;
+
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PrincipalCharacter extends Character {
     private int caffeine;
@@ -11,12 +15,13 @@ public class PrincipalCharacter extends Character {
     private ArrayList <Answer> answers;
 
     /// Constructor Getters y Setters ///
-    public PrincipalCharacter(String id, String nombre, ImageIcon imagen, ArrayList<Dialogue> dialogos) {
-        super(id, nombre, imagen, dialogos);
+    public PrincipalCharacter(String id, String name, Image imagen, String direction) {
+        super(id, name, imagen, direction);
         setCaffeine(50);
         setPopularity(50);
         setMoney(50);
         setStudy(50);
+        setAnswers();
     }
 
     public int getCaffeine() {
@@ -51,7 +56,35 @@ public class PrincipalCharacter extends Character {
         this.study = study;
     }
 
-    public ArrayList<Answer> ChargeResponses (){
+    public void setAnswers () throws IllegalArgumentException {
+        RandomAccessFile raf = FileReaders.openFile(this.dialogues);
+        ArrayList<Dialogue> dialogues = FileReaders.chargeDialogues(raf);
+        FileReaders.closeFile(raf);
 
+        Iterator<Dialogue> it = dialogues.iterator();
+
+        while (it.hasNext()) {
+            Dialogue d1 = it.next();
+            Dialogue d2 = it.next();
+
+            if (d1.getId().equals(d2.getId())) {
+                Answer a = new Answer(d1.getId(), d1, d2);
+                this.answers.add(a);
+            } else {
+                throw new IllegalArgumentException("Se ha encontrado un error a la hora de guardar los dialogos del personaje \n");
+            }
+        }
+    }
+    public Answer chargeAnswer (String id){
+        if (!answers.isEmpty()){
+            Iterator <Answer> it = answers.iterator();
+            while (it.hasNext()){
+                Answer a = it.next();
+                if (a.getId().equals(id)){
+                    return a;
+                }
+            }
+        }
+        return null;
     }
 }

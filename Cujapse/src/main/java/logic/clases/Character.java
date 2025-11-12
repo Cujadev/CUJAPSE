@@ -1,23 +1,22 @@
 package logic.clases;
 
 import javafx.scene.image.Image;
-import  logic.auxiliars.chargers.CargadorMensaje;
 
-import javax.swing.*;
+import logic.auxiliars.chargers.ChargerMenssage;
+import logic.auxiliars.files.FileReaders;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.RandomAccess;
+import java.util.ListIterator;
 
 /// Constructor, Getters y setters
 
-public class Character implements CargadorMensaje {
-    private String id;
-    private  String name;
-    private Image image;
-    private File dialogues;
+public class Character implements ChargerMenssage {
+    protected String id;
+    protected  String name;
+    protected Image image;
+    protected File dialogues;
 
     public Character(String id, String name, Image image, String direction) {
         this.id = id;
@@ -61,9 +60,19 @@ public class Character implements CargadorMensaje {
     //Implementar cargar dialogo
 
     @Override
-    public Dialogue cargarDialogo(String id) {
-        Dialogue menssage;
+    public Dialogue ChargeDialogue(String id) {
+        Dialogue menssage = null;
+        RandomAccessFile raf = FileReaders.openFile(this.dialogues);
+        ArrayList <Dialogue> dialogues = FileReaders.chargeDialogues(raf);
+        FileReaders.closeFile(raf);
+        ListIterator <Dialogue> it = dialogues.listIterator();
+        boolean found = false;
 
+        while(it.hasNext() && !found){
+            if (it.next().getId().equals(id)){
+                menssage = it.previous();
+            }
+        }
         return menssage;
     }
 }
