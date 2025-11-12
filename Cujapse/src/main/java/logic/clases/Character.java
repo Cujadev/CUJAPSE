@@ -71,6 +71,7 @@ public class Character implements ChargerMenssage {
         while(it.hasNext() && !found){
             if (it.next().getId().equals(id)){
                 menssage = it.previous();
+                found = true;
             }
         }
         return menssage;
