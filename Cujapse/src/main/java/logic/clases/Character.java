@@ -5,7 +5,13 @@ import  logic.auxiliars.chargers.CargadorMensaje;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.RandomAccess;
+
+/// Constructor, Getters y setters
 
 public class Character implements CargadorMensaje {
     private String id;
@@ -50,6 +56,15 @@ public class Character implements CargadorMensaje {
 
     public void setDialogues(File dialogues) {
         this.dialogues = dialogues;
+    }
+
+    //Implementar cargar dialogo
+
+    @Override
+    public Dialogue cargarDialogo(String id) {
+        Dialogue menssage;
+
+        return menssage;
     }
 }
 
