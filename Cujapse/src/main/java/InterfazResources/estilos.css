@@ -1,0 +1,155 @@
+/* * ESTILOS CSS PARA CUJAPSE - ORCHAT
+ * Paleta: Coolors 10-Colores (Oscuros y Rojizos/Anaranjados)
+ * Fuente: Monotype Corsiva
+ */
+
+/* --- CONFIGURACIÓN GLOBAL (ROOT) --- */
+
+.root {
+    /* Fondo principal: El color más oscuro para un look moderno y minimalista */
+    -fx-background-color: #03071E;
+    /* Fuente moderna y legible para todo el sistema */
+    -fx-font-family: "System", "Inter", sans-serif; /* CAMBIO IMPORTANTE DE FUENTE */
+    /* Padding general para evitar que los elementos toquen el borde de la ventana */
+    -fx-padding: 0;
+}
+
+/* --- ESTILOS DE TEXTO Y LABELS --- */
+
+/* Estilo general para todos los Label (texto de chat, descripciones, etc.) */
+.label {
+    /* Texto más brillante para máximo contraste */
+    -fx-text-fill: #FCCA46; /* Amarillo/Naranja Suave y Brillante para el texto principal */
+    -fx-font-size: 16px; /* AUMENTADO ligeramente el tamaño base */
+}
+
+/* --- ESTILOS DE BOTONES (Interacciones) --- */
+
+.button {
+    /* Fondo: Naranja Vivo (Acento Principal) */
+    -fx-background-color: #F48C06;
+    /* Texto: Color más oscuro de la paleta */
+    -fx-text-fill: #03071E;
+    -fx-font-weight: bold;
+    -fx-font-size: 17px; /* AUMENTADO ligeramente el tamaño */
+    -fx-background-radius: 8px; /* Esquinas ligeramente más cuadradas que antes */
+    -fx-padding: 8px 18px;
+    /* Efecto de sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0.2, 0, 2);
+    -fx-cursor: hand;
+}
+
+/* Estado :hover para los botones (Feedback visual instantáneo) */
+.button:hover {
+    -fx-background-color: #E85D04; /* Naranja Fuego */
+}
+
+/* --- 1. MENÚ SUPERIOR PERSONALIZADO (Window Controls + Stats) --- */
+
+/* Clase aplicada al HBox/VBox del TOP del BorderPane (JuegoPrincipal) */
+.menu-superior {
+    /* Fondo: Rojo Vino Oscuro */
+    -fx-background-color: #6A040F;
+    -fx-padding: 8px 20px;
+    /* Línea delgada en la parte inferior para separar el header del juego */
+    -fx-border-color: #FAA307;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Estilo específico para los Labels de las estadísticas (dinero, cafeína, etc.) */
+.menu-superior .label {
+    -fx-font-size: 19px; /* AUMENTADO el tamaño */
+    -fx-padding: 0 15px;
+    -fx-text-fill: #F48C06; /* Naranja Vivo para resaltar los valores */
+    -fx-font-weight: bold;
+}
+
+/* Estilo para los botones de control de ventana (Minimizar, Maximizar, Cerrar) */
+.btn-window-control {
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-text-fill: #FCCA46; /* Amarillo/Naranja Suave y Brillante para los íconos */
+    -fx-font-size: 19px; /* AUMENTADO el tamaño */
+    -fx-padding: 5px;
+    -fx-background-radius: 4px;
+}
+.btn-window-control:hover {
+    -fx-background-color: #370617; /* Se oscurece al pasar el ratón */
+}
+/* Estilo especial para el botón de CERRAR */
+.btn-window-control.btn-close {
+    -fx-text-fill: #DC2F02; /* Rojo Llama */
+}
+.btn-window-control.btn-close:hover {
+    -fx-background-color: #D00000; /* Rojo puro al pasar el ratón */
+    -fx-text-fill: #FCCA46; /* Amarillo Suave y Brillante */
+}
+
+/* --- 2. VISTA DE PRÓLOGO (Estilo Historia) --- */
+
+/* Fondo de la caja de diálogo de Omar */
+.dialogo-caja {
+    -fx-background-color: #FCCA46; /* APLICADO EL AMARILLO/NARANJA SUAVE (#fcca46) */
+
+    /* MEJORAS DE DISEÑO: BORDES, SOMBRAS Y FORMA */
+    -fx-background-radius: 50 50 10 10; /* Bordes más redondos en la parte superior y suavizados en la inferior */
+    -fx-padding: 25px;
+
+    /* Borde acentuado superior e izquierdo con el color principal de acento */
+    -fx-border-color: #F48C06;
+    -fx-border-width: 5px 0 0 5px; /* Borde superior e izquierdo más grueso */
+    -fx-border-radius: 50 50 10 10; /* Aplicar el mismo radio al borde */
+
+    /* Sombra exterior para levantarla del fondo */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, -2)
+              /* Sombra interior para darle un efecto de grabado/profundidad */
+              inner-shadow(gaussian, rgba(0,0,0,0.2), 5, 0.5, 0, 1);
+}
+
+/* Texto de Omar sobre fondo claro (debe ser muy oscuro) */
+.dialogo-caja .label {
+    -fx-text-fill: #03071E;
+    -fx-font-size: 18px; /* AUMENTADO el tamaño del texto principal del diálogo */
+    -fx-font-weight: bold; /* Hacer el texto más legible sobre el fondo claro */
+}
+
+/* --- 3. VISTA PRINCIPAL (Chat) --- */
+
+/* ScrollPane y Viewport transparentes */
+.scroll-pane, .scroll-pane > .viewport {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+/* Panel Lateral (Árbol de Decisión) - Mismo color que el Header */
+#paneArbolDecision {
+    -fx-background-color: #6A040F; /* Rojo Vino Oscuro */
+    -fx-border-color: #FAA307;
+    -fx-border-width: 0 0 0 1px;
+    -fx-padding: 15px;
+}
+
+/* Burbuja del NPC (Omar, otros) */
+.burbuja-npc {
+    -fx-background-color: #370617; /* Negro Cacao (Fondo Secundario) */
+    -fx-background-radius: 12 12 12 4; /* Esquina de inicio menos pronunciada */
+    -fx-padding: 10px;
+    -fx-text-fill: #FCCA46; /* Amarillo/Naranja Suave y Brillante */
+    -fx-font-size: 15px; /* AUMENTADO el tamaño */
+}
+
+/* Burbuja del Jugador */
+.burbuja-player {
+    -fx-background-color: #9D0208; /* Rojo Básico (Para diferenciación) */
+    -fx-background-radius: 12 12 4 12;
+    -fx-padding: 10px;
+    -fx-text-fill: #FCCA46; /* Amarillo/Naranja Suave y Brillante */
+    -fx-font-size: 15px; /* AUMENTADO el tamaño */
+}
+
+/* Estilo para la barra inferior de entrada de texto (si existe) */
+.bottom-input-bar {
+    -fx-background-color: #370617; /* Negro Cacao */
+    -fx-padding: 10px;
+    -fx-border-color: #FAA307;
+    -fx-border-width: 1px 0 0 0;
+}

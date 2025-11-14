@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="564.0" prefWidth="923.0" styleClass="root" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cujapse.controllers.PrologoViewController">
+    <children>
+
+        <!-- FONDO / IMAGEN DEL PERSONAJE (Ocupa todo el AnchorPane) -->
+        <ImageView fx:id="imgPersonaje" fitHeight="564.0" fitWidth="923.0" pickOnBounds="true" preserveRatio="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <!-- Asegúrate de que esta ruta sea correcta para tu proyecto -->
+                <Image url="@../RecursosVisuales/fondoTutroial.png" />
+            </image>
+        </ImageView>
+
+        <!-- PREVISUALIZACIÓN DE LA APP (Inicialmente oculta, aparece en el diálogo) -->
+        <ImageView fx:id="imgAppPreview" fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="false" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <image>
+                <!-- Imagen de la pantalla principal de Orchat -->
+                <Image url="@../RecursosVisuales/Principal.png" />
+            </image>
+        </ImageView>
+      <ImageView fitHeight="379.0" fitWidth="277.0" layoutX="-14.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../RecursosVisuales/Omar_tutorial.png" />
+         </image>
+      </ImageView>
+
+        <!-- CAJA DE DIÁLOGO (Anclada al fondo de la pantalla) -->
+        <AnchorPane fx:id="dialogBox" layoutX="14.0" layoutY="419.0" opacity="0.94" prefHeight="120.0" prefWidth="895.0" styleClass="dialogo-caja" AnchorPane.bottomAnchor="21.799999999999955" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.799999999999955">
+            <children>
+                <VBox alignment="TOP_RIGHT" prefHeight="130.0" prefWidth="893.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
+                    <children>
+
+                        <!-- Etiqueta donde se muestra el texto del tutorial línea por línea -->
+                        <Label fx:id="labelDialogo" alignment="TOP_LEFT" prefHeight="90.0" prefWidth="893.0" text="Línea de diálogo inicial del tutorial." wrapText="true" VBox.vgrow="ALWAYS" />
+
+                        <!-- Contenedor para los botones (Continuar o Sí/No) -->
+                        <HBox fx:id="hboxBotones" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="893.0" spacing="15.0">
+                            <!-- Botón para avanzar o la opción "SÍ" -->
+                            <Button fx:id="btnContinuar" mnemonicParsing="false" onAction="#onContinuarClick" text="Continuar..." />
+                            <!-- Botón de opción "NO" (Inicialmente invisible) -->
+                            <Button fx:id="btnNo" mnemonicParsing="false" onAction="#onNoClick" text="No" visible="false" />
+                        </HBox>
+
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+
+    </children>
+</AnchorPane>
