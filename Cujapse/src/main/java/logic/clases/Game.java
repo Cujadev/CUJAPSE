@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 public class Game {
     private File personajes;
+    private ArrayList<Personaje> personajes;
     private ArrayList <Event> eventos;
-    private ArrayList <Escenarios> escenarios;
+    private ArrayList <Scenary> escenarios;
+    private Queue<Event> colaEventos;
 
     //Recorrer el file de personajes
     // Hacer un método que aleatorize  los eventos y los ponga en una cola

@@ -21,6 +21,7 @@ public class PrincipalCharacter extends Character {
         setPopularity(50);
         setMoney(50);
         setStudy(50);
+        answers = new ArrayList<Answer>();
         setAnswers();
     }
 
@@ -57,9 +58,10 @@ public class PrincipalCharacter extends Character {
     }
 
     public void setAnswers () throws IllegalArgumentException {
-        RandomAccessFile raf = FileReaders.openFile(this.dialogues);
+        RandomAccessFile raf = FileReaders.openFile(dialogues);
         ArrayList<Dialogue> dialogues = FileReaders.chargeDialogues(raf);
         FileReaders.closeFile(raf);
+        int count = 1;
 
         Iterator<Dialogue> it = dialogues.iterator();
 
@@ -67,24 +69,26 @@ public class PrincipalCharacter extends Character {
             Dialogue d1 = it.next();
             Dialogue d2 = it.next();
 
-            if (d1.getId().equals(d2.getId())) {
-                Answer a = new Answer(d1.getId(), d1, d2);
-                this.answers.add(a);
-            } else {
-                throw new IllegalArgumentException("Se ha encontrado un error a la hora de guardar los dialogos del personaje \n");
-            }
+            String answerID = "" + count++;
+            Answer a = new Answer(answerID,d1,d2);
+
+            d1.setId(answerID);
+            d2.setId(answerID);
+            answers.add(a);
         }
     }
     public Answer chargeAnswer (String id){
+        boolean found = false;
+        Answer a = null;
+
         if (!answers.isEmpty()){
             Iterator <Answer> it = answers.iterator();
-            while (it.hasNext()){
-                Answer a = it.next();
-                if (a.getId().equals(id)){
-                    return a;
-                }
+            while (it.hasNext() && !found){
+                a = it.next();
+                if (a.getId().equals(id))
+                    found = true;
             }
         }
-        return null;
+        return a;
     }
 }
