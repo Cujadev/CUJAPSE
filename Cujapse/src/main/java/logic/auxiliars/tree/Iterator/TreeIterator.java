@@ -3,10 +3,9 @@ package logic.auxiliars.tree.Iterator;
 import logic.auxiliars.tree.DecisionNode;
 
 public class TreeIterator<E> {
-
     private DecisionNode<E> actual;
 
-    public TreeIterator(DecisionNode<E> root) {
+    public TreeIterator(DecisionNode<E> root) throws NullPointerException{
         if (root == null) {
             throw new NullPointerException("No existe nada para recorrer el árbol");
         }
@@ -28,7 +27,7 @@ public class TreeIterator<E> {
      * 1 = izquierda, 2 = derecha.
      * Devuelve el nuevo nodo actual.
      */
-    public DecisionNode<E> choose(int branch) {
+    public DecisionNode<E> choose(int branch) throws IllegalArgumentException{
         if (branch == 1) {
             if (actual.getLeft() == null) {
                 throw new IllegalArgumentException("No existe rama izquierda desde este nodo");

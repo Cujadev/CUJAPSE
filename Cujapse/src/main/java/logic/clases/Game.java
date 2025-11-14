@@ -8,6 +8,7 @@ import java.util.Queue;
 public class Game {
     private static Game game;
     private File personajesFichero;
+
     private ArrayList<Character> personajes;
     private ArrayList <Event> eventos;
     private ArrayList <Scenary> escenarios;

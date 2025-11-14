@@ -25,17 +25,16 @@ public class DecisionTree<E>{
     }
 
     //Se agrega un nodo aprovechandose de las llamadas por referencia, simulando la lincked list
-    public boolean AddNode (E info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
+    public boolean AddNode (DecisionNode <E> info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
 
         if (root == null){
-            setRoot(new DecisionNode<>(info));
+            setRoot(info);
             return true;
         }
         else{
             if (branch == 1){
                 if (father.getLeft() == null){
-                    DecisionNode <E> newNode = new DecisionNode<>(info);
-                    father.setLeft(newNode);
+                    father.setLeft(info);
                 }
                 else{
                     throw new IllegalArgumentException("Error, rama ya ocupada");
@@ -43,7 +42,7 @@ public class DecisionTree<E>{
             }
             else if (branch == 2){
                 if (father.getRight() == null){
-                    father.setRight(new DecisionNode<>(info));
+                    father.setRight(info);
                 }
                 else {
                     throw new IllegalArgumentException("Error, rama ocupada");
