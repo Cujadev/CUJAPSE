@@ -16,8 +16,8 @@ public class Answer {
     }
 
     private void setAnswers(Dialogue dial1, Dialogue dial2) {
-        answers[1] = dial1;
-        answers[2] = dial2;
+        answers[0] = dial1;
+        answers[1] = dial2;
     }
 
     public String getId() {
