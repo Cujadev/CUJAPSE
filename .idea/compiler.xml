@@ -9,8 +9,5 @@
         <module name="Cujapse" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Cujapse" target="24" />
-    </bytecodeTargetLevel>
   </component>
 </project>
