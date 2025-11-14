@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Game {
     private File personajes;
-    private ArrayList<Personaje> personajes;
+    private ArrayList<Character> personajes;
     private ArrayList <Event> eventos;
     private ArrayList <Scenary> escenarios;
     private Queue<Event> colaEventos;
