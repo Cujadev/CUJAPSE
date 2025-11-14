@@ -43,7 +43,7 @@ public class DecisionTree<E>{
             }
             else if (branch == 2){
                 if (father.getRight() == null){
-                    father.setLeft(new DecisionNode<>(info));
+                    father.setRight(new DecisionNode<>(info));
                 }
                 else {
                     throw new IllegalArgumentException("Error, rama ocupada");
