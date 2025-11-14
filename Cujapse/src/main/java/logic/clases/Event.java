@@ -1,5 +1,7 @@
 package logic.clases;
 
+import  logic.auxiliars.tree.DecisionTree;
+
 public class Event {
-    //Crear un método que le permita al juego cargar al MVC el modelo vista contrlolador
+    private DecisicionTree <>
 }
