@@ -2,7 +2,7 @@ package logic.auxiliars.files;
 
 
 import logic.clases.Dialogue;
-import logic.clases.Character;
+import logic.clases.GameCharacter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,15 +51,15 @@ public class FileReaders {
         return dialogues;
     }
 
-    public static Character findCharacter (String id, RandomAccessFile raf){
-        Character returned = null;
+    public static GameCharacter findCharacter (String id, RandomAccessFile raf){
+        GameCharacter returned = null;
         try{
            int cant = raf.readInt();
            for (int i = 0; i < cant; i++){
                int tam = raf.readInt();
                byte[] string = new byte[tam];
                raf.read(string);
-               Character c = (Character) Convert.toObject(string);
+               GameCharacter c = (GameCharacter) Convert.toObject(string);
                if (c.getId().equals(id)){
                    returned = c;
                }

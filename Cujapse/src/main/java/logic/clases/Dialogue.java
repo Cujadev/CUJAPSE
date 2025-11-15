@@ -1,6 +1,11 @@
 package logic.clases;
 
-public class Dialogue {
+import logic.auxiliars.chargers.ChargerMenssage;
+
+import java.io.Serializable;
+
+public class Dialogue implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String id;
     private String contenido;
 
