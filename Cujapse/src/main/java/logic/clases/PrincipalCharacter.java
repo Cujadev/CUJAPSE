@@ -7,7 +7,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class PrincipalCharacter extends Character {
+public class PrincipalCharacter extends GameCharacter {
     private int caffeine;
     private int popularity;
     private int money;
@@ -15,8 +15,8 @@ public class PrincipalCharacter extends Character {
     private ArrayList <Answer> answers;
 
     /// Constructor Getters y Setters ///
-    public PrincipalCharacter(String id, String name, Image imagen, String direction) {
-        super(id, name, imagen, direction);
+    public PrincipalCharacter(String id, String name, String imagenPath, String direction) {
+        super(id, name, imagenPath, direction);
         setCaffeine(50);
         setPopularity(50);
         setMoney(50);
