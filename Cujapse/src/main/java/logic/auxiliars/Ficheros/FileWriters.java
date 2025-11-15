@@ -54,7 +54,9 @@ public class FileWriters {
         try {
             Path path = Paths.get(direccionFile);
 
-            if(Files.exists(path)) {
+            if(!Files.exists(path)) {
+                Files.createFile(path);
+            }
                 RandomAccessFile raf = new RandomAccessFile(direccionFile,"rw");
                 raf.seek(raf.length());
                 if(dialogue != null) {
@@ -64,7 +66,6 @@ public class FileWriters {
                     }else if (id instanceof Integer) {
                         numeroId = (Integer) id;
                     }
-
                     raf.writeInt(numeroId);
                     byte[] bytesDialogue = Convert.toBytes(dialogue);
                     raf.writeInt(bytesDialogue.length);
@@ -74,7 +75,6 @@ public class FileWriters {
                     throw new IllegalArgumentException("Dialogo nulo");
                 }
                 raf.close();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
