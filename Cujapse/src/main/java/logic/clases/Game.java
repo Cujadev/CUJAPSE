@@ -9,7 +9,7 @@ public class Game {
     private static Game game;
     private File personajesFichero;
 
-    private ArrayList<Character> personajes;
+    private ArrayList<GameCharacter> personajes;
     private ArrayList <Event> eventos;
     private ArrayList <Scenary> escenarios;
     private Queue<Event> colaEventos;
@@ -17,7 +17,7 @@ public class Game {
 
     public Game() {
         personajesFichero = new File("fichero.dat");
-        personajes = new ArrayList<Character>();
+        personajes = new ArrayList<GameCharacter>();
         eventos = new ArrayList<Event>();
         escenarios = new ArrayList<Scenary>();
         colaEventos = new ArrayDeque<Event>();
@@ -60,9 +60,9 @@ public class Game {
         this.colaEventos = colaEventos;
     }
 
-    public Character findCharacter(String id){
+    public GameCharacter findCharacter(String id){
         boolean found = false;
-        Character c = null;
+        GameCharacter c = null;
 
         for(int i = 0; i < personajes.size() && !found; i++){
             if(personajes.get(i).getId().equalsIgnoreCase(id)){
