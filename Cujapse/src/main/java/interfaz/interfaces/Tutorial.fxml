@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,7 +16,7 @@
         <ImageView fx:id="imgPersonaje" fitHeight="564.0" fitWidth="923.0" pickOnBounds="true" preserveRatio="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
                 <!-- Asegúrate de que esta ruta sea correcta para tu proyecto -->
-                <Image url="@../RecursosVisuales/fondoTutroial.png" />
+                <Image url="@../visualResources/fondoTutroial.png" />
             </image>
         </ImageView>
 
@@ -23,12 +24,12 @@
         <ImageView fx:id="imgAppPreview" fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="false" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <image>
                 <!-- Imagen de la pantalla principal de Orchat -->
-                <Image url="@../RecursosVisuales/Principal.png" />
+                <Image url="@../visualResources/Principal.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="379.0" fitWidth="277.0" layoutX="28.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../RecursosVisuales/Omar_tutorial.png" />
+                <Image url="@../visualResources/Omar_tutorial.png" />
             </image>
         </ImageView>
 
@@ -53,10 +54,18 @@
 
                 <!-- Botón de Continuar/Flecha - ANCLADO Y CON ESTILO DE FLECHA -->
                 <!-- Este botón se usa para "Continuar" (▶) y luego se convierte en la opción "Sí" -->
-                <Button fx:id="btnContinuar" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onContinuarClick" prefHeight="63.0" prefWidth="34.0" styleClass="button, btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" />
+                <Button fx:id="btnContinuar" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onContinuarClick" prefHeight="63.0" prefWidth="75.0" styleClass="button, btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" />
 
             </children>
         </AnchorPane>
+      <DialogPane layoutX="347.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0">
+          <header>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
+          </header>
+          <expandableContent>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
+          </expandableContent>
+      </DialogPane>
 
     </children>
 </AnchorPane>
