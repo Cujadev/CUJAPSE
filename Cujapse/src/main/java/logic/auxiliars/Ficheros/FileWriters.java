@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 public class FileWriters {
     private File fichero;
@@ -45,41 +48,37 @@ public class FileWriters {
         return ok;
     }
 
-    public GameCharacter findCharacter(Object id) throws IOException, ClassNotFoundException {
-        boolean found = false;
-        GameCharacter character = null;
-        RandomAccessFile raf = new RandomAccessFile(fichero,"r");
-        int numeroID = -1;
-        if(id instanceof String){
-            numeroID = Integer.parseInt((String) id);
-        }else if(id instanceof Integer){
-            numeroID = (Integer) id;
-        }
-        while(raf.getFilePointer() < raf.length() && !found){
-            int identificador = raf.readInt();
-            if(identificador == numeroID){
-                found = true;
-                int tammanio = raf.readInt();
-                byte[] bytesIdentificador = new byte[tammanio];
-                raf.readFully(bytesIdentificador);
-                character = (GameCharacter) Convert.toObject(bytesIdentificador);
-                character.loadResources();
-            }else{
-                int tamanio = raf.readInt();
-                raf.skipBytes(tamanio);
-            }
-        }
-        raf.close();
-        return character;
-    }
+    public boolean saveDialogue(Dialogue dialogue, String direccionFile) throws IOException {
+        int numeroId = -1;
+        boolean ok = false;
+        try {
+            Path path = Paths.get(direccionFile);
 
-    public Dialogue findDialogue(Object idGameCharacter, Object idDialogue) throws IOException, ClassNotFoundException {
-        GameCharacter character = findCharacter(idGameCharacter);
-        Dialogue dialogue = null;
-        if(character != null){
-            dialogue = character.findDialogue(idDialogue);
+            if(!Files.exists(path)) {
+                Files.createFile(path);
+            }
+                RandomAccessFile raf = new RandomAccessFile(direccionFile,"rw");
+                raf.seek(raf.length());
+                if(dialogue != null) {
+                    Object id = dialogue.getId();
+                    if (id instanceof String) {
+                        numeroId =  Integer.parseInt((String) id);
+                    }else if (id instanceof Integer) {
+                        numeroId = (Integer) id;
+                    }
+                    raf.writeInt(numeroId);
+                    byte[] bytesDialogue = Convert.toBytes(dialogue);
+                    raf.writeInt(bytesDialogue.length);
+                    raf.write(bytesDialogue);
+                    ok = true;
+                }else{
+                    throw new IllegalArgumentException("Dialogo nulo");
+                }
+                raf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return dialogue;
+       return ok;
     }
 
 
