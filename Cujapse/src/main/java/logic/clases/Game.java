@@ -57,7 +57,12 @@ public class Game {
     }
 
     public void setColaEventos(Queue<Event> colaEventos) {
-        this.colaEventos = colaEventos;
+        int i;
+        ArrayList<Integer> aux = new ArrayList<>();
+
+        while (this.eventos.size() != aux.size()){
+
+        }
     }
 
     public GameCharacter findCharacter(String id){
@@ -73,9 +78,5 @@ public class Game {
 
         return c;
     }
-
-    //Recorrer el file de personajes
     // Hacer un método que aleatorize  los eventos y los ponga en una cola
-    // Hacer las clase situación para cambiar los eventos
-    // Hacer los árboles
 }

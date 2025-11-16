@@ -32,7 +32,7 @@ public class FileReaders {
         return true;
     }
     public static ArrayList<Dialogue> chargeDialogues(RandomAccessFile raf) {
-        ArrayList <Dialogue> dialogues = null;
+        ArrayList <Dialogue> dialogues = new ArrayList<>();
 
         try {
             int cant = raf.readInt();
