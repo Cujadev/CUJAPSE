@@ -1,12 +1,14 @@
-package logic.auxiliars.files;
+package logic.auxiliars.Ficheros;
 
+import logic.auxiliars.files.Convert;
 import logic.clases.Dialogue;
 import logic.clases.GameCharacter;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
+import java.util.Random;
 public class FileWriters {
     private File fichero;
 
