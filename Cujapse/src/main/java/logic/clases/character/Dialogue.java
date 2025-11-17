@@ -1,6 +1,4 @@
-package logic.clases;
-
-import logic.auxiliars.chargers.ChargerMenssage;
+package logic.clases.character;
 
 import java.io.Serializable;
 

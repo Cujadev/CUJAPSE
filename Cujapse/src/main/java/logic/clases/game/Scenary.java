@@ -1,6 +1,12 @@
-package logic.clases;
+package logic.clases.game;
 
 import javafx.scene.image.Image;
+import logic.clases.character.Answer;
+import logic.clases.character.Dialogue;
+import logic.clases.character.GameCharacter;
+import logic.clases.character.PrincipalCharacter;
+import logic.clases.event.Event;
+import logic.clases.event.Situation;
 
 import java.util.ArrayList;
 

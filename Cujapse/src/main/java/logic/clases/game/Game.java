@@ -1,4 +1,8 @@
-package logic.clases;
+package logic.clases.game;
+
+import logic.clases.character.GameCharacter;
+import logic.clases.character.PrincipalCharacter;
+import logic.clases.event.Event;
 
 import java.io.File;
 import java.util.ArrayDeque;
@@ -12,7 +16,6 @@ public class Game {
 
     private ArrayList<GameCharacter> personajes;
     private ArrayList <Event> eventos;
-    private ArrayList <Scenary> escenarios;
     private Queue<Event> colaEventos;
     private PrincipalCharacter mainCharacter;
 
@@ -20,7 +23,6 @@ public class Game {
         personajesFichero = new File("fichero.dat");
         personajes = new ArrayList<>();
         eventos = new ArrayList<>();
-        escenarios = new ArrayList<>();
         colaEventos = new ArrayDeque<>();
     }
 
@@ -37,13 +39,6 @@ public class Game {
         this.mainCharacter = mainCharacter;
     }
 
-    public ArrayList<Scenary> getEscenarios() {
-        return escenarios;
-    }
-
-    public void setEscenarios(ArrayList<Scenary> escenarios) {
-        this.escenarios = escenarios;
-    }
 
     public ArrayList<Event> getEventos() {
         return eventos;

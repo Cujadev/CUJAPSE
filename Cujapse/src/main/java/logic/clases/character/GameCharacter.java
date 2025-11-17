@@ -1,4 +1,4 @@
-package logic.clases;
+package logic.clases.character;
 
 import logic.auxiliars.chargers.ChargerMenssage;
 import logic.auxiliars.files.Convert;

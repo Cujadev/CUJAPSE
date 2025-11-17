@@ -1,4 +1,4 @@
-package logic.clases;
+package logic.clases.event;
 
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
