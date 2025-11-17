@@ -32,7 +32,7 @@ public class Event {
     public void setIdCharacter(String idCharacter) {
         this.idCharacter = idCharacter;
     }
-    public Situation getNextSituaion(int branch){
+    public Situation getNextSituation(int branch){
         Situation s;
         TreeIterator <Situation> it = situations.TreeIterator();
 
