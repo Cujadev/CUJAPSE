@@ -3,12 +3,17 @@ package logic.auxiliars.chargers;
 public class ChargerSituation_Dialogue {
     private String idCharacter;
     private String idDialogueCharacter;
-    private String [] idDialoguePrincipal;
+    private String idAnswer;
 
-    public ChargerSituation_Dialogue(String idCharacter, String idDialogueCharacter, String[] idDialoguePrincipal) {
+    public ChargerSituation_Dialogue(String idCharacter, String idDialogueCharacter, String idAnswer) {
         setIdCharacter(idCharacter);
         setIdDialogueCharacter(idDialogueCharacter);
-        setIdDialoguePrincipal(idDialoguePrincipal);
+        setIdAnswer(idAnswer);
+    }
+    public ChargerSituation_Dialogue(String idCharacter, String idDialogueCharacter) {
+        setIdCharacter(idCharacter);
+        setIdDialogueCharacter(idDialogueCharacter);
+        setIdAnswer(null);
     }
 
     public String getIdCharacter() {
@@ -27,11 +32,11 @@ public class ChargerSituation_Dialogue {
         this.idDialogueCharacter = idDialogueCharacter;
     }
 
-    public String[] getIdDialoguePrincipal() {
-        return idDialoguePrincipal;
+    public String getIdAnswer() {
+        return idAnswer;
     }
 
-    public void setIdDialoguePrincipal(String[] idDialoguePrincipal) {
-        this.idDialoguePrincipal = idDialoguePrincipal;
+    public void setIdAnswer(String idAnswer) {
+        this.idAnswer = idAnswer;
     }
 }

@@ -63,7 +63,6 @@ public class FileReaders {
                if (c.getId().equals(id)){
                    returned = c;
                }
-
            }
         }catch (IOException | ClassNotFoundException e){
             e.printStackTrace();

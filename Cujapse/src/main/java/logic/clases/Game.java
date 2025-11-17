@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;
 
+
 public class Game {
     private static Game game;
     private File personajesFichero;
@@ -17,10 +18,10 @@ public class Game {
 
     public Game() {
         personajesFichero = new File("fichero.dat");
-        personajes = new ArrayList<GameCharacter>();
-        eventos = new ArrayList<Event>();
-        escenarios = new ArrayList<Scenary>();
-        colaEventos = new ArrayDeque<Event>();
+        personajes = new ArrayList<>();
+        eventos = new ArrayList<>();
+        escenarios = new ArrayList<>();
+        colaEventos = new ArrayDeque<>();
     }
 
     public static Game getInstance() {
@@ -56,15 +57,6 @@ public class Game {
         return colaEventos;
     }
 
-    public void setColaEventos(Queue<Event> colaEventos) {
-        int i;
-        ArrayList<Integer> aux = new ArrayList<>();
-
-        while (this.eventos.size() != aux.size()){
-
-        }
-    }
-
     public GameCharacter findCharacter(String id){
         boolean found = false;
         GameCharacter c = null;
@@ -78,5 +70,4 @@ public class Game {
 
         return c;
     }
-    // Hacer un método que aleatorize  los eventos y los ponga en una cola
 }

@@ -10,23 +10,21 @@ public class Situation {
         this.association = association;
     }
 
+    public ChargerSituation_Dialogue getAssociation (){
+        return association;
+    }
+
     // Obtener el diálogo del personaje
-    public Dialogue getCharacterDialogue(){
+    public Dialogue getCharacterDialogue(String idCharacter){
         Game game = Game.getInstance();
-        Character c = game.findCharacter(association.getIdCharacter());
+        GameCharacter c = game.findCharacter(association.getIdCharacter());
         return c.ChargeDialogue(association.getIdDialogueCharacter());
     }
 
     // Obtener las respuestas del personaje principal
-    public Answer[] getPrincipalAnswers(){
+    public Answer getPrincipalAnswers(String id){
         Game game = Game.getInstance();
-        PrincipalCharacter pc = game.getMainCharacter();
-        String[] ids = association.getIdDialoguePrincipal();
-
-        Answer[] result = new Answer[ids.length];
-        for (int i = 0; i < ids.length; i++){
-            result[i] = pc.chargeAnswer(ids[i]);
-        }
-        return result;
+        PrincipalCharacter p = game.getMainCharacter();
+        return p.chargeAnswer(id);
     }
 }

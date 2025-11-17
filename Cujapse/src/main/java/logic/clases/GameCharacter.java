@@ -1,7 +1,5 @@
 package logic.clases;
 
-import javafx.scene.image.Image;
-
 import logic.auxiliars.chargers.ChargerMenssage;
 import logic.auxiliars.files.Convert;
 import logic.auxiliars.files.FileReaders;
@@ -19,9 +17,7 @@ public class GameCharacter implements ChargerMenssage, Serializable {
     private static final long serialVersionUID = 1L;
     protected String id;
     protected String name;
-    protected transient Image image;
     protected transient File dialogues;
-
     protected String imagePath;
     protected String dialoguesPath;
 
@@ -53,20 +49,28 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         this.name = name;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
     public File getDialogues() {
         return dialogues;
     }
 
     public void setDialogues(File dialogues) {
         this.dialogues = dialogues;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getDialoguesPath() {
+        return dialoguesPath;
+    }
+
+    public void setDialoguesPath(String dialoguesPath) {
+        this.dialoguesPath = dialoguesPath;
     }
 
     //Implementar cargar dialogo
@@ -91,9 +95,6 @@ public class GameCharacter implements ChargerMenssage, Serializable {
 
     // para cargar los recursos y poder meter esto en un fichero
     public void loadResources() throws IOException {
-        if (imagePath != null) {
-            this.image = new Image("file:" + imagePath);
-        }
         if (dialoguesPath != null) {
             this.dialogues = new File(dialoguesPath);
             if (!this.dialogues.exists()) {
