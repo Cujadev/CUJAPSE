@@ -1,26 +1,29 @@
-package logic.clases;
+package logic.clases.game;
+
+import logic.clases.character.GameCharacter;
+import logic.clases.character.PrincipalCharacter;
+import logic.clases.event.Event;
 
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;
 
+
 public class Game {
     private static Game game;
     private File personajesFichero;
 
-    private ArrayList<Character> personajes;
+    private ArrayList<GameCharacter> personajes;
     private ArrayList <Event> eventos;
-    private ArrayList <Scenary> escenarios;
     private Queue<Event> colaEventos;
     private PrincipalCharacter mainCharacter;
 
     public Game() {
         personajesFichero = new File("fichero.dat");
-        personajes = new ArrayList<Character>();
-        eventos = new ArrayList<Event>();
-        escenarios = new ArrayList<Scenary>();
-        colaEventos = new ArrayDeque<Event>();
+        personajes = new ArrayList<>();
+        eventos = new ArrayList<>();
+        colaEventos = new ArrayDeque<>();
     }
 
     public static Game getInstance() {
@@ -36,13 +39,6 @@ public class Game {
         this.mainCharacter = mainCharacter;
     }
 
-    public ArrayList<Scenary> getEscenarios() {
-        return escenarios;
-    }
-
-    public void setEscenarios(ArrayList<Scenary> escenarios) {
-        this.escenarios = escenarios;
-    }
 
     public ArrayList<Event> getEventos() {
         return eventos;
@@ -56,13 +52,9 @@ public class Game {
         return colaEventos;
     }
 
-    public void setColaEventos(Queue<Event> colaEventos) {
-        this.colaEventos = colaEventos;
-    }
-
-    public Character findCharacter(String id){
+    public GameCharacter findCharacter(String id){
         boolean found = false;
-        Character c = null;
+        GameCharacter c = null;
 
         for(int i = 0; i < personajes.size() && !found; i++){
             if(personajes.get(i).getId().equalsIgnoreCase(id)){
@@ -73,9 +65,4 @@ public class Game {
 
         return c;
     }
-
-    //Recorrer el file de personajes
-    // Hacer un método que aleatorize  los eventos y los ponga en una cola
-    // Hacer las clase situación para cambiar los eventos
-    // Hacer los árboles
 }

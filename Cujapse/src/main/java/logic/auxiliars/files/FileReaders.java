@@ -1,8 +1,9 @@
 package logic.auxiliars.files;
 
 
-import logic.clases.Dialogue;
-import logic.clases.GameCharacter;
+import logic.clases.character.Consecuence;
+import logic.clases.character.Dialogue;
+import logic.clases.character.GameCharacter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +33,7 @@ public class FileReaders {
         return true;
     }
     public static ArrayList<Dialogue> chargeDialogues(RandomAccessFile raf) {
-        ArrayList <Dialogue> dialogues = null;
+        ArrayList <Dialogue> dialogues = new ArrayList<>();
 
         try {
             int cant = raf.readInt();
@@ -63,11 +64,29 @@ public class FileReaders {
                if (c.getId().equals(id)){
                    returned = c;
                }
-
            }
         }catch (IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
         return  returned;
+    }
+    public static Consecuence searchConsecuence (String id, RandomAccessFile raf){
+        Consecuence c;
+        boolean found = false;
+
+        try {
+            int cant = raf.readInt();
+            for (int i = 0; i < cant && !found; i++){
+                int tam = raf.readInt();
+                byte[] string = new  byte[tam];
+                c = (Consecuence) Convert.toObject(string);
+                if (c.getId().equals(id)){
+                    found = true;
+                }
+            }
+        }catch (IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return c;
     }
 }
