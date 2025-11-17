@@ -15,7 +15,6 @@
 
         <ImageView fx:id="imgPersonaje" fitHeight="564.0" fitWidth="923.0" pickOnBounds="true" preserveRatio="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
-<<<<<<<< HEAD:Cujapse/src/main/java/interfaz/interfaces/Tutorial.fxml
                 <!-- Asegúrate de que esta ruta sea correcta para tu proyecto -->
                 <Image url="@../visualResources/fondoTutroial.png" />
             </image>
@@ -26,9 +25,8 @@
             <image>
                 <!-- Imagen de la pantalla principal de Orchat -->
                 <Image url="@../visualResources/Principal.png" />
-========
+
                 <Image url="@../visualResources/fondoTutroial.png" />
->>>>>>>> cc6f68e (Guardando cambios en la interfaz):Cujapse/src/main/resources/interfaces/Tutorial.fxml
             </image>
         </ImageView>
         <ImageView fitHeight="379.0" fitWidth="277.0" layoutX="28.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
@@ -58,11 +56,9 @@
 
                 <!-- Botón de Continuar/Flecha - ANCLADO Y CON ESTILO DE FLECHA -->
                 <!-- Este botón se usa para "Continuar" (▶) y luego se convierte en la opción "Sí" -->
-<<<<<<<< HEAD:Cujapse/src/main/java/interfaz/interfaces/Tutorial.fxml
-                <Button fx:id="btnContinuar" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onContinuarClick" prefHeight="63.0" prefWidth="75.0" styleClass="button, btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" />
-========
+
                 <Button fx:id="btnContinuar" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onContinuarClick" prefHeight="63.0" prefWidth="34.0" styleClass="button, btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="15.0" />
->>>>>>>> cc6f68e (Guardando cambios en la interfaz):Cujapse/src/main/resources/interfaces/Tutorial.fxml
+
 
             </children>
         </AnchorPane>
