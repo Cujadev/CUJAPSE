@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="654" prefWidth="939" stylesheets="@../visualResources/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+
+    <children>
+
+        <!-- PANEL PRINCIPAL (FONDO GENERAL) -->
+        <Pane layoutX="47.0" layoutY="0" prefHeight="662.0" prefWidth="906.0" styleClass="dialogo-caja">
+
+            <children>
+
+                <!-- BARRA SUPERIOR -->
+                <Pane fx:id="panelSuperior" layoutX="-50.0" layoutY="0" prefHeight="50" prefWidth="987.0" styleClass="zona-decision" />
+            <ScrollPane layoutX="4.0" layoutY="50.0" />
+                <ScrollPane layoutX="633.0" layoutY="57.0" styleClass="scroll-pane-arbol">
+                    <content>
+                        <Pane fx:id="tree" prefHeight="591.0" prefWidth="265.0" styleClass="panel-arbol" />
+                    </content>
+                </ScrollPane>
+
+
+                <!-- ZONA DE DECISIONES -->
+                <Pane fx:id="decisionZone" layoutX="15.0" layoutY="496.0" prefHeight="59.0" prefWidth="594.0" styleClass="zona-decision" />
+
+                                              <!-- SEPARADOR HORIZONTAL -->
+                <Separator layoutX="3.0" layoutY="575.0" prefHeight="6" prefWidth="613.0" style="-fx-background-color: black; -fx-border-color: black; -fx-border-width: 2;">
+                </Separator>
+
+                                                          <!-- SEPARADOR VERTICAL -->
+                <Separator layoutX="613.0" layoutY="47.0" orientation="vertical" prefHeight="534.0" prefWidth="7.0" style="-fx-background-color: black; -fx-border-color: black; -fx-border-width: 2;">
+                </Separator>
+
+                                        <!-- PANEL DEL CHAT -->
+                <Pane fx:id="chat" layoutX="13.0" layoutY="98.0" prefHeight="384.0" prefWidth="594.0" styleClass="panel-chat" />
+
+            </children>
+        </Pane>
+
+    </children>
+</AnchorPane>
