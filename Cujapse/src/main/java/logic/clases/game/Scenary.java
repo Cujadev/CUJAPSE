@@ -12,23 +12,21 @@ import java.util.ArrayList;
 
 public class Scenary {
     private Event event;
-    private ArrayList <Image> sceneryImages;
 
     // Pedir al evento dado una selección una situación
     // Poder dar al MVC la imagen a cargar
     // Poder pedir al juego un nuevo evento
+    public Scenary (){
 
-    public Scenary(Event event) {
-        sceneryImages = new ArrayList<>();
-        this.event = event;
     }
 
     public Event getEvento() {
         return event;
     }
 
-    public void setEvento(Event evento) {
-
+    public void setEvento() {
+        Game g = Game.getInstance();
+        this.event = g.getNextEvent();
     }
 
     //====Entregar los diálogos====

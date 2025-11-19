@@ -5,25 +5,22 @@ import logic.clases.character.PrincipalCharacter;
 import logic.clases.event.Event;
 
 import java.io.File;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Queue;
+import java.util.*;
 
 
 public class Game {
     private static Game game;
     private File personajesFichero;
-
-    private ArrayList<GameCharacter> personajes;
-    private ArrayList <Event> eventos;
-    private Queue<Event> colaEventos;
+    private LinkedList<Event> events;
+    private Queue<Event> eventQueue;
     private PrincipalCharacter mainCharacter;
+    private Scenary scenary;
 
     public Game() {
         personajesFichero = new File("fichero.dat");
-        personajes = new ArrayList<>();
-        eventos = new ArrayList<>();
-        colaEventos = new ArrayDeque<>();
+        events = new LinkedList<>();
+        eventQueue = new ArrayDeque<>();
+        scenary = new Scenary();
     }
 
     public static Game getInstance() {
@@ -40,29 +37,33 @@ public class Game {
     }
 
 
-    public ArrayList<Event> getEventos() {
-        return eventos;
+    public LinkedList<Event> getEventos() {
+        return events;
     }
 
-    public void setEventos(ArrayList<Event> eventos) {
-        this.eventos = eventos;
+    public void setEventos(LinkedList<Event> events) {
+        this.events = events;
     }
 
-    public Queue<Event> getColaEventos() {
-        return colaEventos;
+    public Queue<Event> getEventQueue() {
+        return eventQueue;
     }
 
     public GameCharacter findCharacter(String id){
-        boolean found = false;
-        GameCharacter c = null;
+        return null;
+    }
 
-        for(int i = 0; i < personajes.size() && !found; i++){
-            if(personajes.get(i).getId().equalsIgnoreCase(id)){
-                found = true;
-                c = personajes.get(i);
-            }
+    public void inQuequeEvents (){
+        LinkedList <Event> events = new LinkedList<>(this.events);
+        Random random = new Random();
+
+        while (!events.isEmpty()){
+            int index = random.nextInt(events.size());
+            eventQueue.offer(events.get(index));
+            events.remove(index);
         }
-
-        return c;
+    }
+    public Event getNextEvent (){
+        return eventQueue.poll();
     }
 }
