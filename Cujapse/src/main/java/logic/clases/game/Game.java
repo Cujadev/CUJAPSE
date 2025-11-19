@@ -1,11 +1,16 @@
 package logic.clases.game;
 
+import logic.auxiliars.files.FileReaders;
 import logic.clases.character.GameCharacter;
 import logic.clases.character.PrincipalCharacter;
 import logic.clases.event.Event;
 
 import java.io.File;
-import java.util.*;
+import java.io.RandomAccessFile;
+import java.util.ArrayDeque;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Random;
 
 
 public class Game {
@@ -50,7 +55,11 @@ public class Game {
     }
 
     public GameCharacter findCharacter(String id){
-        return null;
+        RandomAccessFile raf = FileReaders.openFile(personajesFichero);
+        GameCharacter c = FileReaders.findCharacter(id, raf);
+        FileReaders.closeFile(raf);
+
+        return c;
     }
 
     public void inQuequeEvents (){
