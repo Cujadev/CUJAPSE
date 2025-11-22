@@ -15,24 +15,28 @@ import java.util.Random;
 
 public class Game {
     private static Game game;
-    private File personajesFichero;
+    private final File personajesFichero;
     private LinkedList<Event> events;
-    private Queue<Event> eventQueue;
+    private final Queue<Event> eventQueue;
     private PrincipalCharacter mainCharacter;
     private Scenary scenary;
 
+    //====Constructor====
     public Game() {
-        personajesFichero = new File("fichero.dat");
+        personajesFichero = new File("./src/main/java/logic/ficheros/personajes.txt");// Revisar si se crea
         events = new LinkedList<>();
         eventQueue = new ArrayDeque<>();
         scenary = new Scenary();
     }
 
+    //====Singleton====
     public static Game getInstance() {
         if (game == null)
             game = new Game();
         return game;
     }
+
+    //====Getter and Setters====
     public PrincipalCharacter getMainCharacter() {
         return mainCharacter;
     }
@@ -42,9 +46,7 @@ public class Game {
     }
 
 
-    public LinkedList<Event> getEventos() {
-        return events;
-    }
+    public LinkedList<Event> getEventos() {return events;}
 
     public void setEventos(LinkedList<Event> events) {
         this.events = events;
@@ -54,25 +56,37 @@ public class Game {
         return eventQueue;
     }
 
-    public GameCharacter findCharacter(String id){
-        RandomAccessFile raf = FileReaders.openFile(personajesFichero);
-        GameCharacter c = FileReaders.findCharacter(id, raf);
-        FileReaders.closeFile(raf);
+    public Scenary getScenary() {
+        return scenary;
+    }
+
+    public void setScenary(Scenary scenary) {
+        this.scenary = scenary;
+    }
+    //====Métodos necesarios====
+
+    //Buscar un personaje
+    public GameCharacter findCharacter(String id) {
+        RandomAccessFile raf = FileReaders.openFile(personajesFichero);//Abre el fichero
+        GameCharacter c = FileReaders.findCharacter(id, raf);//Busca el personaje en el fichero
+        FileReaders.closeFile(raf);// cierra el fichero
 
         return c;
     }
 
-    public void inQuequeEvents (){
-        LinkedList <Event> events = new LinkedList<>(this.events);
-        Random random = new Random();
+    //Encolar los eventos
+    public void inQuequeEvents() {
+        LinkedList<Event> events = new LinkedList<>(this.events); //Crea una copia de la lincked list
+        Random random = new Random();// Randomizador
 
-        while (!events.isEmpty()){
-            int index = random.nextInt(events.size());
-            eventQueue.offer(events.get(index));
-            events.remove(index);
+        while (!events.isEmpty()) {// Siempre que no esté vacio
+            int index = random.nextInt(events.size() - 1);// Se busca un número random entre 0 y el tamaño del array
+            eventQueue.offer(events.get(index));// Se agrega a la cola de elementos ese elemento en el índice random
+            events.remove(index); // Se remueve de la lincked copia de eventos.
         }
     }
-    public Event getNextEvent (){
+
+    public Event getNextEvent (){//Se van desencolando los eventos
         return eventQueue.poll();
     }
 }
