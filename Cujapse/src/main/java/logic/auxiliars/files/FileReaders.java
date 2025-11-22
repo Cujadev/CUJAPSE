@@ -110,4 +110,7 @@ public class FileReaders {
         }
         return dialogue;
     }
+    public static File returnFile (String path){
+        return new File(path);
+    }
 }

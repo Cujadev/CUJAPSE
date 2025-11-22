@@ -1,15 +1,10 @@
 package logic.clases.character;
 
 import logic.auxiliars.chargers.ChargerMenssage;
-import logic.auxiliars.files.Convert;
 import logic.auxiliars.files.FileReaders;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.ListIterator;
 
 /// Constructor, Getters y setters
 
@@ -17,7 +12,6 @@ public class GameCharacter implements ChargerMenssage, Serializable {
     private static final long serialVersionUID = 1L;
     protected String id;
     protected String name;
-    protected transient File dialogues;
     protected String imagePath;
     protected String dialoguesPath;
 
@@ -26,11 +20,6 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         this.name = name;
         this.imagePath = imagePath;
         this.dialoguesPath = dialoguesPath;
-        try {
-            loadResources();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public String getId() {
@@ -47,14 +36,6 @@ public class GameCharacter implements ChargerMenssage, Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public File getDialogues() {
-        return dialogues;
-    }
-
-    public void setDialogues(File dialogues) {
-        this.dialogues = dialogues;
     }
 
     public String getImagePath() {
@@ -78,32 +59,13 @@ public class GameCharacter implements ChargerMenssage, Serializable {
     @Override
     public Dialogue ChargeDialogue(String id) {
         Dialogue menssage = null;
-        RandomAccessFile raf = FileReaders.openFile(this.dialogues);
-        ArrayList <Dialogue> dialogues = FileReaders.chargeDialogues(raf);
+        RandomAccessFile raf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));
+        Dialogue dialogue = FileReaders.searchDialogue(id,raf);
         FileReaders.closeFile(raf);
-        ListIterator <Dialogue> it = dialogues.listIterator();
-        boolean found = false;
-
-        while(it.hasNext() && !found){
-            if (it.next().getId().equals(id)){
-                menssage = it.previous();
-                found = true;
-            }
-        }
-        return menssage;
+        return dialogue;
     }
 
-    // para cargar los recursos y poder meter esto en un fichero
-    public void loadResources() throws IOException {
-        if (dialoguesPath != null) {
-            this.dialogues = new File(dialoguesPath);
-            if (!this.dialogues.exists()) {
-                this.dialogues.createNewFile();
-            }
-        }
-    }
-
-
+    /*
     // para sacar del fichero solo el dialgo que se necesita
     public Dialogue findDialogue(Object id) throws IOException, ClassNotFoundException {
         RandomAccessFile raf = new RandomAccessFile(dialogues,"r");
@@ -131,9 +93,9 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         }
         raf.close();
         return dialogue;
-    }
+    }*/
 
-    // guardar un dialogo nuevo
+    /*// guardar un dialogo nuevo
     public boolean saveDialogue(Dialogue dialogue) throws IOException {
         boolean ok = false;
         int numeroID = -1;
@@ -155,7 +117,7 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         }
         raf.close();
         return ok;
-    }
+    }*/
 
 
 }
