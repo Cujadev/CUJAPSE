@@ -2,10 +2,10 @@ package logic.clases.character;
 
 import logic.auxiliars.files.FileReaders;
 
+import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.io.File;
 
 public class PrincipalCharacter extends GameCharacter {
 
@@ -103,6 +103,66 @@ public class PrincipalCharacter extends GameCharacter {
             result += 50;
         }
         return result;
+    }
+
+    public boolean isDead (){
+        boolean found = false;
+        for (int i = 0; i < stats.size() && !found; i++){
+            if (stats.get(i) <= 0 ||stats.get(i) >= 100){
+                found = true;
+            }
+        }
+        return found;
+    }
+    public String causeOfDeath(){
+        String id = "";
+        boolean found = false;
+        int index = 0;
+        for (int i = 0; i < stats.size() && !found; i++){
+            if (stats.get(i) <= 0 || stats.get(i) >= 100){
+                index = i;
+            }
+        }
+
+        switch (index){
+            case 0:{
+                if (stats.get(index) <= 0){
+                    id = "0";
+                }
+                else{
+                    id = "1";
+                }
+                break;
+            }
+            case 1:{
+                if (stats.get(index) <= 0){
+                    id = "2";
+                }
+                else{
+                    id = "3";
+                }
+                break;
+            }
+            case 2:{
+                if (stats.get(index) <= 0){
+                    id = "4";
+                }
+                else{
+                    id = "5";
+                }
+                break;
+            }
+            case 3:{
+                if (stats.get(index) <= 0){
+                    id = "6";
+                }
+                else{
+                    id = "7";
+                }
+                break;
+            }
+        }
+        return id;
     }
 
     //Modificar Características

@@ -1,36 +1,42 @@
 package logic.clases.game;
 
+import logic.auxiliars.files.FileReaders;
 import logic.clases.character.GameCharacter;
 import logic.clases.character.PrincipalCharacter;
 import logic.clases.event.Event;
 
 import java.io.File;
+import java.io.RandomAccessFile;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 
 public class Game {
     private static Game game;
-    private File personajesFichero;
-
-    private ArrayList<GameCharacter> personajes;
-    private ArrayList <Event> eventos;
-    private Queue<Event> colaEventos;
+    private final File personajesFichero;
+    private LinkedList<Event> events;
+    private final Queue<Event> eventQueue;
     private PrincipalCharacter mainCharacter;
+    private Scenary scenary;
 
+    //====Constructor====
     public Game() {
-        personajesFichero = new File("fichero.dat");
-        personajes = new ArrayList<>();
-        eventos = new ArrayList<>();
-        colaEventos = new ArrayDeque<>();
+        personajesFichero = new File("./src/main/java/logic/ficheros/personajes.txt");// Revisar si se crea
+        events = new LinkedList<>();
+        eventQueue = new ArrayDeque<>();
+        scenary = new Scenary();
     }
 
+    //====Singleton====
     public static Game getInstance() {
         if (game == null)
             game = new Game();
         return game;
     }
+
+    //====Getter and Setters====
     public PrincipalCharacter getMainCharacter() {
         return mainCharacter;
     }
@@ -40,29 +46,47 @@ public class Game {
     }
 
 
-    public ArrayList<Event> getEventos() {
-        return eventos;
+    public LinkedList<Event> getEventos() {return events;}
+
+    public void setEventos(LinkedList<Event> events) {
+        this.events = events;
     }
 
-    public void setEventos(ArrayList<Event> eventos) {
-        this.eventos = eventos;
+    public Queue<Event> getEventQueue() {
+        return eventQueue;
     }
 
-    public Queue<Event> getColaEventos() {
-        return colaEventos;
+    public Scenary getScenary() {
+        return scenary;
     }
 
-    public GameCharacter findCharacter(String id){
-        boolean found = false;
-        GameCharacter c = null;
+    public void setScenary(Scenary scenary) {
+        this.scenary = scenary;
+    }
+    //====Métodos necesarios====
 
-        for(int i = 0; i < personajes.size() && !found; i++){
-            if(personajes.get(i).getId().equalsIgnoreCase(id)){
-                found = true;
-                c = personajes.get(i);
-            }
-        }
+    //Buscar un personaje
+    public GameCharacter findCharacter(String id) {
+        RandomAccessFile raf = FileReaders.openFile(personajesFichero);//Abre el fichero
+        GameCharacter c = FileReaders.findCharacter(id, raf);//Busca el personaje en el fichero
+        FileReaders.closeFile(raf);// cierra el fichero
 
         return c;
+    }
+
+    //Encolar los eventos
+    public void inQuequeEvents() {
+        LinkedList<Event> events = new LinkedList<>(this.events); //Crea una copia de la lincked list
+        Random random = new Random();// Randomizador
+
+        while (!events.isEmpty()) {// Siempre que no esté vacio
+            int index = random.nextInt(events.size() - 1);// Se busca un número random entre 0 y el tamaño del array
+            eventQueue.offer(events.get(index));// Se agrega a la cola de elementos ese elemento en el índice random
+            events.remove(index); // Se remueve de la lincked copia de eventos.
+        }
+    }
+
+    public Event getNextEvent (){//Se van desencolando los eventos
+        return eventQueue.poll();
     }
 }
