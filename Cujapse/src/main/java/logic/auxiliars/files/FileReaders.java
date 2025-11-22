@@ -89,4 +89,25 @@ public class FileReaders {
         }
         return c;
     }
+    public static Dialogue searchDialogue (String id, RandomAccessFile raf){
+        Dialogue dialogue = null;
+        boolean found = false;
+
+        try {
+            int cant = raf.readInt();
+            for (int i = 0; i < cant; i++){
+                int tam = raf.readInt();
+                byte[] string = new byte[tam];
+                raf.read(string);
+                Dialogue dial =  (Dialogue) Convert.toObject(string);
+                if (dial.getId().equals(id)){
+                    dialogue = dial;
+                    found = true;
+                }
+            }
+        }catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return dialogue;
+    }
 }
