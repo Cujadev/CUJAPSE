@@ -1,45 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="654" prefWidth="939" stylesheets="@../visualResources/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="rootPane" prefHeight="700.0" prefWidth="1200.0" styleClass="root-principal" stylesheets="@../visualResources/paletaDeColores/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaz.controllers.PrincipalController">
 
     <children>
 
-        <!-- PANEL PRINCIPAL (FONDO GENERAL) -->
-        <Pane layoutX="47.0" layoutY="0" prefHeight="662.0" prefWidth="906.0" styleClass="dialogo-caja">
+        <HBox fx:id="menuSuperior" alignment="TOP_RIGHT" layoutY="-8.0" prefHeight="78.0" prefWidth="1200.0" styleClass="menu-superior" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="-8.0">
+            <children>
+            <ImageView fx:id="btnMinimizar" fitHeight="48.0" fitWidth="59.0" layoutX="60.0" pickOnBounds="true" preserveRatio="true" x="30.0" y="40.0">
+               <image>
+                  <Image url="@../visualResources/iconos/minimizar.png" />
+               </image></ImageView>
+            <ImageView fx:id="btnMaximizar" fitHeight="46.0" fitWidth="40.0" layoutX="60.0" pickOnBounds="true" preserveRatio="true" x="20.0" y="20.0">
+               <image>
+                  <Image url="@../visualResources/iconos/maximizar.png" />
+               </image></ImageView>
+            <ImageView fx:id="btnCerrar" fitHeight="40.0" fitWidth="58.0" layoutX="60.0" pickOnBounds="true" preserveRatio="true" x="20.0" y="20.0">
+               <image>
+                  <Image url="@../visualResources/iconos/cerrar.png" />
+               </image></ImageView>
+            </children>
+        </HBox>
+
+        <VBox fx:id="panelIzquierdo" alignment="TOP_CENTER" prefWidth="62.0" styleClass="panel-izquierdo" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="49" />
+
+        <VBox fx:id="panelChat" spacing="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="63" AnchorPane.rightAnchor="279" AnchorPane.topAnchor="49">
 
             <children>
 
-                <!-- BARRA SUPERIOR -->
-                <Pane fx:id="panelSuperior" layoutX="-50.0" layoutY="0" prefHeight="50" prefWidth="987.0" styleClass="zona-decision" />
-            <ScrollPane layoutX="4.0" layoutY="50.0" />
-                <ScrollPane layoutX="633.0" layoutY="57.0" styleClass="scroll-pane-arbol">
+                <HBox alignment="CENTER_LEFT" prefHeight="54" styleClass="chat-header">
+                    <children>
+                        <ImageView fitHeight="30" fitWidth="30">
+                            <image>
+                                <Image url="@../visualResources/iconos/orchat-icon.png" />
+                            </image>
+                        </ImageView>
+                        <Label styleClass="chat-title" text="Orchat ">
+                            <font><Font name="System Bold" size="16" /></font>
+                            <HBox.margin><Insets left="10" /></HBox.margin>
+                        </Label>
+                    </children>
+                    <padding><Insets left="20" /></padding>
+                </HBox>
+
+                <ScrollPane fx:id="scrollChat" fitToWidth="true" styleClass="scroll-pane-arbol" VBox.vgrow="ALWAYS">
                     <content>
-                        <Pane fx:id="tree" prefHeight="591.0" prefWidth="265.0" styleClass="panel-arbol" />
+                        <VBox fx:id="vboxMensajes" spacing="12" styleClass="panel-chat">
+                            <padding>
+                                <Insets bottom="15" left="15" right="15" top="15" />
+                            </padding>
+                        </VBox>
                     </content>
                 </ScrollPane>
 
+                <!-- BOTTOM: decision area (FIXED) -->
+                <AnchorPane fx:id="decisionArea" prefHeight="170" styleClass="decision-panel" VBox.vgrow="NEVER">
+                    <children>
+                        <VBox fx:id="decisionBox" alignment="CENTER" spacing="15" AnchorPane.bottomAnchor="15" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15">
 
-                <!-- ZONA DE DECISIONES -->
-                <Pane fx:id="decisionZone" layoutX="15.0" layoutY="496.0" prefHeight="59.0" prefWidth="594.0" styleClass="zona-decision" />
+                            <!-- Oval message with button INSIDE -->
+                            <HBox alignment="CENTER" spacing="0" styleClass="decision-message-container">
+                                <children>
+                                    <Label fx:id="labelDecisionMessage" alignment="CENTER" maxWidth="500" minHeight="60" prefHeight="60" prefWidth="500" styleClass="decision-message-text" text="" wrapText="true" HBox.hgrow="ALWAYS" />
+                                    <!-- Send button INSIDE the label area -->
+                                    <Button fx:id="btnSendDecision" onAction="#onSendDecisionClick" styleClass="btn-send-decision-inside">
+                                        <graphic>
+                                            <ImageView fitHeight="34" fitWidth="34" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@../visualResources/iconos/enviar.png" />
+                                                </image>
+                                            </ImageView>
+                                        </graphic>
+                                        <HBox.margin>
+                                            <Insets right="10" />
+                                        </HBox.margin>
+                                    </Button>
+                                </children>
+                            </HBox>
 
-                                              <!-- SEPARADOR HORIZONTAL -->
-                <Separator layoutX="3.0" layoutY="575.0" prefHeight="6" prefWidth="613.0" style="-fx-background-color: black; -fx-border-color: black; -fx-border-width: 2;">
-                </Separator>
+                            <!-- Options -->
+                            <HBox alignment="CENTER" spacing="35">
+                                <children>
+                                    <Button fx:id="btnOptionYes" onAction="#onOptionYesClick" prefWidth="120" styleClass="decision-btn" text="Sí" />
+                                    <Button fx:id="btnOptionNo" onAction="#onOptionNoClick" prefWidth="120" styleClass="decision-btn" text="No" />
+                                </children>
+                            </HBox>
 
-                                                          <!-- SEPARADOR VERTICAL -->
-                <Separator layoutX="613.0" layoutY="47.0" orientation="vertical" prefHeight="534.0" prefWidth="7.0" style="-fx-background-color: black; -fx-border-color: black; -fx-border-width: 2;">
-                </Separator>
-
-                                        <!-- PANEL DEL CHAT -->
-                <Pane fx:id="chat" layoutX="13.0" layoutY="98.0" prefHeight="384.0" prefWidth="594.0" styleClass="panel-chat" />
+                        </VBox>
+                    </children>
+                </AnchorPane>
 
             </children>
-        </Pane>
+        </VBox>
+
+        <VBox fx:id="panelArbol" alignment="TOP_CENTER" prefWidth="280" styleClass="panel-arbol" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="49" />
 
     </children>
 </AnchorPane>

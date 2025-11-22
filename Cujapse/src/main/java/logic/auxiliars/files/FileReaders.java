@@ -71,7 +71,7 @@ public class FileReaders {
         return  returned;
     }
     public static Consecuence searchConsecuence (String id, RandomAccessFile raf){
-        Consecuence c;
+        Consecuence c=null;
         boolean found = false;
 
         try {
