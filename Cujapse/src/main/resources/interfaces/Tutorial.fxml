@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,27 +8,29 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="564.0" prefWidth="923.0" styleClass="root" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cujapse.controllers.PrologoViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="564.0" prefWidth="923.0" styleClass="root"
+            stylesheets="@../visualResources/paletaDeColores/estilos.css"
+            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="interfaz.controllers.TutorialController"
+            AnchorPane.topAnchor="0"
+            AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0"
+            AnchorPane.bottomAnchor="0"
+>
     <children>
 
-        <!-- FONDO / IMAGEN DEL PERSONAJE (Ocupa todo el AnchorPane) -->
-        <ImageView fx:id="imgPersonaje" fitHeight="564.0" fitWidth="923.0" pickOnBounds="true" preserveRatio="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ImageView fx:id="imgPersonaje"
+                   fitHeight="564.0" fitWidth="923.0" pickOnBounds="true" preserveRatio="false"
+                   AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
             <image>
                 <!-- Asegúrate de que esta ruta sea correcta para tu proyecto -->
-                <Image url="@../visualResources/fondoTutroial.png" />
+                <Image url="@../visualResources/escenarios/fondoTutorial.png" />
             </image>
         </ImageView>
-
-        <!-- PREVISUALIZACIÓN DE LA APP (Inicialmente oculta, aparece en el diálogo) -->
-        <ImageView fx:id="imgAppPreview" fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="false" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+        <ImageView fitHeight="379.0" fitWidth="277.0" layoutX="14.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <!-- Imagen de la pantalla principal de Orchat -->
-                <Image url="@../visualResources/Principal.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="379.0" fitWidth="277.0" layoutX="28.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../visualResources/Omar_tutorial.png" />
+                <Image url="@../visualResources/personajes/Omar_tutorial.png" />
             </image>
         </ImageView>
 
@@ -54,18 +55,12 @@
 
                 <!-- Botón de Continuar/Flecha - ANCLADO Y CON ESTILO DE FLECHA -->
                 <!-- Este botón se usa para "Continuar" (▶) y luego se convierte en la opción "Sí" -->
-                <Button fx:id="btnContinuar" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onContinuarClick" prefHeight="63.0" prefWidth="75.0" styleClass="button, btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" />
+
+                <Button fx:id="btnContinuar" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onContinuarClick" prefHeight="63.0" prefWidth="34.0" styleClass="button, btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="15.0" />
+
 
             </children>
         </AnchorPane>
-      <DialogPane layoutX="347.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0">
-          <header>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
-          </header>
-          <expandableContent>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
-          </expandableContent>
-      </DialogPane>
 
     </children>
 </AnchorPane>

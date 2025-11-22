@@ -1,0 +1,445 @@
+/* =========================================================
+   ESTILOS CUJAPSE - PALETA AMARILLO/ROJO/NARANJA
+   ========================================================= */
+
+/* -------------------------
+   ROOT
+   ------------------------- */
+.root, .root-principal {
+    -fx-background-color: #2F1B0F;
+    -fx-font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    -fx-font-size: 15px;
+    -fx-text-fill: #FFD700;
+}
+
+/* -------------------------
+   BARRA SUPERIOR
+   ------------------------- */
+.menu-superior {
+    -fx-background-color: #B22222;
+    -fx-padding: 12 20;
+    -fx-border-color: #FF4500;
+    -fx-border-width: 0 0 3px 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 8, 0.15, 0, 2);
+}
+
+.menu-superior .label,
+.menu-superior .text {
+    -fx-text-fill: #FFD700;
+    -fx-font-size: 17px;
+    -fx-font-weight: 600;
+}
+
+.title-label {
+    -fx-text-fill: #FFD700;
+}
+
+/* -------------------------
+   PANEL IZQUIERDO (ESTADÍSTICAS)
+   ------------------------- */
+.panel-izquierdo, .panel-izquierdo-contenido {
+    -fx-background-color: #8B4513;
+    -fx-border-color: #D2691E;
+    -fx-border-width: 0 3px 0 0;
+    -fx-padding: 12 8px;
+}
+
+.panel-estadisticas-container {
+    -fx-background-color: #FF8C00;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #FFD700;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 12, 0.3, 0, 3);
+}
+
+.estadisticas-title {
+    -fx-text-fill: #8B0000;
+    -fx-font-weight: bold;
+}
+
+.stat-container {
+    -fx-background-color: rgba(255, 215, 0, 0.9);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #FF4500;
+    -fx-border-width: 1;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.2, 0, 1);
+}
+
+.stat-value {
+    -fx-text-fill: #8B0000;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Botones de navegación */
+.nav-button {
+    -fx-background-color: #FF4500;
+    -fx-text-fill: #FFD700;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 12 15;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0.2, 0, 2);
+}
+
+.nav-button:hover {
+    -fx-background-color: #FF6347;
+    -fx-text-fill: #FFFF00;
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFD700;
+    -fx-font-size: 20px;
+    -fx-padding: 6px;
+    -fx-cursor: hand;
+}
+.icon-button:hover {
+    -fx-text-fill: #FF8C00;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* -------------------------
+   PANEL CENTRAL - CHAT
+   ------------------------- */
+.chat-header {
+    -fx-background-color: #FF8C00;
+    -fx-border-color: #FFD700;
+    -fx-border-width: 0 0 3px 0;
+}
+
+.chat-title {
+    -fx-text-fill: #8B0000;
+    -fx-font-weight: bold;
+}
+
+.panel-chat {
+    -fx-background-color: #FFF8DC;
+    -fx-padding: 20px;
+    -fx-text-fill: #8B0000;
+}
+
+.chat-scroll-pane {
+    -fx-background-color: #FFF8DC;
+    -fx-border-color: #D2691E;
+    -fx-border-width: 0;
+}
+
+.chat-messages-container {
+    -fx-background-color: #FFF8DC;
+    -fx-padding: 15px;
+}
+
+/* Burbuja NPC */
+.burbuja-npc {
+    -fx-background-color: #FFD700;
+    -fx-background-radius: 18px 18px 18px 6px;
+    -fx-padding: 12px 16px;
+    -fx-text-fill: #8B0000;
+    -fx-font-size: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 8, 0.12, 0, 2);
+    -fx-max-width: 500px;
+}
+
+/* Burbuja Jugador */
+.burbuja-player {
+    -fx-background-color: #FF8C00;
+    -fx-background-radius: 18px 18px 6px 18px;
+    -fx-padding: 12px 16px;
+    -fx-text-fill: #FFF8DC;
+    -fx-font-size: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 8, 0.12, 0, 2);
+    -fx-max-width: 500px;
+}
+
+.mensaje-escenario {
+    -fx-alignment: center;
+    -fx-padding: 15px;
+    -fx-background-color: rgba(255, 140, 0, 0.1);
+    -fx-background-radius: 12px;
+    -fx-border-color: #FFD700;
+    -fx-border-radius: 12px;
+    -fx-border-width: 2px;
+}
+
+/* -------------------------
+   ZONA DE DECISIONES
+   ------------------------- */
+.zona-decision, .decision-panel {
+    -fx-background-color: #8B4513;
+    -fx-padding: 14px;
+    -fx-background-radius: 8px;
+    -fx-border-color: #FFD700;
+    -fx-border-width: 3px 0 0 0;
+}
+
+.decision-text, .decision-question {
+    -fx-text-fill: #FFD700;
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+}
+
+.decision-btn {
+    -fx-background-color: #FB8B24;
+    -fx-text-fill: #8B0000;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 22px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0.3, 0, 3);
+}
+.decision-btn:hover {
+    -fx-background-color: #ff9f40;
+}
+
+.decision-btn-yes {
+    -fx-background-color: #32CD32;
+    -fx-text-fill: #FFF8DC;
+}
+.decision-btn-yes:hover {
+    -fx-background-color: #228B22;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.decision-btn-no {
+    -fx-background-color: #DC143C;
+    -fx-text-fill: #FFF8DC;
+}
+.decision-btn-no:hover {
+    -fx-background-color: #B22222;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* -------------------------
+   PANEL DERECHO - PROGRESO/ÁRBOL
+   ------------------------- */
+.panel-arbol, .progress-panel {
+    -fx-background-color: #8B4513;
+    -fx-padding: 16px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: #D2691E;
+    -fx-border-width: 0 0 0 3px;
+}
+
+.progress-title {
+    -fx-text-fill: #FFD700;
+}
+
+.progress-subtitle {
+    -fx-text-fill: #FFA500;
+    -fx-font-size: 13px;
+}
+
+/* Nodos del árbol */
+.nodo-desbloqueado, .progress-node-completed {
+    -fx-background-color: rgba(50, 205, 50, 0.3);
+    -fx-border-color: #32CD32;
+    -fx-border-radius: 8px;
+    -fx-padding: 12px;
+    -fx-text-fill: #FFF8DC;
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+}
+
+.progress-node-current {
+    -fx-background-color: rgba(255, 215, 0, 0.4);
+    -fx-border-color: #FFD700;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
+}
+
+.nodo-bloqueado, .progress-node-locked {
+    -fx-background-color: rgba(139, 0, 0, 0.2);
+    -fx-border-color: #8B0000;
+    -fx-border-radius: 8px;
+    -fx-padding: 12px;
+    -fx-text-fill: rgba(255, 215, 0, 0.6);
+    -fx-font-size: 15px;
+}
+
+.node-label {
+    -fx-text-fill: #FFF8DC;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.progress-text {
+    -fx-text-fill: #FFA500;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* -------------------------
+   SCROLL PANELS
+   ------------------------- */
+.scroll-pane-arbol, .progress-scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane-arbol .scroll-bar:vertical .track,
+.progress-scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: rgba(79,0,11,0.12);
+    -fx-background-radius: 6px;
+}
+
+.scroll-pane-arbol .scroll-bar:vertical .thumb,
+.progress-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #FF8C00;
+    -fx-background-radius: 6px;
+}
+
+.scroll-pane-arbol .scroll-bar:vertical .thumb:hover,
+.progress-scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #ff9f40;
+}
+
+.chat-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #FFD700;
+    -fx-background-radius: 5px;
+}
+
+.progress-tree {
+    -fx-background-color: transparent;
+}
+
+/* -------------------------
+   DIALOGO DEL TUTORIAL
+   ------------------------- */
+.dialogo-caja {
+    -fx-background-color: #FCCA46;
+    -fx-background-radius: 40px 40px 15px 15px;
+    -fx-padding: 22px;
+    -fx-text-fill: #8B0000;
+    -fx-font-size: 17px;
+}
+
+.dialogo-caja .label {
+    -fx-text-fill: #8B0000;
+    -fx-font-size: 17px;
+}
+
+/* Flecha continuar */
+.btn-continue-arrow {
+    -fx-background-color: transparent;
+    -fx-text-fill: #8B0000;
+    -fx-font-size: 50px;
+    -fx-font-weight: 700;
+}
+.decision-container {
+    -fx-background-color: transparent;
+}
+
+.decision-label {
+    -fx-background-color: #FCCA46;
+    -fx-text-fill: black;
+    -fx-background-radius: 25;
+    -fx-padding: 10 20;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* ----- Decision area ----- */
+#decisionArea {
+    -fx-background-color: transparent;
+}
+
+/* Container for decision message with button INSIDE */
+.decision-message-container {
+    -fx-background-color: #FCCA46;
+    -fx-background-radius: 28px;
+    -fx-padding: 0;
+    -fx-pref-width: 550px;
+    -fx-max-width: 550px;
+    -fx-pref-height: 60px;
+    -fx-alignment: center;
+}
+
+/* Text inside the decision message */
+.decision-message-text {
+    -fx-font-size: 16px;
+    -fx-text-fill: #03071E;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 0 0 0 20px;
+    -fx-background-color: transparent;
+}
+
+/* send button INSIDE the decision message */
+.btn-send-decision-inside {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-background-radius: 0 28px 28px 0;
+}
+
+.btn-send-decision-inside:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.btn-send-decision-inside:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* option buttons */
+.decision-btn {
+    -fx-background-color: #FB8B24;
+    -fx-text-fill: #03071E;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12px;
+    -fx-padding: 10 26;
+}
+
+.decision-btn:hover {
+    -fx-background-color: #E85D04;
+}
+
+/* selected option style */
+.decision-selected {
+    -fx-border-color: #FFD700;
+    -fx-border-width: 3px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 6, 0.1, 0, 2);
+}
+/* avatar styles (clip applied by controller) */
+.avatar {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 6, 0.1, 0, 2);
+}
+
+/* bubbles already present in your CSS; ensure text and sizes */
+.label-usuario {
+    -fx-font-weight: 600;
+    -fx-text-fill: #8B0000;
+    -fx-font-size: 13px;
+}
+
+.label-mensaje {
+    -fx-text-fill: #03071E;
+    -fx-font-size: 15px;
+}
+
+/* scenario image bubble */
+.mensaje-escenario {
+    -fx-padding: 10;
+    -fx-background-radius: 12px;
+    -fx-background-color: rgba(255, 215, 0, 0.12);
+    -fx-border-color: #FFD700;
+    -fx-border-radius: 12px;
+}
+
+/* decision panel */
+.decision-panel {
+    -fx-background-color: transparent;
+}
+
