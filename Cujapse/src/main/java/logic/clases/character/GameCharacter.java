@@ -2,11 +2,13 @@ package logic.clases.character;
 
 import logic.auxiliars.chargers.ChargerMenssage;
 import logic.auxiliars.files.FileReaders;
+import logic.auxiliars.files.FileWriters;
 
+import java.io.File;
 import java.io.RandomAccessFile;
 import java.io.Serializable;
 
-/// Constructor, Getters y setters
+
 
 public class GameCharacter implements ChargerMenssage, Serializable {
     private static final long serialVersionUID = 1L;
@@ -15,6 +17,7 @@ public class GameCharacter implements ChargerMenssage, Serializable {
     protected String imagePath;
     protected String dialoguesPath;
 
+    /// ==== Constructor ====
     public GameCharacter(String id, String name, String imagePath, String dialoguesPath) {
         this.id = id;
         this.name = name;
@@ -22,6 +25,7 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         this.dialoguesPath = dialoguesPath;
     }
 
+    ///  ==== Getters y Setters ====
     public String getId() {
         return id;
     }
@@ -54,18 +58,28 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         this.dialoguesPath = dialoguesPath;
     }
 
-    //Implementar cargar dialogo
+    /// ==== Métodos útiles ====
 
     @Override
+    // Esta función devuelve el diálogo para ser utilizado por el escenario
     public Dialogue ChargeDialogue(String id) {
         Dialogue menssage = null;
-        RandomAccessFile raf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));
-        Dialogue dialogue = FileReaders.searchDialogue(id,raf);
-        FileReaders.closeFile(raf);
+        RandomAccessFile raf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));//Abre un RAF
+        Dialogue dialogue = FileReaders.searchDialogue(id,raf);// Busca el diálogo según el ID dado
+        FileReaders.closeFile(raf);// Cierra el Fichero
         return dialogue;
     }
 
-    /*
+    //Esta funcion guarda dialogos
+    public void saveDialogue (Dialogue d){
+        File f = FileReaders.returnFile(getDialoguesPath());// Crea el file
+        FileWriters.saveDialogue(d,f);// Guarda el dialogo
+    }
+}
+/*
+Estos son los métodos creados por Rolando que de momento no son necesarios no se van a
+borrar para tenerlos en cuenta caso de bug
+
     // para sacar del fichero solo el dialgo que se necesita
     public Dialogue findDialogue(Object id) throws IOException, ClassNotFoundException {
         RandomAccessFile raf = new RandomAccessFile(dialogues,"r");
@@ -93,9 +107,9 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         }
         raf.close();
         return dialogue;
-    }*/
+    }
 
-    /*// guardar un dialogo nuevo
+    // guardar un dialogo nuevo
     public boolean saveDialogue(Dialogue dialogue) throws IOException {
         boolean ok = false;
         int numeroID = -1;
@@ -117,8 +131,6 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         }
         raf.close();
         return ok;
-    }*/
-
-
-}
+    }
+ */
 

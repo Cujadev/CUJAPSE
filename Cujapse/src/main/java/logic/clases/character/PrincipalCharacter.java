@@ -9,9 +9,9 @@ import java.util.Iterator;
 
 public class PrincipalCharacter extends GameCharacter {
 
-    private ArrayList <Answer> answers;
-    private ArrayList <Integer> stats;
-    private File consecuences;
+    private final ArrayList <Answer> answers;
+    private final ArrayList <Integer> stats;
+    private final File consecuences;
 
     /// Constructor Getters y Setters ///
     public PrincipalCharacter(String id, String name, String imagenPath, String dialoguePath, String consecuensesPath) {
@@ -25,7 +25,7 @@ public class PrincipalCharacter extends GameCharacter {
         consecuences = new File(consecuensesPath);
     }
     public void setAnswers () throws IllegalArgumentException {
-        RandomAccessFile draf = FileReaders.openFile(dialogues);
+        RandomAccessFile draf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));
         RandomAccessFile craf = FileReaders.openFile(consecuences);
         ArrayList<Dialogue> dialogues = FileReaders.chargeDialogues(draf);
         FileReaders.closeFile(draf);
@@ -107,9 +107,10 @@ public class PrincipalCharacter extends GameCharacter {
 
     public boolean isDead (){
         boolean found = false;
-        for (int i = 0; i < stats.size() && !found; i++){
-            if (stats.get(i) <= 0 ||stats.get(i) >= 100){
+        for (int i = 0; i < stats.size() && !found; i++) {
+            if (stats.get(i) <= 0 || stats.get(i) >= 100) {
                 found = true;
+
             }
         }
         return found;
