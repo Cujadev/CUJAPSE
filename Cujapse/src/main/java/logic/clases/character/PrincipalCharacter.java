@@ -11,7 +11,7 @@ public class PrincipalCharacter extends GameCharacter {
 
     private ArrayList <Answer> answers;
     private ArrayList <Integer> stats;
-    private File consecuences;
+    private File consequences;
 
     /// Constructor Getters y Setters ///
     public PrincipalCharacter(String id, String name, String imagenPath, String dialoguePath, String consecuensesPath) {
@@ -22,11 +22,11 @@ public class PrincipalCharacter extends GameCharacter {
         }
         answers = new ArrayList<Answer>();
         setAnswers();
-        consecuences = new File(consecuensesPath);
+        consequences = new File(consecuensesPath);
     }
     public void setAnswers () throws IllegalArgumentException {
         RandomAccessFile draf = FileReaders.openFile(dialogues);
-        RandomAccessFile craf = FileReaders.openFile(consecuences);
+        RandomAccessFile craf = FileReaders.openFile(consequences);
         ArrayList<Dialogue> dialogues = FileReaders.chargeDialogues(draf);
         FileReaders.closeFile(draf);
         int count = 1;
@@ -38,7 +38,7 @@ public class PrincipalCharacter extends GameCharacter {
             Dialogue d2 = it.next();
 
             String answerID = "" + count++;
-            Consecuence c = FileReaders.searchConsecuence(answerID,craf);
+            Consequence c = FileReaders.searchConsecuence(answerID,craf);
             Answer a = new Answer(answerID,d1,d2,c);
 
             d1.setId(answerID);
@@ -64,32 +64,32 @@ public class PrincipalCharacter extends GameCharacter {
 
     // Modificar las estadísticas
     public void modifyStats (int election, String idAnswer){
-        Consecuence c = chargeAnswer(idAnswer).getConsecuence();
-        Integer[] consecuenses;
+        Consequence c = chargeAnswer(idAnswer).getConsecuence();
+        Integer[] consequences;
         if (election == 1){
-            consecuenses = c.getLconsecueces();
+            consequences = c.getLconsecueces();
         }
         else if (election == 2){
-            consecuenses = c.getRconsecuences();
+            consequences = c.getRconsecuences();
         }
         else {
             throw new IllegalArgumentException();
         }
         for (int i = 0; i < 4; i++){
-            if (consecuenses[i] == 1 || consecuenses[i] == 2){
-                stats.set(i, subbStat(stats.get(i), consecuenses[i]));
+            if (consequences[i] == 1 || consequences[i] == 2){
+                stats.set(i, subbStat(stats.get(i), consequences[i]));
             }
-            if (consecuenses[i] == 3 || consecuenses[i] == 4){
-                stats.set(i,incrementStat(stats.get(i), consecuenses[i]));
+            if (consequences[i] == 3 || consequences[i] == 4){
+                stats.set(i,incrementStat(stats.get(i), consequences[i]));
             }
         }
     }
-    private  int subbStat (int stat, int consecuence)  throws  IllegalArgumentException{
+    private  int subbStat (int stat, int consequence)  throws  IllegalArgumentException{
         int result = stat;
-        if (consecuence == 1){
+        if (consequence == 1){
             result -= 25;
         }
-        else if (consecuence == 2){
+        else if (consequence == 2){
             result -= 50;
         }
         return result;

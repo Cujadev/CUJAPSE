@@ -13,7 +13,7 @@ public class Dialogue implements Serializable {
         setId(id);
     }
 
-    //=====Guetters y Setters========
+    //=====Getters y Setters========
     public String getId() {
         return id;
     }

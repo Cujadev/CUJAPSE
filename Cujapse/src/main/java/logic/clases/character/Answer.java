@@ -4,14 +4,14 @@ package logic.clases.character;
 public class Answer {
     private String id;
     private Dialogue[] answers;
-    private Consecuence consecuence;
+    private Consequence consequence;
 
 
-    public Answer(String id, Dialogue dial1, Dialogue dial2, Consecuence consecuence) {
+    public Answer(String id, Dialogue dial1, Dialogue dial2, Consequence consecuence) {
         setId(id);
         this.answers = new Dialogue[2];
         this.setAnswers(dial1,dial2);
-        this.consecuence = consecuence;
+        this.consequence = consecuence;
     }
 
     public Dialogue[] getAnswers() {
@@ -35,11 +35,11 @@ public class Answer {
         this.answers = answers;
     }
 
-    public Consecuence getConsecuence() {
-        return consecuence;
+    public Consequence getConsequence() {
+        return consequence;
     }
 
-    public void setConsecuence(Consecuence consecuence) {
-        this.consecuence = consecuence;
+    public void setConsequence(Consequence consequence) {
+        this.consequence = consequence;
     }
 }

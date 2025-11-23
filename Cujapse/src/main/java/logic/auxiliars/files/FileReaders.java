@@ -1,7 +1,7 @@
 package logic.auxiliars.files;
 
 
-import logic.clases.character.Consecuence;
+import logic.clases.character.Consequence;
 import logic.clases.character.Dialogue;
 import logic.clases.character.GameCharacter;
 
@@ -70,8 +70,8 @@ public class FileReaders {
         }
         return  returned;
     }
-    public static Consecuence searchConsecuence (String id, RandomAccessFile raf){
-        Consecuence c=null;
+    public static Consequence searchConsecuence (String id, RandomAccessFile raf){
+        Consequence c=null;
         boolean found = false;
 
         try {
@@ -79,7 +79,7 @@ public class FileReaders {
             for (int i = 0; i < cant && !found; i++){
                 int tam = raf.readInt();
                 byte[] string = new  byte[tam];
-                c = (Consecuence) Convert.toObject(string);
+                c = (Consequence) Convert.toObject(string);
                 if (c.getId().equals(id)){
                     found = true;
                 }

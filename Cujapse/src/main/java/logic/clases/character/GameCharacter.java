@@ -1,5 +1,6 @@
 package logic.clases.character;
 
+import javafx.scene.control.Dialog;
 import logic.auxiliars.chargers.ChargerMenssage;
 import logic.auxiliars.files.Convert;
 import logic.auxiliars.files.FileReaders;
@@ -77,20 +78,18 @@ public class GameCharacter implements ChargerMenssage, Serializable {
 
     @Override
     public Dialogue ChargeDialogue(String id) {
-        Dialogue menssage = null;
+        Dialogue message = null;
         RandomAccessFile raf = FileReaders.openFile(this.dialogues);
         ArrayList <Dialogue> dialogues = FileReaders.chargeDialogues(raf);
         FileReaders.closeFile(raf);
         ListIterator <Dialogue> it = dialogues.listIterator();
-        boolean found = false;
 
-        while(it.hasNext() && !found){
-            if (it.next().getId().equals(id)){
-                menssage = it.previous();
-                found = true;
-            }
+        while(it.hasNext() && message == null){
+            Dialogue d = it.next();
+            if (d.getId().equals(id))
+                message = d;
         }
-        return menssage;
+        return message;
     }
 
     // para cargar los recursos y poder meter esto en un fichero
@@ -104,59 +103,39 @@ public class GameCharacter implements ChargerMenssage, Serializable {
     }
 
 
-    // para sacar del fichero solo el dialgo que se necesita
-    public Dialogue findDialogue(Object id) throws IOException, ClassNotFoundException {
+    // Para sacar del fichero solo el diálogo que se necesita
+    public Dialogue findDialogue(String id) throws IOException, ClassNotFoundException {
         RandomAccessFile raf = new RandomAccessFile(dialogues,"r");
-        boolean found = false;
         Dialogue dialogue = null;
-        int numeroID = -1;
-        if(id instanceof String){
-            numeroID = Integer.parseInt((String) id);
-        }else if(id instanceof Integer){
-            numeroID = (Integer) id;
-        }
 
-        while(raf.getFilePointer() < raf.length() && !found){
-            int idDialogue = raf.readInt();
-            if(idDialogue == numeroID){
-                found = true;
-                int tamanioDialogue = raf.readInt();
-                byte[] bytesDialogue = new byte[tamanioDialogue];
-                raf.readFully(bytesDialogue);
-                dialogue = (Dialogue) Convert.toObject(bytesDialogue);
-            }else{
-                int tamanio = raf.readInt();
-                raf.skipBytes(tamanio);
-            }
+        while(raf.getFilePointer() < raf.length() && dialogue == null){
+           int size = raf.readInt();
+           byte[] array = new byte[size];
+           raf.read(array);
+           Dialogue d = (Dialogue)Convert.toObject(array);
+           if(d.getId().equalsIgnoreCase(id))
+               dialogue = d;
         }
         raf.close();
+
         return dialogue;
     }
 
-    // guardar un dialogo nuevo
+    // Guardar un diálogo nuevo
     public boolean saveDialogue(Dialogue dialogue) throws IOException {
         boolean ok = false;
-        int numeroID = -1;
-        Object id;
         RandomAccessFile raf = new RandomAccessFile(dialogues, "rw");
+
         if(dialogue != null){
-            id = dialogue.getId();
-            if(id instanceof String){
-                numeroID = Integer.parseInt((String) id);
-            }else if(id instanceof Integer){
-                numeroID = (Integer) id;
-            }
             raf.seek(raf.length());
-            raf.writeInt(numeroID);
             byte[] dialogueBytes = Convert.toBytes(dialogue);
             raf.writeInt(dialogueBytes.length);
             raf.write(dialogueBytes);
             ok = true;
         }
         raf.close();
+
         return ok;
     }
-
-
 }
 
