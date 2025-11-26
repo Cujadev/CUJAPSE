@@ -1,12 +1,16 @@
 package logic.clases.character;
 
-
+///Esta clase es lo que tiene todo lo referente a las respuestas del personaje principal con su respectivas consecuencias
 public class Answer {
     private String id;
     private Dialogue[] answers;
     private Consecuence consecuence;
 
 
+    /// Nota:
+    /// Se puede modificar para que guarde un ID de la consecuencia
+    ///
+    /// ==== Constructor ====
     public Answer(String id, Dialogue dial1, Dialogue dial2, Consecuence consecuence) {
         setId(id);
         this.answers = new Dialogue[2];
@@ -14,6 +18,7 @@ public class Answer {
         this.consecuence = consecuence;
     }
 
+    /// ==== Getters and Setters ====
     public Dialogue[] getAnswers() {
         return answers;
     }

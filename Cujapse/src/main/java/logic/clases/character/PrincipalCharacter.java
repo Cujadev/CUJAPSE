@@ -10,17 +10,17 @@ public class PrincipalCharacter extends GameCharacter {
 
     private final ArrayList<Answer> answers;
     private final ArrayList<Integer> stats;
-    private final String consecuences;
+    private final String consequences;
 
     /// ==== Constructor ====
-    public PrincipalCharacter(String id, String name, String imagenPath, String dialoguePath, String consecuensesPath) {
+    public PrincipalCharacter(String id, String name, String imagenPath, String dialoguePath, String consequensesPath) {
         super(id, name, imagenPath, dialoguePath);
         stats = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             stats.add(50);
         }
         answers = new ArrayList<Answer>();
-        consecuences = consecuensesPath;
+        consequences = consequensesPath;
         setAnswers();
 
     }
@@ -28,8 +28,8 @@ public class PrincipalCharacter extends GameCharacter {
     /// ==== Métodos útiles ====
     public void setAnswers() throws IllegalArgumentException {
         RandomAccessFile draf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));//Abre el fichero de dialogos
-        RandomAccessFile craf = FileReaders.openFile(FileReaders.returnFile(consecuences));//Abre el fichero de consecuencia
-        ArrayList<Dialogue> dialogues = FileReaders.chargeDialogues(draf);// Se cargan todos los dialogos del personaje principal
+        RandomAccessFile craf = FileReaders.openFile(FileReaders.returnFile(consequences));//Abre el fichero de consecuencia
+        ArrayList<Dialogue> dialogues = FileReaders.findDialogues(draf);// Se cargan todos los dialogos del personaje principal
         FileReaders.closeFile(draf);// Se cierra el fichero
 
         Iterator<Dialogue> it = dialogues.iterator();
@@ -170,7 +170,4 @@ public class PrincipalCharacter extends GameCharacter {
         }
         return id;
     }
-
-    //Modificar Características
-
 }
