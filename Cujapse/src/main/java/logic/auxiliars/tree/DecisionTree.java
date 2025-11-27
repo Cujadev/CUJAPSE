@@ -2,11 +2,12 @@ package logic.auxiliars.tree;
 
 import logic.auxiliars.tree.Iterator.TreeIterator;
 
-//Crear los trabajos con Iteradores
+/// Esta es la clase que simula un arbol de desicion
 public class DecisionTree<E>{
     private DecisionNode<E> root;
-    private TreeIterator <E> iterator;
+    private final TreeIterator <E> iterator;
 
+    /// ==== Constructor ====
     public DecisionTree (){
         root = null;
         iterator = null;
@@ -16,6 +17,7 @@ public class DecisionTree<E>{
         iterator = new TreeIterator<>(this.root);
     }
 
+    /// ==== Getters y Setters ====
     public DecisionNode<E> getRoot() {
         return root;
     }
@@ -25,14 +27,13 @@ public class DecisionTree<E>{
     }
 
     //Se agrega un nodo aprovechandose de las llamadas por referencia, simulando la lincked list
-    public boolean AddNode (DecisionNode <E> info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
+    public void AddNode (DecisionNode <E> info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
 
-        if (root == null){
+        if (root == null){ // Si se cumple se agrega en  la raíz
             setRoot(info);
-            return true;
         }
         else{
-            if (branch == 1){
+            if (branch == 1){// Si se cumple se agrega en la izquierda
                 if (father.getLeft() == null){
                     father.setLeft(info);
                 }
@@ -40,7 +41,7 @@ public class DecisionTree<E>{
                     throw new IllegalArgumentException("Error, rama ya ocupada");
                 }
             }
-            else if (branch == 2){
+            else if (branch == 2){// Si se cumple se agrega en la derecha
                 if (father.getRight() == null){
                     father.setRight(info);
                 }
@@ -52,9 +53,9 @@ public class DecisionTree<E>{
                 throw new IllegalArgumentException("Error, solo se pueden tener 2 ramas");
             }
         }
-        return false;
     }
-    public TreeIterator <E> TreeIterator() throws NullPointerException{
+    // Obtiene el iterador
+    public TreeIterator <E> treeIterator() throws NullPointerException{
         TreeIterator <E> it = null;
         if (this.iterator != null){
             return this.iterator;
