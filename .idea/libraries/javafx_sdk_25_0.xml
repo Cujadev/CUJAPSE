@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="javafx-sdk-25.0">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Downloads/openjfx-25.0.1_windows-x64_bin-sdk/javafx-sdk-25.0.1/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Downloads/openjfx-25.0.1_windows-x64_bin-sdk/javafx-sdk-25.0.1" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Downloads/openjfx-25.0.1_windows-x64_bin-sdk/javafx-sdk-25.0.1/lib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Downloads/openjfx-25.0.1_windows-x64_bin-sdk/javafx-sdk-25.0.1" recursive="false" type="SOURCES" />
+  </library>
+</component>

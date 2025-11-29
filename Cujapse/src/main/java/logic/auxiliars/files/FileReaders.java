@@ -30,7 +30,7 @@ public class FileReaders {
     /// Cierra el RAF
     public static void closeFile (RandomAccessFile arch){
         try {
-            arch.close();
+            if (arch != null) arch.close();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -39,13 +39,14 @@ public class FileReaders {
     /// Busca el dialogo en el RAF
     public static ArrayList<Dialogue> findDialogues(RandomAccessFile raf) {
         ArrayList <Dialogue> dialogues = new ArrayList<>();
+        if (raf == null) return dialogues;
 
         try {
             int cant = raf.readInt();// Lee la cantidad de dialogos a leer
             for (int i = 0; i < cant; i++){// Recorre el archivo en la cantidad;
                 int tam = raf.readInt();
                 byte[] string = new byte[tam];
-                raf.read(string);// Se obtiene la cadena de bytes
+                raf.readFully(string);// asegurar lectura completa
                 Dialogue d = (Dialogue) Convert.toObject(string);
                 if (d != null) {
                     dialogues.add(d); // Se agrega a el array list
@@ -60,14 +61,16 @@ public class FileReaders {
     //  Busca un personaje de la misma forma que el anterior
     public static GameCharacter findCharacter (String id, RandomAccessFile raf){
         GameCharacter returned = null;
+        if (raf == null) return null;
+
         try{
            int cant = raf.readInt();
            for (int i = 0; i < cant; i++){
                int tam = raf.readInt();
                byte[] string = new byte[tam];
-               raf.read(string);
+               raf.readFully(string);
                GameCharacter c = (GameCharacter) Convert.toObject(string);
-               if (c.getId().equals(id)){
+               if (c != null && c.getId().equals(id)){
                    returned = c;
                }
            }
@@ -81,14 +84,16 @@ public class FileReaders {
     public static Consecuence searchConsecuence (String id, RandomAccessFile raf){
         Consecuence c=null;
         boolean found = false;
+        if (raf == null) return null;
 
         try {
             int cant = raf.readInt();
             for (int i = 0; i < cant && !found; i++){
                 int tam = raf.readInt();
                 byte[] string = new  byte[tam];
+                raf.readFully(string);
                 c = (Consecuence) Convert.toObject(string);
-                if (c.getId().equals(id)){
+                if (c != null && c.getId().equals(id)){
                     found = true;
                 }
             }
@@ -101,15 +106,16 @@ public class FileReaders {
     public static Dialogue searchDialogue (String id, RandomAccessFile raf){
         Dialogue dialogue = null;
         boolean found = false;
+        if (raf == null) return null;
 
         try {
             int cant = raf.readInt();
             for (int i = 0; i < cant; i++){
                 int tam = raf.readInt();
                 byte[] string = new byte[tam];
-                raf.read(string);
+                raf.readFully(string);
                 Dialogue dial =  (Dialogue) Convert.toObject(string);
-                if (dial.getId().equals(id)){
+                if (dial != null && dial.getId().equals(id)){
                     dialogue = dial;
                     found = true;
                 }
