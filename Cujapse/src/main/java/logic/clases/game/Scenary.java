@@ -112,4 +112,10 @@ public class Scenary implements ChargerMenssage {
         FileReaders.closeFile(raf);
         return result;
     }
+    public String giveCharacterName (){
+        String result;
+        Game g = Game.getInstance();
+        result = Game.getInstance().findCharacter(event.getNextSituaion(0).getAssociation().getIdCharacter()).getName();
+        return  result;
+    }
 }
