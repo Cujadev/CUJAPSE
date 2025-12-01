@@ -27,6 +27,7 @@ public class TreeIterator<E> {
      * 1 = izquierda, 2 = derecha.
      * Devuelve el nuevo nodo actual.
      */
+
     public DecisionNode<E> choose(int branch) throws IllegalArgumentException{
         if (branch == 1) {
             if (actual.getLeft() == null) {

@@ -5,7 +5,7 @@ import logic.auxiliars.tree.Iterator.TreeIterator;
 /// Esta es la clase que simula un arbol de desicion
 public class DecisionTree<E>{
     private DecisionNode<E> root;
-    private final TreeIterator <E> iterator;
+    private TreeIterator <E> iterator;
 
     /// ==== Constructor ====
     public DecisionTree (){
@@ -27,10 +27,13 @@ public class DecisionTree<E>{
     }
 
     //Se agrega un nodo aprovechandose de las llamadas por referencia, simulando la lincked list
-    public void AddNode (DecisionNode <E> info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
+
+
+    public void addNode(DecisionNode <E> info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
 
         if (root == null){ // Si se cumple se agrega en  la raíz
             setRoot(info);
+            this.iterator = new TreeIterator<>(this.root);
         }
         else{
             if (branch == 1){// Si se cumple se agrega en la izquierda
