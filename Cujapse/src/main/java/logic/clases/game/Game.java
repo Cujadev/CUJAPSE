@@ -23,10 +23,11 @@ public class Game {
 
     //====Constructor====
     public Game() {
-        personajesFichero = new File("./src/main/java/logic/ficheros/personajes.txt");// Revisar si se crea
+        personajesFichero = new File("./src/main/resources/data/Characters/personajes.dat");// Revisar si se crea
         events = new LinkedList<>();
         eventQueue = new ArrayDeque<>();
         scenary = new Scenary();
+        mainCharacter  = new PrincipalCharacter("1","User",null,"./src/main/resources/data/Principal Character/principal_dialogues.dat","./src/main/resources/data/Principal Character/consecuencias.dat");
     }
 
     //====Singleton====
