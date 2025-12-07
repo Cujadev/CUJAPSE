@@ -1,4 +1,4 @@
-package logic.clases;
+package logic.clases.event;
 
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
@@ -6,17 +6,23 @@ import logic.auxiliars.tree.Iterator.TreeIterator;
 
 public class Event {
     private DecisionTree<Situation> situations;
-    private String idCharacter;
+    private TreeIterator<Situation> it;
+    private String imagePath;
 
-    public Event(String idCharacter) {
+    /// ===Constructores
+    public Event(String imagePath) {
         situations = new DecisionTree<>();
-        this.idCharacter = idCharacter;
-    }
-    public Event (Situation root, String idCharacter){
-        situations = new DecisionTree<>(root);
-        this.idCharacter = idCharacter;
-    }
+        it = situations.treeIterator();
 
+    }
+    public Event (Situation root){
+        situations = new DecisionTree<>(root);
+        it = situations.treeIterator();
+    }
+    ///+++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ///
+    ///
+    /// ===Getters y Setters===
     public DecisionTree<Situation> getSituations() {
         return situations;
     }
@@ -25,16 +31,21 @@ public class Event {
         this.situations = situations;
     }
 
-    public String getIdCharacter() {
-        return idCharacter;
-    }
+    public String getImagePath() {return imagePath;}
 
-    public void setIdCharacter(String idCharacter) {
-        this.idCharacter = idCharacter;
-    }
+    public void setImagePath(String imagePath) {this.imagePath = imagePath;}
+    ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ///
+    ///
+    /// ===Métodos de la clase
+
+    ///Recorre el árbol de situaciones dentro de la clase
+    ///Se debe pasar como parámetro 1,2,0
+    /// 1 para izquierda
+    /// 2 para derecha
+    /// 0 nodo actual
     public Situation getNextSituaion(int branch){
         Situation s;
-        TreeIterator <Situation> it = situations.TreeIterator();
 
         if (branch == 1){
             it.choose(1);

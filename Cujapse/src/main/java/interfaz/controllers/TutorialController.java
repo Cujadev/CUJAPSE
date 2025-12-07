@@ -1,5 +1,6 @@
 package interfaz.controllers;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
@@ -363,3 +364,8 @@ public class TutorialController implements Initializable {
 >>>>>>> 7a7600f (interfaces 3)
     }
 }
+=======
+public class TutorialController {
+
+}
+>>>>>>> 0cca16d2fec70aadf4769c45c401c3dd5fcdaa44

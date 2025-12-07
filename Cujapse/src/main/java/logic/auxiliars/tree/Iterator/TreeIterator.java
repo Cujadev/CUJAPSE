@@ -1,7 +1,7 @@
 package logic.auxiliars.tree.Iterator;
 
 import logic.auxiliars.tree.DecisionNode;
-
+/// Esta clase itera por el arbol que se ha creado para poder alternar entre las situaciones
 public class TreeIterator<E> {
     private DecisionNode<E> actual;
 

@@ -6,20 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<<<<<<< HEAD
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="564.0" prefWidth="923.0" styleClass="root" stylesheets="@../visualResources/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cujapse.controllers.PrologoViewController">
-    <children>
-
-        <ImageView fx:id="imgPersonaje" fitHeight="564.0" fitWidth="923.0" pickOnBounds="true" preserveRatio="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <image>
-                <Image url="@../visualResources/fondoTutroial.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="379.0" fitWidth="277.0" layoutX="28.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../visualResources/Omar_tutorial.png" />
-=======
 <AnchorPane prefHeight="564.0" prefWidth="923.0"
             styleClass="root"
             stylesheets="@../visualResources/paletaDeColores/estilos.css"
@@ -35,7 +21,6 @@
                    AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
             <image>
                 <Image url="@../visualResources/escenarios/fondoTutorial.png"/>
->>>>>>> 7a7600f (interfaces 3)
             </image>
         </ImageView>
 
@@ -71,12 +56,6 @@
 
                 </VBox>
 
-<<<<<<< HEAD
-                <!-- Botón de Continuar/Flecha - ANCLADO Y CON ESTILO DE FLECHA -->
-                <!-- Este botón se usa para "Continuar" (▶) y luego se convierte en la opción "Sí" -->
-                <Button fx:id="btnContinuar" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onContinuarClick" prefHeight="63.0" prefWidth="34.0" styleClass="button, btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="15.0" />
-
-=======
                 <!-- Botón continuar (flecha) -->
                 <Button fx:id="btnContinuar"
                         text="▶"
@@ -85,9 +64,7 @@
                         styleClass="btn-continue-arrow"
                         AnchorPane.bottomAnchor="10"
                         AnchorPane.rightAnchor="15"/>
->>>>>>> 7a7600f (interfaces 3)
             </children>
-
         </AnchorPane>
 
     </children>

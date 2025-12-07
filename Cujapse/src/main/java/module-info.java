@@ -1,12 +1,16 @@
 module com.example.cujapse {
     requires javafx.controls;
     requires javafx.fxml;
-<<<<<<< HEAD
-=======
     requires javafx.graphics;
->>>>>>> 7a7600f (interfaces 3)
     requires java.desktop;
+    requires javafx.graphics;
 
-    opens com.example.cujapse to javafx.fxml;
-    exports com.example.cujapse;
+    // Exportamos controladores si otra parte del programa los necesita
+    exports interfaz.controllers;
+    exports main;
+    // JavaFX necesita acceso con reflexión a controladores y FXML
+    opens interfaz.controllers to javafx.fxml;
+    opens interfaces to javafx.fxml;
+    opens main to javafx.graphics;
+
 }

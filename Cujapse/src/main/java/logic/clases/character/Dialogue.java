@@ -1,6 +1,4 @@
-package logic.clases;
-
-import logic.auxiliars.chargers.ChargerMenssage;
+package logic.clases.character;
 
 import java.io.Serializable;
 
@@ -30,7 +28,7 @@ public class Dialogue implements Serializable {
     }
 
     public void setContenido(String contenido) {
-        if(!contenido.trim().isEmpty()){
+        if(!contenido.trim().isEmpty()){// Verifica si la cadena no está vacia
             this.contenido = contenido;
         }
     }
