@@ -12,12 +12,12 @@ public class Event {
     /// ===Constructores
     public Event(String imagePath) {
         situations = new DecisionTree<>();
-        it = situations.TreeIterator();
+        it = situations.treeIterator();
 
     }
     public Event (Situation root){
         situations = new DecisionTree<>(root);
-        it = situations.TreeIterator();
+        it = situations.treeIterator();
     }
     ///+++++++++++++++++++++++++++++++++++++++++++++++++++++
     ///

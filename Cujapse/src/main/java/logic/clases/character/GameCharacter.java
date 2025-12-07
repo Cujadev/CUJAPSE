@@ -1,38 +1,31 @@
 package logic.clases.character;
 
 import logic.auxiliars.chargers.ChargerMenssage;
-import logic.auxiliars.files.Convert;
 import logic.auxiliars.files.FileReaders;
+import logic.auxiliars.files.FileWriters;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.ListIterator;
 
-/// Constructor, Getters y setters
+
 
 public class GameCharacter implements ChargerMenssage, Serializable {
     private static final long serialVersionUID = 1L;
     protected String id;
     protected String name;
-    protected transient File dialogues;
     protected String imagePath;
     protected String dialoguesPath;
 
+    /// ==== Constructor ====
     public GameCharacter(String id, String name, String imagePath, String dialoguesPath) {
         this.id = id;
         this.name = name;
         this.imagePath = imagePath;
         this.dialoguesPath = dialoguesPath;
-        try {
-            loadResources();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
+    ///  ==== Getters y Setters ====
     public String getId() {
         return id;
     }
@@ -47,14 +40,6 @@ public class GameCharacter implements ChargerMenssage, Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public File getDialogues() {
-        return dialogues;
-    }
-
-    public void setDialogues(File dialogues) {
-        this.dialogues = dialogues;
     }
 
     public String getImagePath() {
@@ -73,36 +58,27 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         this.dialoguesPath = dialoguesPath;
     }
 
-    //Implementar cargar dialogo
+    /// ==== Métodos útiles ====
 
     @Override
+    // Esta función devuelve el diálogo para ser utilizado por el escenario
     public Dialogue ChargeDialogue(String id) {
         Dialogue menssage = null;
-        RandomAccessFile raf = FileReaders.openFile(this.dialogues);
-        ArrayList <Dialogue> dialogues = FileReaders.chargeDialogues(raf);
-        FileReaders.closeFile(raf);
-        ListIterator <Dialogue> it = dialogues.listIterator();
-        boolean found = false;
-
-        while(it.hasNext() && !found){
-            if (it.next().getId().equals(id)){
-                menssage = it.previous();
-                found = true;
-            }
-        }
-        return menssage;
+        RandomAccessFile raf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));//Abre un RAF
+        Dialogue dialogue = FileReaders.searchDialogue(id,raf);// Busca el diálogo según el ID dado
+        FileReaders.closeFile(raf);// Cierra el Fichero
+        return dialogue;
     }
 
-    // para cargar los recursos y poder meter esto en un fichero
-    public void loadResources() throws IOException {
-        if (dialoguesPath != null) {
-            this.dialogues = new File(dialoguesPath);
-            if (!this.dialogues.exists()) {
-                this.dialogues.createNewFile();
-            }
-        }
+    //Esta funcion guarda dialogos
+    public void saveDialogue (Dialogue d){
+        File f = FileReaders.returnFile(getDialoguesPath());// Crea el file
+        FileWriters.saveDialogue(d,f);// Guarda el dialogo
     }
-
+}
+/*
+Estos son los métodos creados por Rolando que de momento no son necesarios no se van a
+borrar para tenerlos en cuenta caso de bug
 
     // para sacar del fichero solo el dialgo que se necesita
     public Dialogue findDialogue(Object id) throws IOException, ClassNotFoundException {
@@ -156,7 +132,5 @@ public class GameCharacter implements ChargerMenssage, Serializable {
         raf.close();
         return ok;
     }
-
-
-}
+ */
 

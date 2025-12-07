@@ -1,18 +1,20 @@
 package logic.auxiliars.tree;
-
 import logic.clases.event.Situation;
 
+/// Es la clase que representa un nodo del arbol
 public class DecisionNode<E>{
     private E info;
     private DecisionNode <E> left;
     private DecisionNode <E> right;
 
+    ///  ==== Constructor ====
     public DecisionNode(E info) {
         this.info = info;
         this.left = null;
         this.right = null;
     }
 
+    /// ==== Getters and Setters ====
     public E getInfo() {
         return info;
     }

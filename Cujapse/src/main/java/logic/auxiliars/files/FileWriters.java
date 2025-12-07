@@ -1,6 +1,6 @@
-package logic.auxiliars.Ficheros;
+package logic.auxiliars.files;
 
-import logic.auxiliars.files.Convert;
+import logic.clases.character.Consecuence;
 import logic.clases.character.Dialogue;
 import logic.clases.character.GameCharacter;
 
@@ -8,78 +8,103 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+/// Se encarga de escribir en los achivos
+/// Nota: Se debe tener en cuenta la misma observación
 public class FileWriters {
-    private File fichero;
 
-    public FileWriters(String nombreArchivo) {
-        this.fichero = new File(nombreArchivo);
+    /// Métodos útiles
+
+    // Abre un archivo
+    public static RandomAccessFile openFile (File file){
+        RandomAccessFile raf = null;
+        try{
+             raf = new RandomAccessFile(file, "rw");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return raf;
+    }
+
+    //Cierra el archivo
+    public static void closeFile(RandomAccessFile raf){
         try {
-            if (!this.fichero.exists()) {
-                this.fichero.createNewFile();
-            }
-        } catch (IOException e) {
+            raf.close();
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public boolean saveCharacter(GameCharacter character) throws IOException {
-        int numeroId = -1;
-        RandomAccessFile raf = new RandomAccessFile(fichero,"rw");
-        boolean ok = false;
-        if (character != null) {
-            Object id = character.getId();
-            if (id instanceof String) {
-                numeroId = Integer.parseInt((String) id);
-            }else if (id instanceof Integer) {
-                numeroId = (Integer) id;
+    //Guarda un personaje en el fichero
+    public static  void saveCharacter(GameCharacter character, File file){
+        int cant = 0;
+        RandomAccessFile  raf = null;
+        try {
+            if (file.exists()){
+                raf = openFile(file);
+                cant = raf.readInt();
             }
+            else{
+                raf = openFile(file);
+            }
+            raf.seek(0);
+            raf.writeInt(cant + 1);
+            byte[] string = Convert.toBytes(character);
             raf.seek(raf.length());
-            raf.writeInt(numeroId);
-            byte[] bytesCharacter = Convert.toBytes(character);
-            raf.writeInt(bytesCharacter.length);
-            raf.write(bytesCharacter);
-            ok = true;
+            raf.writeInt(string.length);
+            raf.write(string);
+            closeFile(raf);
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        raf.close();
-        return ok;
     }
 
-    public GameCharacter findCharacter(Object id) throws IOException, ClassNotFoundException {
-        boolean found = false;
-        GameCharacter character = null;
-        RandomAccessFile raf = new RandomAccessFile(fichero,"r");
-        int numeroID = -1;
-        if(id instanceof String){
-            numeroID = Integer.parseInt((String) id);
-        }else if(id instanceof Integer){
-            numeroID = (Integer) id;
-        }
-        while(raf.getFilePointer() < raf.length() && !found){
-            int identificador = raf.readInt();
-            if(identificador == numeroID){
-                found = true;
-                int tammanio = raf.readInt();
-                byte[] bytesIdentificador = new byte[tammanio];
-                raf.readFully(bytesIdentificador);
-                character = (GameCharacter) Convert.toObject(bytesIdentificador);
-                character.loadResources();
-            }else{
-                int tamanio = raf.readInt();
-                raf.skipBytes(tamanio);
+    // Guarda un Dialogo en el fichero
+    public  static void saveDialogue (Dialogue dialogue, File file){
+        RandomAccessFile raf = null;
+        int cant = 0;
+
+        try{
+            if (file.exists()){
+                raf =openFile(file);
+                cant = raf.readInt();
             }
+            else{
+                raf = openFile(file);
+            }
+            raf.seek(0);
+            raf.writeInt(cant + 1);
+            byte[] string = Convert.toBytes(dialogue);
+            raf.seek(raf.length());
+            raf.writeInt(string.length);
+            raf.write(string);
+            closeFile(raf);
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        raf.close();
-        return character;
     }
 
-    public Dialogue findDialogue(Object idGameCharacter, Object idDialogue) throws IOException, ClassNotFoundException {
-        GameCharacter character = findCharacter(idGameCharacter);
-        Dialogue dialogue = null;
-        if(character != null){
-            dialogue = character.findDialogue(idDialogue);
+    // Guarda la consecuencia
+    public  static void saveConsecuence (Consecuence consecuence, File file){
+        RandomAccessFile raf = null;
+        int cant = 0;
+
+        try{
+            if (file.exists()){
+                raf =openFile(file);
+                cant = raf.readInt();
+            }
+            else{
+                raf = openFile(file);
+            }
+            raf.seek(0);
+            raf.writeInt(cant + 1);
+            byte[] string = Convert.toBytes(consecuence);
+            raf.seek(raf.length());
+            raf.writeInt(string.length);
+            raf.write(string);
+            closeFile(raf);
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        return dialogue;
     }
-
-
 }

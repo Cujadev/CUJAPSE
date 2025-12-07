@@ -12,9 +12,11 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 
-
+/// Esta clase se encarga de leer archivos
+/// Nota: Hay código que se repide y puede ser perfeccionado para unir 3 métodos en 1
 public class FileReaders {
 
+    /// Abre un RAF en modo de lectura
     public static RandomAccessFile openFile (File file) {
         RandomAccessFile returned = null;
         try {
@@ -24,26 +26,29 @@ public class FileReaders {
         }
         return returned;
     }
-    public static boolean closeFile (RandomAccessFile arch){
+
+    /// Cierra el RAF
+    public static void closeFile (RandomAccessFile arch){
         try {
             arch.close();
         }catch (IOException e){
             e.printStackTrace();
         }
-        return true;
     }
-    public static ArrayList<Dialogue> chargeDialogues(RandomAccessFile raf) {
+
+    /// Busca el dialogo en el RAF
+    public static ArrayList<Dialogue> findDialogues(RandomAccessFile raf) {
         ArrayList <Dialogue> dialogues = new ArrayList<>();
 
         try {
-            int cant = raf.readInt();
-            for (int i = 0; i < cant; i++){
+            int cant = raf.readInt();// Lee la cantidad de dialogos a leer
+            for (int i = 0; i < cant; i++){// Recorre el archivo en la cantidad;
                 int tam = raf.readInt();
                 byte[] string = new byte[tam];
-                raf.read(string);
+                raf.read(string);// Se obtiene la cadena de bytes
                 Dialogue d = (Dialogue) Convert.toObject(string);
                 if (d != null) {
-                    dialogues.add(d);
+                    dialogues.add(d); // Se agrega a el array list
                 }
             }
         }catch (IOException | ClassNotFoundException e){
@@ -52,6 +57,7 @@ public class FileReaders {
         return dialogues;
     }
 
+    //  Busca un personaje de la misma forma que el anterior
     public static GameCharacter findCharacter (String id, RandomAccessFile raf){
         GameCharacter returned = null;
         try{
@@ -70,6 +76,8 @@ public class FileReaders {
         }
         return  returned;
     }
+
+    // Se repite el algoritmo
     public static Consecuence searchConsecuence (String id, RandomAccessFile raf){
         Consecuence c=null;
         boolean found = false;
@@ -89,6 +97,7 @@ public class FileReaders {
         }
         return c;
     }
+    // Se repite el algoritmo
     public static Dialogue searchDialogue (String id, RandomAccessFile raf){
         Dialogue dialogue = null;
         boolean found = false;
@@ -109,5 +118,9 @@ public class FileReaders {
             e.printStackTrace();
         }
         return dialogue;
+    }
+    // Se crea un file
+    public static File returnFile (String path){
+        return new File(path);
     }
 }

@@ -67,37 +67,39 @@ public class Scenary implements ChargerMenssage {
     //Entregar la imagen de personaje secundario
     public Image giveImageCharacter(){
         Game game = Game.getInstance();
-        Situation s = event.getNextSituaion(0);
-        GameCharacter c = game.findCharacter(s.getAssociation().getIdCharacter());
-        return new Image(c.getImagePath());
+        Situation s = event.getNextSituaion(0);//Se obtiene la situación actual
+        GameCharacter c = game.findCharacter(s.getAssociation().getIdCharacter());//Se busca el personaje
+        return new Image(c.getImagePath());// se retorna la imagen con el imagepath
     }
     //Entregar la imagen del personaje principal
     public Image giveMainCharacterImage (){
         Game game = Game.getInstance();
-        PrincipalCharacter p = game.getMainCharacter();
-        return new Image(p.getImagePath());
+        PrincipalCharacter p = game.getMainCharacter();// Se  busca el personaje principal en el game
+        return new Image(p.getImagePath()); // Se crea la imagen con la referencia a esta
     }
     //Entregar la imagen del escenario
     public Image giveSceneryImage (){
-        return new Image(event.getImagePath());
+        return new Image(event.getImagePath());// Se retorna la imagen del evento
     }
 
+    //Entregar estado del personaje
     public boolean heroIsDeath (){
         PrincipalCharacter p = Game.getInstance().getMainCharacter();
-        return p.isDead();
+        return p.isDead();//Verifica si el personaje murió
     }
 
+    //Se entrega todo lo necesario para poder trabajar la muerte del personaje
     public ArrayList <Object> giveDeath(){
         ArrayList <Object> result = new ArrayList<>();
-        PrincipalCharacter p = Game.getInstance().getMainCharacter();
+        PrincipalCharacter p = Game.getInstance().getMainCharacter();// se obtiene el personaje principal
 
-        String id = p.causeOfDeath();
-        int index = Integer.parseInt(id);
+        String id = p.causeOfDeath();// Se devuelve el id de la causa de muerte
+        int index = Integer.parseInt(id);// Se convierte ese id en un índice
 
-        String menssage = ChargeDialogue(id).getContenido();
-        result.add(menssage);
-        Image image = new Image (deathCasesPath.get(index));
-        result.add(image);
+        String menssage = ChargeDialogue(id).getContenido();// Se utiliza el id para buscar un dialogó de la causa de muerte
+        result.add(menssage);// se agrega ese mensaje
+        Image image = new Image (deathCasesPath.get(index));// Se crea la imagen de la muerte
+        result.add(image);//Se agrega al array de objetos
 
         return result;
     }
