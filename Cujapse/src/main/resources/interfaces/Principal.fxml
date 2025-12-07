@@ -9,101 +9,116 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="700.0" prefWidth="1200.0" styleClass="root-principal" stylesheets="@../visualResources/paletaDeColores/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaz.controllers.PrincipalController">
+<AnchorPane fx:id="rootPane" prefHeight="700" prefWidth="1200" styleClass="root-principal" stylesheets="@/visualResources/paletaDeColores/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaz.controllers.PrincipalController">
 
     <children>
 
-        <HBox fx:id="menuSuperior" alignment="TOP_RIGHT" layoutY="-8.0" prefHeight="78.0" prefWidth="1200.0" styleClass="menu-superior" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="-8.0">
-            <children>
-            <ImageView fx:id="btnMinimizar" fitHeight="48.0" fitWidth="59.0" layoutX="60.0" pickOnBounds="true" preserveRatio="true" x="30.0" y="40.0">
-               <image>
-                  <Image url="@../visualResources/iconos/minimizar.png" />
-               </image></ImageView>
-            <ImageView fx:id="btnMaximizar" fitHeight="46.0" fitWidth="40.0" layoutX="60.0" pickOnBounds="true" preserveRatio="true" x="20.0" y="20.0">
-               <image>
-                  <Image url="@../visualResources/iconos/maximizar.png" />
-               </image></ImageView>
-            <ImageView fx:id="btnCerrar" fitHeight="40.0" fitWidth="58.0" layoutX="60.0" pickOnBounds="true" preserveRatio="true" x="20.0" y="20.0">
-               <image>
-                  <Image url="@../visualResources/iconos/cerrar.png" />
-               </image></ImageView>
-            </children>
+        <!--  MENU SUPERIOR -->
+        <HBox fx:id="menuSuperior" alignment="TOP_RIGHT" prefHeight="45" styleClass="menu-superior" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <padding><Insets right="15" /></padding>
         </HBox>
 
-        <VBox fx:id="panelIzquierdo" alignment="TOP_CENTER" prefWidth="62.0" styleClass="panel-izquierdo" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="49" />
 
-        <VBox fx:id="panelChat" spacing="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="63" AnchorPane.rightAnchor="279" AnchorPane.topAnchor="49">
-
-            <children>
-
-                <HBox alignment="CENTER_LEFT" prefHeight="54" styleClass="chat-header">
-                    <children>
-                        <ImageView fitHeight="30" fitWidth="30">
-                            <image>
-                                <Image url="@../visualResources/iconos/orchat-icon.png" />
-                            </image>
-                        </ImageView>
-                        <Label styleClass="chat-title" text="Orchat ">
-                            <font><Font name="System Bold" size="16" /></font>
-                            <HBox.margin><Insets left="10" /></HBox.margin>
-                        </Label>
-                    </children>
-                    <padding><Insets left="20" /></padding>
-                </HBox>
-
-                <ScrollPane fx:id="scrollChat" fitToWidth="true" styleClass="scroll-pane-arbol" VBox.vgrow="ALWAYS">
-                    <content>
-                        <VBox fx:id="vboxMensajes" spacing="12" styleClass="panel-chat">
-                            <padding>
-                                <Insets bottom="15" left="15" right="15" top="15" />
-                            </padding>
-                        </VBox>
-                    </content>
-                </ScrollPane>
-
-                <!-- BOTTOM: decision area (FIXED) -->
-                <AnchorPane fx:id="decisionArea" prefHeight="170" styleClass="decision-panel" VBox.vgrow="NEVER">
-                    <children>
-                        <VBox fx:id="decisionBox" alignment="CENTER" spacing="15" AnchorPane.bottomAnchor="15" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15">
-
-                            <!-- Oval message with button INSIDE -->
-                            <HBox alignment="CENTER" spacing="0" styleClass="decision-message-container">
-                                <children>
-                                    <Label fx:id="labelDecisionMessage" alignment="CENTER" maxWidth="500" minHeight="60" prefHeight="60" prefWidth="500" styleClass="decision-message-text" text="" wrapText="true" HBox.hgrow="ALWAYS" />
-                                    <!-- Send button INSIDE the label area -->
-                                    <Button fx:id="btnSendDecision" onAction="#onSendDecisionClick" styleClass="btn-send-decision-inside">
-                                        <graphic>
-                                            <ImageView fitHeight="34" fitWidth="34" preserveRatio="true">
-                                                <image>
-                                                    <Image url="@../visualResources/iconos/enviar.png" />
-                                                </image>
-                                            </ImageView>
-                                        </graphic>
-                                        <HBox.margin>
-                                            <Insets right="10" />
-                                        </HBox.margin>
-                                    </Button>
-                                </children>
-                            </HBox>
-
-                            <!-- Options -->
-                            <HBox alignment="CENTER" spacing="35">
-                                <children>
-                                    <Button fx:id="btnOptionYes" onAction="#onOptionYesClick" prefWidth="120" styleClass="decision-btn" text="Sí" />
-                                    <Button fx:id="btnOptionNo" onAction="#onOptionNoClick" prefWidth="120" styleClass="decision-btn" text="No" />
-                                </children>
-                            </HBox>
-
-                        </VBox>
-                    </children>
-                </AnchorPane>
-
-            </children>
+        <!--  PANEL IZQUIERDO  -->
+        <VBox fx:id="panelIzquierdo" prefWidth="70" styleClass="panel-izquierdo" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="45">
         </VBox>
 
-        <VBox fx:id="panelArbol" alignment="TOP_CENTER" prefWidth="280" styleClass="panel-arbol" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="49" />
+
+        <!-- PANEL CHAT (CENTRAL) -->
+        <VBox fx:id="panelChat" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="70" AnchorPane.rightAnchor="270" AnchorPane.topAnchor="45">
+
+            <!--  Barra superior con estadísticas  -->
+            <HBox fx:id="statsTopBar" alignment="CENTER_LEFT" prefHeight="55" spacing="25" styleClass="stats-bar">
+
+                <padding><Insets left="25" /></padding>
+
+                <!-- 1: Dinero -->
+                <HBox fx:id="labelDinero" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image>
+                            <Image url="@../visualResources/estadisticas/dinero.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="labelDineroTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+                <!-- 2: Cafeina -->
+                <HBox fx:id="labelCafeina" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image>
+                            <Image url="@../visualResources/estadisticas/cafeina.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="labelCafeinaTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+                <!-- 3: Popularidad -->
+                <HBox fx:id="labelPopularidad" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image>
+                            <Image url="@../visualResources/estadisticas/popularidad.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="labelPopularidadTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+                <!-- 4: Estudios -->
+                <HBox fx:id="labelEstudios" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image>
+                            <Image url="@../visualResources/estadisticas/estudios.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="labelEstudiosTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+            </HBox>
+
+
+            <!--  Mensajes  -->
+            <ScrollPane fx:id="scrollChat" fitToWidth="true" styleClass="scroll-chat" VBox.vgrow="ALWAYS">
+
+                <content>
+                    <VBox fx:id="vboxMensajes" spacing="15" styleClass="panel-chat">
+                        <padding>
+                            <Insets bottom="15" left="20" right="20" top="15" />
+                        </padding>
+                    </VBox>
+                </content>
+            </ScrollPane>
+
+
+            <!-- DECISIONES (PARTE INFERIOR) -->
+            <AnchorPane fx:id="decisionArea" prefHeight="160" styleClass="decision-panel">
+
+                <children>
+                    <VBox fx:id="decisionBox" alignment="CENTER" spacing="14" AnchorPane.bottomAnchor="15" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15">
+
+                        <!-- Ovalo + icono enviar -->
+                        <HBox alignment="CENTER" spacing="10" styleClass="decision-message-container">
+                            <Label fx:id="labelDecisionMessage" prefHeight="60" prefWidth="520" styleClass="decision-message-text" text="" wrapText="true" />
+                        </HBox>
+
+                        <!-- Sí / No -->
+                        <HBox alignment="CENTER" spacing="50">
+                            <Button fx:id="btnOptionYes" onAction="#onOptionYesClick" prefWidth="120" styleClass="decision-btn" text="Sí" />
+
+                            <Button fx:id="btnOptionNo" onAction="#onOptionNoClick" prefWidth="120" styleClass="decision-btn" text="No" />
+                        </HBox>
+
+                    </VBox>
+                </children>
+
+            </AnchorPane>
+
+        </VBox>
+
+
+        <!-- PANEL ÁRBOL (DERECHA)  -->
+        <VBox fx:id="panelArbol" prefWidth="270" styleClass="panel-arbol" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="45">
+        </VBox>
 
     </children>
+
 </AnchorPane>

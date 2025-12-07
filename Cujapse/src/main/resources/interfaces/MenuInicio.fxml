@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="rootPane" prefHeight="795.0" prefWidth="1099.0" styleClass="root-principal" stylesheets="@../visualResources/paletaDeColores/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaz.controllers.MenuInicioController">
+
+    <children>
+
+        <!-- FONDO -->
+        <ImageView fx:id="fondo" fitHeight="795.0" fitWidth="1096.0" layoutY="-95.0" pickOnBounds="true" preserveRatio="false">
+            <image>
+                <Image url="@../visualResources/escenarios/FondoPantallaInicio.png" />
+            </image>
+        </ImageView>
+
+        <!-- BOTONES BAJO EL LOGO -->
+        <Button fx:id="btnNuevaPartida" alignment="CENTER" layoutX="449.0" layoutY="249.0" prefHeight="43.0" prefWidth="191.0" styleClass="btn-menu-principal" text="Nueva Partida" />
+
+        <Button fx:id="btnCargarPartida" alignment="CENTER" layoutX="449.0" layoutY="303.0" prefHeight="43.0" prefWidth="191.0" styleClass="btn-menu-principal" text="Cargar Partida" />
+
+        <Button fx:id="btnSalir" alignment="CENTER" layoutX="449.0" layoutY="354.0" prefHeight="43.0" prefWidth="191.0" styleClass="btn-menu-principal" text="Salir del Juego" />
+
+    </children>
+</AnchorPane>
