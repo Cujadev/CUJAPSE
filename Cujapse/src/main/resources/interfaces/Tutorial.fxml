@@ -1,65 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="564.0" prefWidth="923.0" styleClass="root"
+<AnchorPane prefHeight="564.0" prefWidth="923.0"
+            styleClass="root"
             stylesheets="@../visualResources/paletaDeColores/estilos.css"
-            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="interfaz.controllers.TutorialController"
-            AnchorPane.topAnchor="0"
-            AnchorPane.leftAnchor="0"
-            AnchorPane.rightAnchor="0"
-            AnchorPane.bottomAnchor="0"
->
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="interfaz.controllers.TutorialController">
+
     <children>
 
-        <ImageView fx:id="imgPersonaje"
-                   fitHeight="564.0" fitWidth="923.0" pickOnBounds="true" preserveRatio="false"
-                   AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+        <!-- Fondo del tutorial -->
+        <ImageView fitHeight="564" fitWidth="923" preserveRatio="false"
+                   AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+                   AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
             <image>
-                <!-- Asegúrate de que esta ruta sea correcta para tu proyecto -->
-                <Image url="@../visualResources/escenarios/fondoTutorial.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="379.0" fitWidth="277.0" layoutX="14.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../visualResources/personajes/Omar_tutorial.png" />
+                <Image url="@../visualResources/escenarios/fondoTutorial.png"/>
             </image>
         </ImageView>
 
-        <!-- CAJA DE DIÁLOGO (Anclada al fondo de la pantalla) -->
-        <AnchorPane fx:id="dialogBox" layoutX="8.0" layoutY="423.0" opacity="0.94" prefHeight="120.0" prefWidth="895.0" styleClass="dialogo-caja" AnchorPane.bottomAnchor="1.7999999999999545" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="20.799999999999955">
+        <!-- Personaje del tutorial -->
+        <ImageView fitHeight="379" fitWidth="277" layoutX="14" layoutY="69" preserveRatio="true">
+            <image>
+                <Image url="@../visualResources/personajes/Omar_tutorial.png"/>
+            </image>
+        </ImageView>
+
+        <!-- Caja de diálogo inferior -->
+        <AnchorPane fx:id="dialogBox"
+                    opacity="0.94"
+                    prefHeight="120" prefWidth="895"
+                    styleClass="dialogo-caja"
+                    AnchorPane.bottomAnchor="10"
+                    AnchorPane.leftAnchor="10"
+                    AnchorPane.rightAnchor="10">
+
             <children>
-                <!-- Contenedor principal del texto y la opción 'No' -->
-                <VBox alignment="TOP_LEFT" prefHeight="100.0" prefWidth="893.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
-                    <children>
+                <VBox alignment="TOP_LEFT"
+                      AnchorPane.topAnchor="10"
+                      AnchorPane.bottomAnchor="10"
+                      AnchorPane.leftAnchor="15"
+                      AnchorPane.rightAnchor="15"
+                      spacing="8">
 
-                        <!-- Etiqueta donde se muestra el texto del tutorial línea por línea -->
-                        <Label fx:id="labelDialogo" alignment="TOP_LEFT" prefHeight="90.0" prefWidth="893.0" text="Línea de diálogo inicial del tutorial." wrapText="true" VBox.vgrow="ALWAYS" />
+                    <!-- Texto del diálogo -->
+                    <Label fx:id="labelDialogo"
+                           wrapText="true"
+                           prefHeight="80"
+                           styleClass="tutorial-text"/>
 
-                        <!-- Contenedor para la opción "No" (aparece en la decisión final) -->
-                        <HBox fx:id="hboxBotones" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="893.0" spacing="15.0">
-                            <!-- Botón de opción "NO" (Solo se usa cuando btnContinuar cambia a "Sí") -->
-                            <Button fx:id="btnNo" mnemonicParsing="false" onAction="#onNoClick" text="No" visible="false" />
-                        </HBox>
-
-                    </children>
                 </VBox>
 
-                <!-- Botón de Continuar/Flecha - ANCLADO Y CON ESTILO DE FLECHA -->
-                <!-- Este botón se usa para "Continuar" (▶) y luego se convierte en la opción "Sí" -->
-
-                <Button fx:id="btnContinuar" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onContinuarClick" prefHeight="63.0" prefWidth="34.0" styleClass="button, btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="15.0" />
-
-
+                <!-- Botón continuar (flecha) -->
+                <Button fx:id="btnContinuar"
+                        text="▶"
+                        onAction="#onContinuarClick"
+                        prefHeight="55" prefWidth="40"
+                        styleClass="btn-continue-arrow"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="15"/>
             </children>
+
         </AnchorPane>
 
     </children>
