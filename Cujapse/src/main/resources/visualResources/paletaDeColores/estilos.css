@@ -1,0 +1,263 @@
+/* ============================================================
+   PALETA GENERAL (DESATURADA) - VERSIÓN SIN BORDES DIFUMINADOS
+   ============================================================ */
+
+/* Fondo general - más suave y elegante */
+.root-principal {
+    -fx-background-color: linear-gradient(to bottom, #F5E6CA 0%, #D8A315 100%);
+}
+
+/* ============================================================
+   MENU SUPERIOR - más suave pero manteniendo contraste
+   ============================================================ */
+
+.menu-superior {
+    -fx-background-color: linear-gradient(to bottom, #9A2325 0%, #7A0104 100%);
+    -fx-padding: 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.3, 0, 2);
+}
+
+/* ============================================================
+   PANEL IZQUIERDO - suavizado con gradiente
+   ============================================================ */
+
+.panel-izquierdo {
+    -fx-background-color: linear-gradient(to bottom, #F0B75E 0%, #E57500 100%);
+    -fx-border-color: #D26900;
+    -fx-border-width: 0 2 0 0;
+    -fx-border-style: solid;
+}
+
+/* ============================================================
+   PANEL ÁRBOL (DERECHA) - más dinámico
+   ============================================================ */
+
+.panel-arbol {
+    -fx-background-color: linear-gradient(to bottom, #F0B75E 0%, #E57500 100%);
+    -fx-border-color: #D26900;
+    -fx-border-width: 0 0 0 2;
+    -fx-border-style: solid;
+}
+
+/* ============================================================
+   CHAT CENTRAL - más luminoso
+   ============================================================ */
+
+.panel-chat {
+    -fx-background-color: #FFFDF5;
+}
+
+.scroll-chat {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+/* ============================================================
+   BARRA SUPERIOR CON ESTADÍSTICAS - más elegante
+   ============================================================ */
+
+.stats-bar {
+    -fx-background-color: linear-gradient(to bottom, #9A2325 0%, #7A0104 100%);
+    -fx-border-color: #5C0103;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 12 15;
+}
+
+.stat-box {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 8;
+    -fx-padding: 6 14;
+    -fx-border-color: rgba(255, 238, 192, 0.3);
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+.stat-label {
+    -fx-font-size: 14;
+    -fx-text-fill: #FFEEC0;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 1, 0.5, 0, 1);
+}
+
+/* ============================================================
+   Burbujas de Chat - más creativas
+   ============================================================ */
+
+.burbuja-npc {
+    -fx-background-color: linear-gradient(to bottom right, #F0A64D 0%, #E57500 100%);
+    -fx-background-radius: 18 18 18 6;
+    -fx-padding: 12 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.3, 2, 2);
+    -fx-border-color: #D26900;
+    -fx-border-width: 1;
+    -fx-border-radius: 18 18 18 6;
+}
+
+.burbuja-player {
+    -fx-background-color: linear-gradient(to bottom left, #E8B839 0%, #D8A315 100%);
+    -fx-background-radius: 18 18 6 18;
+    -fx-padding: 12 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.3, 2, 2);
+    -fx-border-color: #C19212;
+    -fx-border-width: 1;
+    -fx-border-radius: 18 18 6 18;
+}
+
+.label-usuario {
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2A0A05;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 0, 0, 0, 1);
+}
+
+.label-mensaje {
+    -fx-font-size: 14;
+    -fx-text-fill: #3C0E05;
+    -fx-line-spacing: 2px;
+}
+
+/* ============================================================
+   ÁREA DE DECISIONES - más dinámica
+   ============================================================ */
+
+.decision-panel {
+    -fx-background-color: linear-gradient(to top, #4A1810 0%, #3C0E05 100%);
+    -fx-padding: 15;
+    -fx-border-color: #2A0A05;
+    -fx-border-width: 2 0 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, -3);
+}
+
+/* Óvalo del mensaje - destacado */
+.decision-message-container {
+    -fx-background-color: linear-gradient(to right, #9A2325 0%, #7A0104 100%);
+    -fx-background-radius: 30;
+    -fx-padding: 14 22;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0.5, 0, 3);
+    -fx-border-color: #5C0103;
+    -fx-border-width: 1;
+}
+
+.decision-message-text {
+    -fx-font-size: 15;
+    -fx-text-fill: #FFEEC0;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 2, 0.5, 0, 1);
+}
+
+/* Botón enviar dentro del óvalo */
+.btn-send-decision-inside {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.btn-send-decision-inside:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* BOTONES SÍ y NO - BORDES NÍTIDOS AL SELECCIONAR */
+.decision-btn {
+    -fx-background-color: linear-gradient(to bottom, #F0A64D 0%, #E57500 100%);
+    -fx-background-radius: 12;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-padding: 12 25;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0.5, 0, 3);
+    -fx-border-color: #D26900;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+}
+
+.decision-btn:hover {
+    -fx-background-color: linear-gradient(to bottom, #F8B45D 0%, #ED8500 100%);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 7, 0.5, 0, 4);
+}
+
+/* ESTADO SELECCIONADO - BORDE NÍTIDO Y FUERTE */
+.decision-selected {
+    -fx-background-color: linear-gradient(to bottom, #E8B839 0%, #D8A315 100%);
+    -fx-text-fill: #3C0E05;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.5, 0, 5);
+    -fx-border-color: #3C0E05; /* Borde marrón oscuro - MUY NÍTIDO */
+    -fx-border-width: 3; /* Borde más grueso para destacar */
+}
+
+/* ============================================================
+   ScrollPane del árbol - mejorado
+   ============================================================ */
+
+.scroll-pane-arbol {
+    -fx-background-color: transparent;
+    -fx-border-color: #D26900;
+    -fx-border-width: 0 0 0 2;
+}
+
+/* Scrollbars personalizados */
+.scroll-pane-arbol .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 10;
+}
+
+.scroll-pane-arbol .scroll-bar:vertical .thumb {
+    -fx-background-color: linear-gradient(to bottom, #E57500 0%, #D26900 100%);
+    -fx-background-radius: 5;
+}
+
+.scroll-pane-arbol .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: linear-gradient(to bottom, #ED8500 0%, #E57500 100%);
+}
+
+/* ============================================================
+   Botones del menú principal - actualizados
+   ============================================================ */
+
+.btn-menu-principal {
+    -fx-background-color: linear-gradient(to bottom, #FFEDB3 0%, #FFE680 100%);
+    -fx-text-fill: #8B0000;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-border-color: #E0A000;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0.5, 0, 2);
+}
+
+.btn-menu-principal:hover {
+    -fx-background-color: linear-gradient(to bottom, #FFF4CC 0%, #FFD24C 100%);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.5, 0, 3);
+}
+
+/* ============================================================
+   ELEMENTOS DE SEPARACIÓN - más sutiles
+   ============================================================ */
+
+.separator-line {
+    -fx-background-color: linear-gradient(to right, transparent, #D8A315, transparent);
+    -fx-pref-height: 1;
+}
+
+/* ============================================================
+   ESTADOS DE FOCO - accesibilidad
+   ============================================================ */
+
+.decision-btn:focused, .btn-menu-principal:focused {
+    -fx-effect: dropshadow(gaussian, rgba(216, 163, 21, 0.6), 10, 0.5, 0, 0);
+}
+
+/* ============================================================
+   ESTADOS PRESIONADOS
+   ============================================================ */
+
+.decision-btn:pressed, .btn-menu-principal:pressed, .btn-send-decision-inside:pressed {
+    -fx-background-color: linear-gradient(to bottom, #E06700 0%, #D55A00 100%);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0.5, 0, 2);
+}
+
+.btn-menu-principal:pressed {
+    -fx-background-color: linear-gradient(to bottom, #FFD966 0%, #FFCC33 100%);
+}

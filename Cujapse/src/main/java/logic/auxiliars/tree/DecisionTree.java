@@ -1,6 +1,7 @@
 package logic.auxiliars.tree;
 
 import logic.auxiliars.tree.Iterator.TreeIterator;
+import logic.clases.event.Situation;
 
 //Crear los trabajos con Iteradores
 public class DecisionTree<E>{
@@ -17,7 +18,7 @@ public class DecisionTree<E>{
     }
 
     public DecisionNode<E> getRoot() {
-        return root;
+        return  root;
     }
 
     public void setRoot(DecisionNode<E> root) {
@@ -25,10 +26,10 @@ public class DecisionTree<E>{
     }
 
     //Se agrega un nodo aprovechandose de las llamadas por referencia, simulando la lincked list
-    public boolean AddNode (DecisionNode <E> info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
+    public boolean AddNode (DecisionNode<Situation> info, DecisionNode<Situation> father, int branch)throws IllegalArgumentException{
 
         if (root == null){
-            setRoot(info);
+            setRoot((DecisionNode<E>) info);
             return true;
         }
         else{

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<<<<<<< HEAD
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane prefHeight="654" prefWidth="939" stylesheets="@../visualResources/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
@@ -40,6 +41,120 @@
 
             </children>
         </Pane>
+=======
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="rootPane" prefHeight="700" prefWidth="1200" styleClass="root-principal" stylesheets="@/visualResources/paletaDeColores/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaz.controllers.PrincipalController">
+
+    <children>
+
+        <!--  MENU SUPERIOR -->
+        <HBox fx:id="menuSuperior" alignment="TOP_RIGHT" prefHeight="45" styleClass="menu-superior" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <padding><Insets right="15" /></padding>
+        </HBox>
+
+
+        <!--  PANEL IZQUIERDO  -->
+        <VBox fx:id="panelIzquierdo" prefWidth="70" styleClass="panel-izquierdo" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="45">
+        </VBox>
+
+
+        <!-- PANEL CHAT (CENTRAL) -->
+        <VBox fx:id="panelChat" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="70" AnchorPane.rightAnchor="270" AnchorPane.topAnchor="45">
+
+            <!--  Barra superior con estadísticas  -->
+            <HBox fx:id="statsTopBar" alignment="CENTER_LEFT" prefHeight="55" spacing="25" styleClass="stats-bar">
+
+                <padding><Insets left="25" /></padding>
+
+                <!-- 1: Dinero -->
+                <HBox fx:id="labelDinero" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image>
+                            <Image url="@../visualResources/estadisticas/dinero.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="labelDineroTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+                <!-- 2: Cafeina -->
+                <HBox fx:id="labelCafeina" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image>
+                            <Image url="@../visualResources/estadisticas/cafeina.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="labelCafeinaTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+                <!-- 3: Popularidad -->
+                <HBox fx:id="labelPopularidad" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image>
+                            <Image url="@../visualResources/estadisticas/popularidad.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="labelPopularidadTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+                <!-- 4: Estudios -->
+                <HBox fx:id="labelEstudios" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image>
+                            <Image url="@../visualResources/estadisticas/estudios.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="labelEstudiosTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+            </HBox>
+
+
+            <!--  Mensajes  -->
+            <ScrollPane fx:id="scrollChat" fitToWidth="true" styleClass="scroll-chat" VBox.vgrow="ALWAYS">
+
+                <content>
+                    <VBox fx:id="vboxMensajes" spacing="15" styleClass="panel-chat">
+                        <padding>
+                            <Insets bottom="15" left="20" right="20" top="15" />
+                        </padding>
+                    </VBox>
+                </content>
+            </ScrollPane>
+
+
+            <!-- DECISIONES (PARTE INFERIOR) -->
+            <AnchorPane fx:id="decisionArea" prefHeight="160" styleClass="decision-panel">
+
+                <children>
+                    <VBox fx:id="decisionBox" alignment="CENTER" spacing="14" AnchorPane.bottomAnchor="15" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15">
+
+                        <!-- Ovalo + icono enviar -->
+                        <HBox alignment="CENTER" spacing="10" styleClass="decision-message-container">
+                            <Label fx:id="labelDecisionMessage" prefHeight="60" prefWidth="520" styleClass="decision-message-text" text="" wrapText="true" />
+                        </HBox>
+
+                        <!-- Sí / No -->
+                        <HBox alignment="CENTER" spacing="50">
+                            <Button fx:id="btnOptionYes" onAction="#onOptionYesClick" prefWidth="120" styleClass="decision-btn" text="Sí" />
+
+                            <Button fx:id="btnOptionNo" onAction="#onOptionNoClick" prefWidth="120" styleClass="decision-btn" text="No" />
+                        </HBox>
+
+                    </VBox>
+                </children>
+
+            </AnchorPane>
+
+        </VBox>
+
+
+        <!-- PANEL ÁRBOL (DERECHA)  -->
+        <VBox fx:id="panelArbol" prefWidth="270" styleClass="panel-arbol" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="45">
+        </VBox>
+>>>>>>> 7a7600f (interfaces 3)
 
     </children>
+
 </AnchorPane>

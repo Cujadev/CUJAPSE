@@ -1,5 +1,7 @@
 package logic.auxiliars.tree;
 
+import logic.clases.event.Situation;
+
 public class DecisionNode<E>{
     private E info;
     private DecisionNode <E> left;
@@ -23,15 +25,15 @@ public class DecisionNode<E>{
         return left;
     }
 
-    public void setLeft(DecisionNode<E> left) {
-        this.left = left;
+    public void setLeft(DecisionNode<Situation> left) {
+        this.left = (DecisionNode<E>) left;
     }
 
     public DecisionNode<E> getRight() {
         return right;
     }
 
-    public void setRight(DecisionNode <E> right) {
-        this.right = right;
+    public void setRight(DecisionNode<Situation> right) {
+        this.right = (DecisionNode<E>) right;
     }
 }
