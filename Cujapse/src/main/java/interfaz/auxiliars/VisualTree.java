@@ -2,7 +2,6 @@ package interfaz.auxiliars;
 
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
@@ -13,7 +12,7 @@ import logic.auxiliars.tree.DecisionNode;
 
 import java.util.HashMap;
 
-public class VisualTree extends Node {
+public class VisualTree  {
 
     private final Canvas canvas;
     private final GraphicsContext gc;
@@ -36,6 +35,9 @@ public class VisualTree extends Node {
         enableZoom();
     }
 
+    // ============================================================
+    //                       DIBUJAR ÁRBOL
+    // ============================================================
     public void drawTree() {
         positions.clear();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -45,6 +47,9 @@ public class VisualTree extends Node {
         drawNodes(root);
     }
 
+    // ============================================================
+    //                       CENTRAR NODO
+    // ============================================================
     public void focusNode(DecisionNode<?> node) {
         if (!positions.containsKey(node)) return;
 
@@ -65,6 +70,9 @@ public class VisualTree extends Node {
         tt.play();
     }
 
+    // ============================================================
+    //                       ZOOM
+    // ============================================================
     private void enableZoom() {
         canvas.addEventFilter(ScrollEvent.SCROLL, e -> {
 
@@ -79,6 +87,9 @@ public class VisualTree extends Node {
         });
     }
 
+    // ============================================================
+    //                       RESALTAR CAMINO
+    // ============================================================
     public void highlightPath(boolean left, boolean right) {
 
         gc.setStroke(Color.ORANGE);
@@ -112,6 +123,9 @@ public class VisualTree extends Node {
         }
     }
 
+    // ============================================================
+    //                       DIBUJAR CONEXIONES
+    // ============================================================
     private void drawConnections(DecisionNode<?> n) {
         if (n == null) return;
 
@@ -134,6 +148,9 @@ public class VisualTree extends Node {
         }
     }
 
+    // ============================================================
+    //                       DIBUJAR NODOS
+    // ============================================================
     private void drawNodes(DecisionNode<?> n) {
         if (n == null) return;
 
@@ -149,9 +166,17 @@ public class VisualTree extends Node {
         drawNodes(n.getRight());
     }
 
+    // ============================================================
+    //                       LAYOUT DEL ÁRBOL
+    // ============================================================
     private double layout(DecisionNode<?> n, double x, double y) {
-        return 0;
+        if (n == null) return 0;
+
+        double leftWidth = layout(n.getLeft(), x - H_SPACING, y + V_SPACING);
+        double rightWidth = layout(n.getRight(), x + H_SPACING, y + V_SPACING);
+
+        positions.put(n, new double[]{x, y});
+
+        return Math.max(leftWidth + rightWidth, NODE_RADIUS * 2);
     }
-
-
 }
