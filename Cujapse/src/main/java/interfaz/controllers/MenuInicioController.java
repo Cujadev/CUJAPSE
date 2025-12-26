@@ -8,28 +8,27 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controlador del menú de inicio.:
+ * Controlador del menú de inicio.
+ * Envía a la lógica:
  *  1 = Nueva partida
  *  2 = Cargar partida
  *  3 = Salir del juego
  */
 public class MenuInicioController implements Initializable {
 
-    @FXML
-    private Button btnNuevaPartida;
-    @FXML
-    private Button btnCargarPartida;
-    @FXML
-    private Button btnSalir;
+    @FXML private Button btnNuevaPartida;
+    @FXML private Button btnCargarPartida;
+    @FXML private Button btnSalir;
 
     /**
+     * Callback que el MVC o la lógica del juego debe registrar.
      * Se ejecuta cuando el usuario toca un botón.
      */
     private MenuInicioListener listener;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // Aquí puedes agregar animaciones o estilos si lo deseas
     }
 
     /**
@@ -56,7 +55,6 @@ public class MenuInicioController implements Initializable {
         if (listener != null) listener.onMenuOptionSelected(3);
     }
 
-    // ------------------ INTERFAZ PARA LA LÓGICA ------------------
     /*
      * Listener muy simple:
      * La interfaz solo envía un código según el botón:
@@ -70,4 +68,5 @@ public class MenuInicioController implements Initializable {
     public interface MenuInicioListener {
         void onMenuOptionSelected(int codigo);
     }
+
 }

@@ -1,5 +1,5 @@
 package logic.auxiliars.tree;
-import logic.clases.event.Situation;
+
 /// Es la clase que representa un nodo del arbol
 public class DecisionNode<E>{
     private E info;
@@ -26,15 +26,15 @@ public class DecisionNode<E>{
         return left;
     }
 
-    public void setLeft(DecisionNode<Situation> left) {
-        this.left = (DecisionNode<E>) left;
+    public void setLeft(DecisionNode<E> left) {
+        this.left = left;
     }
 
     public DecisionNode<E> getRight() {
         return right;
     }
 
-    public void setRight(DecisionNode<Situation> right) {
-        this.right = (DecisionNode<E>) right;
+    public void setRight(DecisionNode<E> right) {
+        this.right = right;
     }
 }

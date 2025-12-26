@@ -8,11 +8,10 @@ import java.util.List;
 
 /**
  * Controller de la pantalla Tutorial.
- * Aquí están los métodos para manejar el flujo del tutorial (FXML).
- * Para manejar la pantalla de tutorial, el MVC debe interactuar con estos métodos:
+ * El MVC interactúa con:
  *  - setDialogLines(...)
  *  - startTutorial(...)
- *  - onTutorialFinishedCallback(...)
+ *  - setListener(...)
  */
 public class TutorialController {
 
@@ -22,19 +21,12 @@ public class TutorialController {
     @FXML
     private Button btnContinuar;
 
-    /**
-     * Lista de diálogos a mostrar en el tutorial
-     */
+    /** Lista de diálogos a mostrar en el tutorial */
     private List<String> dialogLines;
     private int index = 0;
 
-    /*
-     * Runnable es el tipo de dato para una interfaz funcional.
-     * De esta forma, cuando se finalice el tutorial y se vaya a pasar
-     * a la pantalla principal, solo se pasa el FXML por parámetros.
-     * Cerrará el tutorial y abrirá la pantalla principal.
-     */
-    private Runnable onFinish;
+    /** Listener para notificar al Modelo cuando el tutorial termina */
+    private TutorialListener listener;
 
     /**
      * El Modelo debe pasar las líneas del tutorial aquí.
@@ -54,28 +46,35 @@ public class TutorialController {
     }
 
     /**
-     * Registra qué debe pasar cuando el tutorial termina
-     * (por ejemplo: abrir la interfaz principal).
+     * Registrar el listener que recibirá el evento de "tutorial terminado".
      */
-    public void setOnTutorialFinish(Runnable r) {
-        this.onFinish = r;
+    public void setListener(TutorialListener listener) {
+        this.listener = listener;
     }
 
-    // Interacción del usuario para pasar a la siguiente línea del tutorial
+    /**
+     * Interacción del usuario para pasar a la siguiente línea del tutorial.
+     */
     @FXML
     private void onContinuarClick() {
-        boolean puedeContinuar = dialogLines != null && !dialogLines.isEmpty();
+        if (dialogLines == null || dialogLines.isEmpty()) return;
 
-        if (puedeContinuar) {
-            index++;
+        index++;
 
-            if (index < dialogLines.size()) {
-                labelDialogo.setText(dialogLines.get(index));
-            } else {
-                if (onFinish != null) {
-                    onFinish.run();
-                }
+        if (index < dialogLines.size()) {
+            labelDialogo.setText(dialogLines.get(index));
+        } else {
+            // Notificar al Modelo que el tutorial terminó
+            if (listener != null) {
+                listener.onTutorialFinished();
             }
         }
+    }
+
+    /**
+     * Listener para comunicar al Modelo que el tutorial terminó.
+     */
+    public interface TutorialListener {
+        void onTutorialFinished();
     }
 }
