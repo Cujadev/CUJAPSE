@@ -1,6 +1,6 @@
 package logic.clases.game;
 
-import javafx.scene.image.Image;
+
 import logic.auxiliars.chargers.ChargerMenssage;
 import logic.auxiliars.files.FileReaders;
 import logic.clases.character.Answer;
@@ -10,6 +10,8 @@ import logic.clases.character.PrincipalCharacter;
 import logic.clases.event.Event;
 import logic.clases.event.Situation;
 
+import javafx.scene.image.Image;
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -112,4 +114,11 @@ public class Scenary implements ChargerMenssage {
         FileReaders.closeFile(raf);
         return result;
     }
+    public String giveCharacterName (){
+        return  Game.getInstance().findCharacter(event.getNextSituaion(0).getAssociation().getIdCharacter()).getName();
+    }
+    public String giveMainCharacterName(){
+       return Game.getInstance().getMainCharacter().getName();
+    }
+
 }
