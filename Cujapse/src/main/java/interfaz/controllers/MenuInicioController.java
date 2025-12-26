@@ -15,9 +15,12 @@ import java.util.ResourceBundle;
  */
 public class MenuInicioController implements Initializable {
 
-    @FXML private Button btnNuevaPartida;
-    @FXML private Button btnCargarPartida;
-    @FXML private Button btnSalir;
+    @FXML
+    private Button btnNuevaPartida;
+    @FXML
+    private Button btnCargarPartida;
+    @FXML
+    private Button btnSalir;
 
     /**
      * Se ejecuta cuando el usuario toca un botón.

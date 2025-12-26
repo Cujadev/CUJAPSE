@@ -65,6 +65,7 @@
                         AnchorPane.bottomAnchor="10"
                         AnchorPane.rightAnchor="15"/>
             </children>
+
         </AnchorPane>
 
     </children>

@@ -26,8 +26,8 @@ public class DecisionNode<E>{
         return left;
     }
 
-    public void setLeft(DecisionNode<E> left) {
-        this.left = left;
+    public void setLeft(DecisionNode<Situation> left) {
+        this.left = (DecisionNode<E>) left;
     }
 
     public DecisionNode<E> getRight() {
@@ -36,9 +36,5 @@ public class DecisionNode<E>{
 
     public void setRight(DecisionNode<Situation> right) {
         this.right = (DecisionNode<E>) right;
-    }
-
-    public void setLeft(DecisionNode<E> info) {
-
     }
 }

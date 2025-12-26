@@ -1,16 +1,14 @@
 package interfaz.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
- * Controller de la pantalla Tutorial.Aquí están los métodos para manejar el flujo del tutorial(FXML).
+ * Controller de la pantalla Tutorial.
+ * Aquí están los métodos para manejar el flujo del tutorial (FXML).
  * Para manejar la pantalla de tutorial, el MVC debe interactuar con estos métodos:
  *  - setDialogLines(...)
  *  - startTutorial(...)
@@ -20,6 +18,7 @@ public class TutorialController {
 
     @FXML
     private Label labelDialogo;
+
     @FXML
     private Button btnContinuar;
 
@@ -29,15 +28,13 @@ public class TutorialController {
     private List<String> dialogLines;
     private int index = 0;
 
-    /* Runnable es el tipo de dato para una interfaz funcional
-     * *De esta forma cuando se finalice el tutorial ,que se vaya a pasar a la pantalla principal ,tan solo es pasar el FXML
-     * por parametros.Y cerrara el tutorial y abrirá la pantalla principal */
+    /*
+     * Runnable es el tipo de dato para una interfaz funcional.
+     * De esta forma, cuando se finalice el tutorial y se vaya a pasar
+     * a la pantalla principal, solo se pasa el FXML por parámetros.
+     * Cerrará el tutorial y abrirá la pantalla principal.
+     */
     private Runnable onFinish;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        labelDialogo.setText("");
-    }
 
     /**
      * El Modelo debe pasar las líneas del tutorial aquí.
@@ -64,8 +61,7 @@ public class TutorialController {
         this.onFinish = r;
     }
 
-    //Interacción dle usuario para pasar a la siguiente línea del tutorial
-
+    // Interacción del usuario para pasar a la siguiente línea del tutorial
     @FXML
     private void onContinuarClick() {
         boolean puedeContinuar = dialogLines != null && !dialogLines.isEmpty();
@@ -83,4 +79,3 @@ public class TutorialController {
         }
     }
 }
-

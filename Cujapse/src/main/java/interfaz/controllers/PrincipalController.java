@@ -71,7 +71,6 @@ public class PrincipalController  {
     // ================================================================
     //                           INITIALIZE
     // ================================================================
-
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         vboxMensajes.heightProperty().addListener((obs, oldV, newV) ->

@@ -28,10 +28,18 @@ public class DecisionTree<E>{
     }
 
     //Se agrega un nodo aprovechandose de las llamadas por referencia, simulando la lincked list
+<<<<<<< HEAD
+    public boolean AddNode (DecisionNode<Situation> info, DecisionNode<Situation> father, int branch)throws IllegalArgumentException{
+
+        if (root == null){
+            setRoot((DecisionNode<E>) info);
+            return true;
+=======
     public void AddNode (DecisionNode <E> info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
 
         if (root == null){ // Si se cumple se agrega en  la raíz
             setRoot(info);
+>>>>>>> 0cca16d2fec70aadf4769c45c401c3dd5fcdaa44
         }
         else{
             if (branch == 1){// Si se cumple se agrega en la izquierda
