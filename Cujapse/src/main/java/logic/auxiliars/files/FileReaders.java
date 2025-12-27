@@ -89,6 +89,7 @@ public class FileReaders {
             for (int i = 0; i < cant && !found; i++){
                 int tam = raf.readInt();
                 byte[] string = new  byte[tam];
+                raf.readFully(string);
                 c = (Consecuence) Convert.toObject(string);
                 if (c.getId().equals(id)){
                     found = true;

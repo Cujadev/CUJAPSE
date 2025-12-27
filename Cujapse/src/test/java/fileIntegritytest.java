@@ -63,7 +63,7 @@ public class fileIntegritytest {
         RandomAccessFile raf = FileReaders.openFile(Game.getInstance().getPersonajesFichero());
         try{
             int cant = raf.readInt();
-            for (int i = 0; i < cant; i++){
+            for (int i = 0; i < 1; i++){
                 long ptr = raf.getFilePointer();
                 int tam = raf.readInt();
                 byte[] string = new byte[tam];

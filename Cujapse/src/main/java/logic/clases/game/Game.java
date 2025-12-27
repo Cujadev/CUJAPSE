@@ -23,7 +23,7 @@ public class Game {
 
     //====Constructor====
     public Game() {
-        personajesFichero = new File("/data/characters/personajes.dat");// Revisar si se crea
+        personajesFichero = FileReaders.returnFile("/data/Characters/personajes.dat");// Revisar si se crea
         events = new LinkedList<>();
         eventQueue = new ArrayDeque<>();
         scenary = new Scenary();
