@@ -65,6 +65,6 @@ public class Event {
     }
 
     public void addSituation (DecisionNode<Situation> newNode, DecisionNode<Situation> father, int branch){
-            situations.AddNode(newNode, father,branch);
+            situations.addNode(newNode, father,branch);
     }
 }

@@ -24,6 +24,10 @@ public class PrincipalCharacter extends GameCharacter {
         setAnswers();
 
     }
+    /// Getters And Setters
+    public String getConsequences() {
+        return consequences;
+    }
 
     /// ==== Métodos útiles ====
     public void setAnswers() throws IllegalArgumentException {

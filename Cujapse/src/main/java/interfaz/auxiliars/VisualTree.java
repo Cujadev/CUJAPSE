@@ -12,7 +12,9 @@ import logic.auxiliars.tree.DecisionNode;
 
 import java.util.HashMap;
 
+
 public class VisualTree  extends Canvas{
+
 
     private final Canvas canvas;
     private final GraphicsContext gc;

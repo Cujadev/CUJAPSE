@@ -64,6 +64,10 @@ public class Game {
     public void setScenary(Scenary scenary) {
         this.scenary = scenary;
     }
+
+    public File getPersonajesFichero() {
+        return personajesFichero;
+    }
     //====Métodos necesarios====
 
     //Buscar un personaje

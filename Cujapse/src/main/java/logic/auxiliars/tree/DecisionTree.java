@@ -6,12 +6,12 @@ import logic.auxiliars.tree.Iterator.TreeIterator;
 public class DecisionTree<E> {
 
     private DecisionNode<E> root;
-    private final TreeIterator<E> iterator;
+    private TreeIterator<E> iterator;
 
     // ==== Constructores ====
     public DecisionTree() {
-        root = null;
-        iterator = null;
+        this.root = null;
+        this.iterator = null;
     }
 
     public DecisionTree(E root) {
@@ -34,29 +34,33 @@ public class DecisionTree<E> {
      * @param father nodo padre
      * @param branch 1 = izquierda, 2 = derecha
      */
-    public void AddNode(DecisionNode<E> info, DecisionNode<E> father, int branch)
+    public void addNode(DecisionNode<E> info, DecisionNode<E> father, int branch)
             throws IllegalArgumentException {
 
+        // Si el árbol está vacío, el nuevo nodo es la raíz
         if (root == null) {
-            // Si el árbol está vacío, el nuevo nodo se convierte en la raíz
             setRoot(info);
+            this.iterator = new TreeIterator<>(this.root);
             return;
         }
 
-        if (branch == 1) { // izquierda
+        // Insertar en la izquierda
+        if (branch == 1) {
             if (father.getLeft() == null) {
                 father.setLeft(info);
             } else {
                 throw new IllegalArgumentException("Error: rama izquierda ya ocupada");
             }
         }
-        else if (branch == 2) { // derecha
+        // Insertar en la derecha
+        else if (branch == 2) {
             if (father.getRight() == null) {
                 father.setRight(info);
             } else {
                 throw new IllegalArgumentException("Error: rama derecha ya ocupada");
             }
         }
+        // Rama inválida
         else {
             throw new IllegalArgumentException("Error: solo se permiten ramas 1 (izq) o 2 (der)");
         }
