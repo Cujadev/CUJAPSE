@@ -1,4 +1,5 @@
 package main;
+import interfaz.controllers.MenuInicioController;
 import logic.clases.game.Game;
 import javafx.application.Application;
 
