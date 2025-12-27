@@ -27,6 +27,16 @@
           <version>1.9.3</version>
           <scope>test</scope>
       </dependency>
+
+    <dependency>
+      <groupId>org.openjfx</groupId> <artifactId>javafx-controls</artifactId>
+      <version>25</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>25</version>
+    </dependency>
   </dependencies>
 
   <build>
