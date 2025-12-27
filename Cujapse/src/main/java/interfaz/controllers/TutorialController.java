@@ -1,13 +1,10 @@
 package interfaz.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Controller de la pantalla Tutorial.
@@ -16,10 +13,13 @@ import java.util.ResourceBundle;
  *  - startTutorial(...)
  *  - setListener(...)
  */
-public class TutorialController implements Initializable {
+public class TutorialController {
 
-    @FXML private Label labelDialogo;
-    @FXML private Button btnContinuar;
+    @FXML
+    private Label labelDialogo;
+
+    @FXML
+    private Button btnContinuar;
 
     /** Lista de diálogos a mostrar en el tutorial */
     private List<String> dialogLines;
@@ -27,11 +27,6 @@ public class TutorialController implements Initializable {
 
     /** Listener para notificar al Modelo cuando el tutorial termina */
     private TutorialListener listener;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        labelDialogo.setText("");
-    }
 
     /**
      * El Modelo debe pasar las líneas del tutorial aquí.
@@ -57,21 +52,21 @@ public class TutorialController implements Initializable {
         this.listener = listener;
     }
 
-    // Interacción del usuario para pasar a la siguiente línea del tutorial
+    /**
+     * Interacción del usuario para pasar a la siguiente línea del tutorial.
+     */
     @FXML
     private void onContinuarClick() {
-        boolean puedeContinuar = dialogLines != null && !dialogLines.isEmpty();
+        if (dialogLines == null || dialogLines.isEmpty()) return;
 
-        if (puedeContinuar) {
-            index++;
+        index++;
 
-            if (index < dialogLines.size()) {
-                labelDialogo.setText(dialogLines.get(index));
-            } else {
-                // Notificar al Modelo que el tutorial terminó
-                if (listener != null) {
-                    listener.onTutorialFinished();
-                }
+        if (index < dialogLines.size()) {
+            labelDialogo.setText(dialogLines.get(index));
+        } else {
+            // Notificar al Modelo que el tutorial terminó
+            if (listener != null) {
+                listener.onTutorialFinished();
             }
         }
     }
