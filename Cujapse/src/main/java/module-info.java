@@ -3,7 +3,6 @@ module com.example.cujapse {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.desktop;
-    requires javafx.graphics;
 
     // Exportamos controladores si otra parte del programa los necesita
     exports interfaz.controllers;

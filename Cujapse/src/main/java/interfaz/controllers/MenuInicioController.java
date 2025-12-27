@@ -1,72 +1,50 @@
 package interfaz.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class MenuInicioController {
 
-/**
- * Controlador del menú de inicio.
- * Envía a la lógica:
- *  1 = Nueva partida
- *  2 = Cargar partida
- *  3 = Salir del juego
- */
-public class MenuInicioController implements Initializable {
+    @FXML private AnchorPane rootPane;
+    @FXML private StackPane scalableRoot;
+    @FXML private Button btnFullscreen;
 
-    @FXML private Button btnNuevaPartida;
-    @FXML private Button btnCargarPartida;
-    @FXML private Button btnSalir;
+    private Stage stage;
 
-    /**
-     * Callback que el MVC o la lógica del juego debe registrar.
-     * Se ejecuta cuando el usuario toca un botón.
-     */
-    private MenuInicioListener listener;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Aquí puedes agregar animaciones o estilos si lo deseas
-    }
-
-    /**
-     * Permite que la lógica registre un listener para recibir los códigos.
-     */
-    public void setListener(MenuInicioListener listener) {
-        this.listener = listener;
-    }
-
-    // ------------------ EVENTOS DE BOTONES ------------------
+    private final double BASE_WIDTH = 972;
+    private final double BASE_HEIGHT = 866;
 
     @FXML
-    private void onNuevaPartidaClick() {
-        if (listener != null) listener.onMenuOptionSelected(1);
-    }
+    public void initialize() {
 
-    @FXML
-    private void onCargarPartidaClick() {
-        if (listener != null) listener.onMenuOptionSelected(2);
-    }
 
-    @FXML
-    private void onSalirClick() {
-        if (listener != null) listener.onMenuOptionSelected(3);
-    }
 
-    /*
-     * Listener muy simple:
-     * La interfaz solo envía un código según el botón:
-     *   1 = Nueva partida
-     *   2 = Cargar partida
-     *   3 = Salir
-     *
-     * La lógica del juego implementa esta interfaz y decide qué hacer
-     * cuando recibe ese código. Así el menú no contiene lógica, solo notifica.
-     */
-    public interface MenuInicioListener {
-        void onMenuOptionSelected(int codigo);
+        // Obtener Stage de forma garantizada
+        rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+
+                newScene.windowProperty().addListener((obs2, oldWin, newWin) -> {
+                    if (newWin != null) {
+                        stage = (Stage) newWin;
+
+                        // Desactivar maximizar y resize
+                        stage.setResizable(false);
+
+                        // Escalado proporcional REAL
+                        scalableRoot.scaleXProperty().bind(
+                                stage.widthProperty().divide(BASE_WIDTH)
+                        );
+                        scalableRoot.scaleYProperty().bind(
+                                stage.heightProperty().divide(BASE_HEIGHT)
+                        );
+                    }
+                });
+            }
+        });
     }
 
 }
