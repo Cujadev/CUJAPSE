@@ -4,24 +4,79 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:id="rootPane" prefHeight="795.0" prefWidth="1099.0" styleClass="root-principal" stylesheets="@../visualResources/paletaDeColores/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaz.controllers.MenuInicioController">
+<AnchorPane fx:id="rootPane"
+            prefWidth="972" prefHeight="866"
+            styleClass="root-principal"
+            stylesheets="@../visualResources/paletaDeColores/estilos.css"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="interfaz.controllers.MenuInicioController">
 
     <children>
 
-        <!-- FONDO -->
-        <ImageView fx:id="fondo" fitHeight="795.0" fitWidth="1096.0" layoutY="-95.0" pickOnBounds="true" preserveRatio="false">
-            <image>
-                <Image url="@../visualResources/escenarios/FondoPantallaInicio.png" />
-            </image>
-        </ImageView>
+        <!-- CONTENEDOR ESCALABLE -->
+        <StackPane fx:id="scalableRoot"
+                   AnchorPane.topAnchor="0"
+                   AnchorPane.bottomAnchor="0"
+                   AnchorPane.leftAnchor="0"
+                   AnchorPane.rightAnchor="0">
 
-        <!-- BOTONES BAJO EL LOGO -->
-        <Button fx:id="btnNuevaPartida" alignment="CENTER" layoutX="449.0" layoutY="249.0" prefHeight="43.0" prefWidth="191.0" styleClass="btn-menu-principal" text="Nueva Partida" />
+            <!-- PANEL BASE (TAMAÑO ORIGINAL DE LA IMAGEN) -->
+            <Pane fx:id="panelBase"
+                  prefWidth="972"
+                  prefHeight="866">
 
-        <Button fx:id="btnCargarPartida" alignment="CENTER" layoutX="449.0" layoutY="303.0" prefHeight="43.0" prefWidth="191.0" styleClass="btn-menu-principal" text="Cargar Partida" />
+                <!-- FONDO COMPLETO -->
+                <ImageView fx:id="fondo"
+                           fitWidth="972"
+                           fitHeight="866"
+                           preserveRatio="false"
+                           StackPane.alignment="CENTER">
+                    <image>
+                        <Image url="@../visualResources/escenarios/fondoPantallaInicio.png"/>
+                    </image>
+                </ImageView>
 
-        <Button fx:id="btnSalir" alignment="CENTER" layoutX="449.0" layoutY="354.0" prefHeight="43.0" prefWidth="191.0" styleClass="btn-menu-principal" text="Salir del Juego" />
+                <!-- PANEL DEL MENÚ  -->
+                <Pane fx:id="panelMenu"
+                      layoutX="269"
+                      layoutY="369"
+                      prefWidth="450"
+                      prefHeight="300">
+
+                    <VBox alignment="TOP_CENTER" spacing="25"
+                          prefWidth="450" prefHeight="300">
+
+                        <Button fx:id="btnNuevaPartida"
+                                prefWidth="200" prefHeight="45"
+                                styleClass="btn-menu-principal"
+                                text="Nueva Partida"
+                                onAction="#onNuevaPartidaClick"/>
+
+                        <Button fx:id="btnCargarPartida"
+                                prefWidth="200" prefHeight="45"
+                                styleClass="btn-menu-principal"
+                                text="Cargar Partida"
+                                onAction="#onCargarPartidaClick"/>
+
+                        <Button fx:id="btnSalir"
+                                prefWidth="200" prefHeight="45"
+                                styleClass="btn-menu-principal"
+                                text="Salir del Juego"
+                                onAction="#onSalirClick"/>
+
+                    </VBox>
+
+                </Pane>
+
+            </Pane>
+
+
+        </StackPane>
 
     </children>
 </AnchorPane>

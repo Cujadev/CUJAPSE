@@ -7,10 +7,8 @@ import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,7 +25,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PrincipalController implements Initializable {
+public class PrincipalController  {
 
     // ================================================================
     //                        FXML ELEMENTOS
@@ -37,14 +35,12 @@ public class PrincipalController implements Initializable {
     @FXML private VBox vboxMensajes;
     @FXML private ScrollPane scrollChat;
 
-    // Contenedores HBox para estadísticas (mantener nombres del FXML)
     @FXML private HBox statsTopBar;
     @FXML private HBox labelDinero;
     @FXML private HBox labelCafeina;
     @FXML private HBox labelPopularidad;
     @FXML private HBox labelEstudios;
 
-    // Labels para el texto de porcentaje
     @FXML private Label labelDineroTexto;
     @FXML private Label labelCafeinaTexto;
     @FXML private Label labelPopularidadTexto;
@@ -62,9 +58,12 @@ public class PrincipalController implements Initializable {
     //                        VARIABLES INTERNAS
     // ================================================================
     private int selectedOption = 0;
-    private boolean decisionSent = false;
-    private static final String DEFAULT_PLAYER_AVATAR = "/visualResources/personajes/player.png";
+    private String selectedOptionText = "";
+    private boolean decisionEnviada = false;
+
+    private static final String AVATAR_PLAYER = "/visualResources/personajes/player.png";
     private static final String FALLBACK_AVATAR = "/visualResources/iconos/default-avatar.png";
+
     private VisualTree visualTree;
     private DecisionTree<?> logicTree;
     private DecisionNode<?> currentNode;
@@ -72,16 +71,21 @@ public class PrincipalController implements Initializable {
     // ================================================================
     //                           INITIALIZE
     // ================================================================
-    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         vboxMensajes.heightProperty().addListener((obs, oldV, newV) ->
                 scrollChat.setVvalue(1.0)
         );
 
         decisionBox.setVisible(false);
         btnSendDecision.setVisible(false);
+        btnSendDecision.setDisable(true);
 
-        // Asegurar que se muestren los valores iniciales
+        labelDecisionMessage.setText("");
+
+        styleOptionButtons();
+
+        // Inicializar estadísticas
         setStatValue(1, 0);
         setStatValue(2, 0);
         setStatValue(3, 0);
@@ -91,26 +95,20 @@ public class PrincipalController implements Initializable {
     // ================================================================
     //                         ESTADISTICAS (UI)
     // ================================================================
-    /**
-     * Método llamado desde el MVC para actualizar un porcentaje.
-     */
     public void setStatValue(int index, int value) {
         if (value < 0) value = 0;
         if (value > 100) value = 100;
 
-        Label target = null;
-        switch(index) {
-            case 1: target = labelDineroTexto; break;
-            case 2: target = labelCafeinaTexto; break;
-            case 3: target = labelPopularidadTexto; break;
-            case 4: target = labelEstudiosTexto; break;
-            default: return;
-        }
+        Label target = switch (index) {
+            case 1 -> labelDineroTexto;
+            case 2 -> labelCafeinaTexto;
+            case 3 -> labelPopularidadTexto;
+            case 4 -> labelEstudiosTexto;
+            default -> null;
+        };
 
         if (target != null) {
             target.setText(value + "%");
-
-            // DEBUG: Verificar que se actualiza
             System.out.println("Actualizando estadística " + index + " a " + value + "%");
         }
     }
@@ -142,7 +140,7 @@ public class PrincipalController implements Initializable {
     // ================================================================
     public void loadEvent(Evento evento) {
         vboxMensajes.getChildren().clear();
-        decisionSent = false;
+        decisionEnviada = false;
 
         if (evento != null && evento.getMensajes() != null) {
             for (Mensaje m : evento.getMensajes()) {
@@ -151,38 +149,75 @@ public class PrincipalController implements Initializable {
         }
 
         labelDecisionMessage.setText("");
-        btnOptionYes.setDisable(false);
-        btnOptionNo.setDisable(false);
+        clearSelection();
         decisionBox.setVisible(true);
-        btnSendDecision.setVisible(false);
     }
 
+    // ================================================================
+    //                         DECISIONES
+    // ================================================================
     @FXML
     private void onOptionYesClick() {
-        if (decisionSent) return;
+        if (decisionEnviada) return;
         selectedOption = 1;
-        labelDecisionMessage.setText("Sí");
-        btnSendDecision.setVisible(true);
+        selectedOptionText = "¡Claro que sí, estoy listo!";
+        updateDecisionDisplay();
     }
 
     @FXML
     private void onOptionNoClick() {
-        if (decisionSent) return;
+        if (decisionEnviada) return;
         selectedOption = 2;
-        labelDecisionMessage.setText("No");
+        selectedOptionText = "No creo estar preparado aún...";
+        updateDecisionDisplay();
+    }
+
+    private void updateDecisionDisplay() {
+        labelDecisionMessage.setText(selectedOptionText);
+        btnSendDecision.setDisable(false);
         btnSendDecision.setVisible(true);
+        updateOptionStyles();
+    }
+
+    private void clearSelection() {
+        selectedOption = 0;
+        selectedOptionText = "";
+        labelDecisionMessage.setText("");
+        btnSendDecision.setDisable(true);
+        btnSendDecision.setVisible(false);
+        updateOptionStyles();
+    }
+
+    private void updateOptionStyles() {
+        btnOptionYes.getStyleClass().remove("decision-selected");
+        btnOptionNo.getStyleClass().remove("decision-selected");
+
+        if (selectedOption == 1) btnOptionYes.getStyleClass().add("decision-selected");
+        if (selectedOption == 2) btnOptionNo.getStyleClass().add("decision-selected");
+    }
+
+    private void styleOptionButtons() {
+        if (!btnOptionYes.getStyleClass().contains("decision-btn"))
+            btnOptionYes.getStyleClass().add("decision-btn");
+        if (!btnOptionNo.getStyleClass().contains("decision-btn"))
+            btnOptionNo.getStyleClass().add("decision-btn");
     }
 
     @FXML
     private void onSendDecisionClick() {
-        if (selectedOption == 0) return;
-        decisionSent = true;
-        addMessageAnimated("Tú", labelDecisionMessage.getText(),
-                DEFAULT_PLAYER_AVATAR, null);
+        if (selectedOption == 0 || decisionEnviada) return;
+
+        decisionEnviada = true;
+
+        addMessageAnimated("Tú", selectedOptionText, AVATAR_PLAYER, null);
+
         btnOptionYes.setDisable(true);
         btnOptionNo.setDisable(true);
-        btnSendDecision.setVisible(false);
-        System.out.println("MVC -> decisión enviada = " + selectedOption);
+
+        labelDecisionMessage.setText("");
+
+        System.out.println("Decision enviada al engine -> codigo: "
+                + selectedOption + ", texto: " + selectedOptionText);
     }
 
     // ================================================================
@@ -190,6 +225,7 @@ public class PrincipalController implements Initializable {
     // ================================================================
     private void addMessageAnimated(String sender, String text,
                                     String avatarPath, String imgPath) {
+
         HBox row = new HBox();
         row.setAlignment(sender.equalsIgnoreCase("Tú")
                 ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
@@ -197,6 +233,7 @@ public class PrincipalController implements Initializable {
         row.setPadding(new Insets(6));
 
         ImageView avatar = makeAvatar(avatarPath);
+
         VBox bubble = new VBox();
         bubble.setSpacing(5);
         bubble.setMaxWidth(500);
@@ -206,9 +243,11 @@ public class PrincipalController implements Initializable {
 
         Label lblSender = new Label(sender);
         lblSender.getStyleClass().add("label-usuario");
+
         Label lblText = new Label(text);
         lblText.setWrapText(true);
         lblText.getStyleClass().add("label-mensaje");
+
         bubble.getChildren().addAll(lblSender, lblText);
 
         if (imgPath != null && !imgPath.isEmpty()) {
@@ -229,14 +268,17 @@ public class PrincipalController implements Initializable {
 
         FadeTransition ft = new FadeTransition(Duration.millis(250), row);
         ft.setFromValue(0); ft.setToValue(1);
+
         TranslateTransition tt = new TranslateTransition(Duration.millis(250), row);
         tt.setFromY(12); tt.setToY(0);
+
         new SequentialTransition(ft, tt).play();
     }
 
     private ImageView makeAvatar(String path) {
         Image img = safeLoadImage(path);
         if (img == null) img = safeLoadImage(FALLBACK_AVATAR);
+
         ImageView iv = new ImageView(img);
         iv.setFitWidth(44);
         iv.setFitHeight(44);
@@ -245,31 +287,16 @@ public class PrincipalController implements Initializable {
     }
 
     private Image safeLoadImage(String path) {
-        if (path == null || path.isEmpty()) {
-            return null;
-        }
+        if (path == null || path.isEmpty()) return null;
+
         try {
-            // Asegurar que la ruta empieza con /
-            if (!path.startsWith("/")) {
-                path = "/" + path;
-            }
+            if (!path.startsWith("/")) path = "/" + path;
             InputStream is = getClass().getResourceAsStream(path);
-            if (is != null) {
-                return new Image(is);
-            } else {
-                System.err.println("No se pudo cargar imagen: " + path);
-            }
+            if (is != null) return new Image(is);
+            System.err.println("No se pudo cargar imagen: " + path);
         } catch (Exception e) {
             System.err.println("Error cargando imagen " + path + ": " + e.getMessage());
         }
         return null;
-    }
-
-    // Método para probar si se ven las estadísticas
-    public void testStats() {
-        setStatValue(1, 50);
-        setStatValue(2, 75);
-        setStatValue(3, 25);
-        setStatValue(4, 100);
     }
 }
