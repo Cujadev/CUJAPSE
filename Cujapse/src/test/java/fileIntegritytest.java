@@ -63,22 +63,13 @@ public class fileIntegritytest {
         RandomAccessFile raf = FileReaders.openFile(Game.getInstance().getPersonajesFichero());
         try{
             int cant = raf.readInt();
-            for (int i = 0; i < 1; i++){
+            for (int i = 0; i < cant; i++){
                 long ptr = raf.getFilePointer();
                 int tam = raf.readInt();
                 byte[] string = new byte[tam];
                 raf.read(string);
                 GameCharacter c = (GameCharacter) Convert.toObject(string);
-                RandomAccessFile raf2 = FileReaders.openFile(FileReaders.returnFile(c.getDialoguesPath()));
-                int cantD = raf2.readInt();
-                for (int j = 0; i < cantD; i ++){
-                    tam = raf2.readInt();
-                    byte [] stringD = new byte[tam];
-                    raf2.read(stringD);
-                    Dialogue d = (Dialogue) Convert.toObject(stringD);
-                    System.out.println("El id del dialogo es: " + d.getId() + "\n" + d.getContenido());
-                }
-                FileReaders.closeFile(raf2);
+                System.out.println(c.getDialoguesPath() + " "+ c.getImagePath() + " " + c.getName());
             }
             FileWriters.closeFile(raf);
         } catch (IOException e) {

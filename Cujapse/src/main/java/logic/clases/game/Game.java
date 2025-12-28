@@ -27,7 +27,7 @@ public class Game {
         events = new LinkedList<>();
         eventQueue = new ArrayDeque<>();
         scenary = new Scenary();
-        mainCharacter  = new PrincipalCharacter("0","User",null,"/data/main_character/principal_dialogues.dat","/data/main_character/consecuencias.dat");
+        mainCharacter  = new PrincipalCharacter("0","User","/classes/visualResources/personajes/player.png","/data/main_character/principal_dialogues.dat","/data/main_character/consecuencias.dat");
     }
 
     //====Singleton====
