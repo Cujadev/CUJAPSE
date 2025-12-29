@@ -11,15 +11,16 @@ import logic.clases.event.Event;
 import logic.clases.event.Situation;
 
 import javafx.scene.image.Image;
-import javax.sound.sampled.*;
+
 import java.io.File;
 import java.io.RandomAccessFile;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Scenary implements ChargerMenssage {
     private Event event;
     private ArrayList<String> deathCasesPath; //Es un arraylist con las direcciones de los casos de muerte
-    private File deadMensages;
+    private File deadMenssages;
 
     // Pedir al evento dado una selección una situación
     // Poder dar al MVC la imagen a cargar
@@ -31,13 +32,12 @@ public class Scenary implements ChargerMenssage {
     }
 
     /// ==== Getters and Setters ====
-    public Event getEvento() {
+    public Event getEvent() {
         return event;
     }
 
-    public void setEvento() {
-        Game g = Game.getInstance();
-        this.event = g.getNextEvent();
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     public ArrayList<String> getDeathCasesPath() {
@@ -71,21 +71,22 @@ public class Scenary implements ChargerMenssage {
         Game game = Game.getInstance();
         Situation s = event.getNextSituaion(0);//Se obtiene la situación actual
         GameCharacter c = game.findCharacter(s.getAssociation().getIdCharacter());//Se busca el personaje
-        return new Image(c.getImagePath());// se retorna la imagen con el imagepath
+        return convertStringToImage(c.getImagePath());
     }
     //Entregar la imagen del personaje principal
     public Image giveMainCharacterImage (){
         Game game = Game.getInstance();
-        PrincipalCharacter p = game.getMainCharacter();// Se  busca el personaje principal en el game
-        return new Image(p.getImagePath()); // Se crea la imagen con la referencia a esta
+        PrincipalCharacter p = game.getMainCharacter();// Se busca el personaje principal en el game
+        return convertStringToImage(p.getImagePath());
     }
     //Entregar la imagen del escenario
+
     public Image giveSceneryImage (){
-        return new Image(event.getImagePath());// Se retorna la imagen del evento
+        return convertStringToImage(event.getImagePath());
     }
 
     //Entregar estado del personaje
-    public boolean heroIsDeath (){
+    public boolean isHeroDeath(){
         PrincipalCharacter p = Game.getInstance().getMainCharacter();
         return p.isDead();//Verifica si el personaje murió
     }
@@ -109,7 +110,7 @@ public class Scenary implements ChargerMenssage {
     @Override
     public Dialogue ChargeDialogue(String id) {
         Dialogue result;
-        RandomAccessFile raf = FileReaders.openFile(deadMensages);
+        RandomAccessFile raf = FileReaders.openFile(deadMenssages);
         result = FileReaders.searchDialogue(id, raf);
         FileReaders.closeFile(raf);
         return result;
@@ -119,6 +120,20 @@ public class Scenary implements ChargerMenssage {
     }
     public String giveMainCharacterName(){
        return Game.getInstance().getMainCharacter().getName();
+    }
+    private Image convertStringToImage(String string){
+        Image i = null;
+        try {
+            URL imageUrl = getClass().getResource(string);
+            if (imageUrl == null){
+                throw new IllegalArgumentException("El archivo no existe");
+            }
+            i = new Image(imageUrl.toExternalForm());
+        }
+        catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
+        return i;
     }
 
 }

@@ -3,7 +3,6 @@ package main;
 import interfaz.auxiliars.Mensaje;
 import interfaz.controllers.PrincipalController;
 import interfaz.auxiliars.Evento;
-import interfaz.auxiliars.Mensaje;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -69,14 +68,14 @@ public class Main extends Application {
         // Mensaje 1: NPC - USANDO CONSTRUCTOR DE Message (ajusta parámetros)
         Mensaje msg1 = new Mensaje("Profesor",
                 "¡Hola! ¿Estás listo para el examen de mañana?",
-                "/visualResources/personajes/profesora.png",
+                "/visualResources/characters/profesora.png",
                 null);
         mensajes.add(msg1);
 
         // Mensaje 2: NPC con imagen
         Mensaje msg2 = new Mensaje("Amigo",
                 "Mira lo que encontré en internet, ¿no es genial?",
-                "/visualResources/personajes/fiestero.png",
+                "/visualResources/characters/fiestero.png",
                 "/visualResources/escenarios/fondoTutorial.jpg");
         mensajes.add(msg2);
 
