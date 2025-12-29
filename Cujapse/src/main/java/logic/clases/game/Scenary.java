@@ -37,8 +37,7 @@ public class Scenary implements ChargerMenssage {
     }
 
     public void setEvent(Event event) {
-        this.event = event;
-    }
+        this.event = event;    }
 
     public ArrayList<String> getDeathCasesPath() {
         return deathCasesPath;
