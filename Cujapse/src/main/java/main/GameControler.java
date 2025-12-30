@@ -48,36 +48,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void iniciarNuevaPartida() {
         System.out.println("Iniciando nueva partida...");
-        RandomAccessFile raf = FileWriters.openFile(Game.getInstance().getPersonajesFichero());
-        try {
-            int cant = raf.readInt();
-            for (int i = 0; i < cant; i++) {
-                long ptr = raf.getFilePointer();
-                int tam = raf.readInt();
-                byte[] string = new byte[tam];
-                raf.readFully(string);
-                GameCharacter c = (GameCharacter) Convert.toObject(string);
-                System.out.println(c.getDialoguesPath() + " " + c.getImagePath() + " " + c.getName());
-                if (i == 0){
-                    c.setDialoguesPath("/data/characters/dialogues/dialogues_1.dat");
-                }
-                if (i == 1){
-                    c.setDialoguesPath("/data/characters/dialogues/dialogues_2.dat");
-                }
-                if (i == 2){
-                    c.setDialoguesPath("/data/characters/dialogues/dialogues_3.dat");
-                }
-                byte[] data = Convert.toBytes(c);
-                raf.seek(ptr);
-                raf.writeInt(data.length);
-                raf.write(data);
-            }
-            FileWriters.closeFile(raf);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        showTutorial();
     }
 
     private void cargarPartida() {
