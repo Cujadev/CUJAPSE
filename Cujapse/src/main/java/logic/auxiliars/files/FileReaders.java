@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -87,6 +89,7 @@ public class FileReaders {
             for (int i = 0; i < cant && !found; i++){
                 int tam = raf.readInt();
                 byte[] string = new  byte[tam];
+                raf.read(string);
                 c = (Consecuence) Convert.toObject(string);
                 if (c.getId().equals(id)){
                     found = true;
@@ -121,6 +124,19 @@ public class FileReaders {
     }
     // Se crea un file
     public static File returnFile (String path){
-        return new File(path);
+        URL resourceUrl = FileReaders.class.getResource(path);
+        File f = null;
+        try {
+            if (resourceUrl == null){
+                throw new IllegalArgumentException("Resource not found: " + path);
+            }
+            f = new File(resourceUrl.toURI());
+        }
+        catch (IllegalArgumentException e){
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        return f;
     }
 }

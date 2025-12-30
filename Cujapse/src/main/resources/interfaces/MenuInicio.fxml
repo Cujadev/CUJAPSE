@@ -37,7 +37,7 @@
                            preserveRatio="false"
                            StackPane.alignment="CENTER">
                     <image>
-                        <Image url="@../visualResources/escenarios/FondoPantallaInicio.png"/>
+                        <Image url="@../visualResources/escenarios/fondoPantallaInicio.png"/>
                     </image>
                 </ImageView>
 
@@ -54,17 +54,20 @@
                         <Button fx:id="btnNuevaPartida"
                                 prefWidth="200" prefHeight="45"
                                 styleClass="btn-menu-principal"
-                                text="Nueva Partida"/>
+                                text="Nueva Partida"
+                                onAction="#onNuevaPartidaClick"/>
 
                         <Button fx:id="btnCargarPartida"
                                 prefWidth="200" prefHeight="45"
                                 styleClass="btn-menu-principal"
-                                text="Cargar Partida"/>
+                                text="Cargar Partida"
+                                onAction="#onCargarPartidaClick"/>
 
                         <Button fx:id="btnSalir"
                                 prefWidth="200" prefHeight="45"
                                 styleClass="btn-menu-principal"
-                                text="Salir del Juego"/>
+                                text="Salir del Juego"
+                                onAction="#onSalirClick"/>
 
                     </VBox>
 

@@ -1,16 +1,14 @@
 package logic.clases.game;
 
 import logic.auxiliars.files.FileReaders;
+import logic.auxiliars.initializers.InitNewGame;
 import logic.clases.character.GameCharacter;
 import logic.clases.character.PrincipalCharacter;
 import logic.clases.event.Event;
 
 import java.io.File;
 import java.io.RandomAccessFile;
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 
 public class Game {
@@ -23,11 +21,11 @@ public class Game {
 
     //====Constructor====
     public Game() {
-        personajesFichero = new File("./src/main/resources/data/characters/personajes.dat");// Revisar si se crea
+        personajesFichero = FileReaders.returnFile("/data/characters/personajes.dat");// Revisar si se crea
         events = new LinkedList<>();
         eventQueue = new ArrayDeque<>();
         scenary = new Scenary();
-        mainCharacter  = new PrincipalCharacter("0","User",null,"./src/main/resources/data/main_character/principal_dialogues.dat","./src/main/resources/data/main_character/consecuencias.dat");
+        mainCharacter  = new PrincipalCharacter("0","User", "/visualResources/characters/player.png","/data/main_character/principal_dialogues.dat","/data/main_character/consecuencias.dat");
     }
 
     //====Singleton====
@@ -93,5 +91,10 @@ public class Game {
 
     public Event getNextEvent (){//Se van desencolando los eventos
         return eventQueue.poll();
+    }
+
+    public List<String> startNewGame(){
+        List <String> list = InitNewGame.giveTutorialDialogues();
+        return list;
     }
 }
