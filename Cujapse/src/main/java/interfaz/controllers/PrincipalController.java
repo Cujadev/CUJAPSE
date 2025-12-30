@@ -61,7 +61,7 @@ public class PrincipalController  {
     private String selectedOptionText = "";
     private boolean decisionEnviada = false;
 
-    private static final String AVATAR_PLAYER = "/visualResources/personajes/player.png";
+    private static final String AVATAR_PLAYER = "/visualResources/characters/player.png";
     private static final String FALLBACK_AVATAR = "/visualResources/iconos/default-avatar.png";
 
     private VisualTree visualTree;
