@@ -532,3 +532,49 @@
 .btn-menu-principal:pressed {
     -fx-background-color: linear-gradient(to bottom, #FFD966 0%, #FFCC33 100%);
 }
+
+/* ============================================================
+   CAJA DE DIÁLOGO DEL TUTORIAL
+   ============================================================ */
+
+.dialogo-caja {
+    -fx-background-color: linear-gradient(to bottom, #FFE680 0%, #F0B75E 100%);
+    -fx-background-radius: 18;
+    -fx-border-color: #8B4A00; /* Marrón fuerte */
+    -fx-border-width: 3;
+    -fx-border-radius: 18;
+    -fx-padding: 18 22;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.4, 0, 3);
+}
+
+/* Texto dentro del diálogo */
+.tutorial-text {
+    -fx-font-size: 18px;          /* Tamaño medio-grande */
+    -fx-text-fill: #2A0A05;       /* Negro/marrón oscuro */
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.4), 0, 0, 0, 1);
+}
+
+/* Flecha de continuar */
+.btn-continue-arrow {
+    -fx-background-color: transparent;   /* Sin naranja */
+    -fx-text-fill: #2A0A05;              /* Triángulo oscuro */
+    -fx-font-size: 36px;                 /* Triángulo grande */
+    -fx-font-weight: bold;
+
+    -fx-border-color: transparent;       /* Sin borde */
+    -fx-border-width: 0;
+
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}
+
+.btn-continue-arrow:hover {
+    -fx-background-color: rgba(255,255,255,0.15); /* Sutil, sin naranja */
+}
+
+.btn-continue-arrow:pressed {
+    -fx-background-color: rgba(0,0,0,0.10);       /* Ligero oscurecimiento */
+}
+
+
