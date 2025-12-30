@@ -27,7 +27,7 @@
         <!-- Personaje del tutorial -->
         <ImageView fitHeight="379" fitWidth="277" layoutX="14" layoutY="69" preserveRatio="true">
             <image>
-                <Image url="@../visualResources/personajes/Omar_tutorial.png"/>
+                <Image url="@../visualResources/characters/Omar_tutorial.png"/>
             </image>
         </ImageView>
 

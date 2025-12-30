@@ -17,13 +17,12 @@ public class InitNewGame {
     public static ArrayList<String> giveTutorialDialogues () {
         GameCharacter character = findGameCharacter("1");
         ArrayList <Dialogue> dialogues = getDialogues(character);
-        ArrayList <String> result = null;
+        ArrayList <String> result = new ArrayList<>();
         for (int i = 0; i < dialogues.size() - 3; i++) {
             result.add(dialogues.get(i).getContenido());
         }
-        return result;
+        return result.isEmpty() ? null : result;
     }
-
     private static GameCharacter findGameCharacter(String id){
         Game game = Game.getInstance();
         RandomAccessFile raf = FileReaders.openFile(game.getPersonajesFichero());
