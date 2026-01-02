@@ -14,7 +14,6 @@ import java.util.*;
 public class Game {
     private static Game game;
     private final File personajesFichero;
-    private LinkedList<Event> events;
     private final Queue<Event> eventQueue;
     private PrincipalCharacter mainCharacter;
     private Scenary scenary;
@@ -22,7 +21,6 @@ public class Game {
     //====Constructor====
     public Game() {
         personajesFichero = FileReaders.returnFile("/data/characters/personajes.dat");// Revisar si se crea
-        events = new LinkedList<>();
         eventQueue = new ArrayDeque<>();
         scenary = new Scenary();
         mainCharacter  = new PrincipalCharacter("0","User", "/visualResources/characters/player.png","/data/main_character/principal_dialogues.dat","/data/main_character/consecuencias.dat");
@@ -42,13 +40,6 @@ public class Game {
 
     public void setMainCharacter(PrincipalCharacter mainCharacter) {
         this.mainCharacter = mainCharacter;
-    }
-
-
-    public LinkedList<Event> getEventos() {return events;}
-
-    public void setEventos(LinkedList<Event> events) {
-        this.events = events;
     }
 
     public Queue<Event> getEventQueue() {
@@ -78,14 +69,32 @@ public class Game {
     }
 
     //Encolar los eventos
-    public void inQuequeEvents() {
-        LinkedList<Event> events = new LinkedList<>(this.events); //Crea una copia de la lincked list
+    public void inQuequeEvents(ArrayList <Event> events, boolean newGame) {
         Random random = new Random();// Randomizador
+        eventQueue.offer(events.get(0));
+        events.remove(0);
 
-        while (!events.isEmpty()) {// Siempre que no esté vacio
-            int index = random.nextInt(events.size() - 1);// Se busca un número random entre 0 y el tamaño del array
-            eventQueue.offer(events.get(index));// Se agrega a la cola de elementos ese elemento en el índice random
-            events.remove(index); // Se remueve de la lincked copia de eventos.
+        if (!events.isEmpty()) {
+            if (newGame) {
+                while (!events.isEmpty()) {// Siempre que no esté vacio
+                    int index = random.nextInt(events.size() - 1);// Se busca un número random entre 0 y el tamaño del array
+                    eventQueue.offer(events.get(index));// Se agrega a la cola de elementos ese elemento en el índice random
+                    events.remove(index); // Se remueve de la lincked copia de eventos.
+                }
+            }
+            else{
+                ArrayList <String> played = mainCharacter.getIdEvents();
+                while (!events.isEmpty()) {// Siempre que no esté vacio
+                    int index = random.nextInt(events.size() - 1);
+                    if (played.contains(events.get(index).getIdEvent())) {
+                        events.remove(index);
+                    }
+                    else{
+                        eventQueue.offer(events.get(index));
+                        events.remove(index);
+                    }
+                }
+            }
         }
     }
 
@@ -95,6 +104,8 @@ public class Game {
 
     public List<String> startNewGame(){
         List <String> list = InitNewGame.giveTutorialDialogues();
+        ArrayList <Event> events = new ArrayList();
+        events.add(InitNewGame.createFirstEvent());
         return list;
     }
 }

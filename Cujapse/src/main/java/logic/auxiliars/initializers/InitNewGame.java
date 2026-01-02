@@ -32,7 +32,7 @@ public class InitNewGame {
     }
     public static Event createFirstEvent(){
         ArrayList <Situation> situations = obtainSituations("1");
-        Event first = new Event(situations.get(0));
+        Event first = new Event("1",situations.get(0));
         DecisionNode <Situation> node1 = new DecisionNode<>(situations.get(1));
         DecisionNode <Situation> node2 = new DecisionNode<>(situations.get(2));
         first.addSituation(node1, first.getSituations().getRoot(), 1);
