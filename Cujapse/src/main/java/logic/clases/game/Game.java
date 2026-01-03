@@ -106,6 +106,7 @@ public class Game {
         List <String> list = InitNewGame.giveTutorialDialogues();
         ArrayList <Event> events = new ArrayList();
         events.add(InitNewGame.createFirstEvent());
+        inQuequeEvents(events, true);
         return list;
     }
 }
