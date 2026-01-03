@@ -14,6 +14,7 @@ module com.example.cujapse {
     exports logic.clases.character;
     exports logic.clases.event;
     exports logic.clases.game;
+    exports logic.auxiliars.initializers;
     // JavaFX necesita acceso con reflexión a controladores y FXML
     opens interfaz.controllers to javafx.fxml;
     opens interfaces to javafx.fxml;

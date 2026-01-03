@@ -64,7 +64,6 @@ public class Game {
         RandomAccessFile raf = FileReaders.openFile(personajesFichero);//Abre el fichero
         GameCharacter c = FileReaders.findCharacter(id, raf);//Busca el personaje en el fichero
         FileReaders.closeFile(raf);// cierra el fichero
-
         return c;
     }
 
@@ -72,7 +71,7 @@ public class Game {
     public void inQuequeEvents(ArrayList <Event> events, boolean newGame) {
         Random random = new Random();// Randomizador
         eventQueue.offer(events.get(0));
-        events.remove(0);
+        events.removeFirst();
 
         if (!events.isEmpty()) {
             if (newGame) {
