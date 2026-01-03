@@ -5,19 +5,24 @@ import logic.auxiliars.tree.DecisionTree;
 import logic.auxiliars.tree.Iterator.TreeIterator;
 
 public class Event {
+    private String event;
     private DecisionTree<Situation> situations;
     private TreeIterator<Situation> it;
     private String imagePath;
 
     /// ===Constructores
-    public Event(String imagePath) {
-        situations = new DecisionTree<>();
-        it = situations.treeIterator();
-
-    }
-    public Event (Situation root){
+    public Event(String id, String imagePath,Situation root) {
         situations = new DecisionTree<>(root);
         it = situations.treeIterator();
+        this.event = id;
+        this.imagePath = imagePath;
+
+    }
+
+    public Event (String id,Situation root){
+        situations = new DecisionTree<>(root);
+        it = situations.treeIterator();
+        event = id;
     }
     ///+++++++++++++++++++++++++++++++++++++++++++++++++++++
     ///
@@ -34,6 +39,14 @@ public class Event {
     public String getImagePath() {return imagePath;}
 
     public void setImagePath(String imagePath) {this.imagePath = imagePath;}
+
+    public String getIdEvent() {
+        return event;
+    }
+
+    public void setIdEvent(String event) {
+        this.event = event;
+    }
     ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     ///
     ///
