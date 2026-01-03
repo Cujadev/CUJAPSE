@@ -67,9 +67,14 @@ public class GameControler extends Application implements MenuInicioController.M
             TutorialController controller = loader.getController();
 
             controller.setDialogLines(game.startNewGame());
+            controller.startTutorial();
+
             Stage stage = new Stage();
             stage.setTitle("Tutorial");
             stage.setScene(new Scene(root, 600, 400));
+
+            controller.setListener(() -> stage.close());
+
             stage.show();
 
         }  catch (IOException e) {
