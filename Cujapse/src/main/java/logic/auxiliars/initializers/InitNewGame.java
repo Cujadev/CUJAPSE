@@ -14,6 +14,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class InitNewGame {
     private static final HashMap <String, String> tutorial = new HashMap<>();
@@ -61,12 +62,13 @@ public class InitNewGame {
     private static ArrayList <Situation> obtainSituations (String id){
         GameCharacter character = findGameCharacter(id);
         ArrayList <Situation> result = new ArrayList<>();
-        ArrayList <Dialogue> dialogues = new ArrayList<>();
+        ArrayList <Dialogue> dialogues;
 
         if (character.getId().equals("1")){
             ArrayList <Dialogue> tutorialDialogues = getDialogues(character);
             int lastIndex = tutorialDialogues.size() - 1;
-            dialogues = (ArrayList<Dialogue>) tutorialDialogues.subList(lastIndex - 3, lastIndex);
+            List<Dialogue> temporal = tutorialDialogues.subList(lastIndex - 3, lastIndex);
+            dialogues = new ArrayList<>(temporal);
             for (Dialogue dialogue : dialogues) {
                 result.add(generateSituation(dialogue.getId(), character));
             }
