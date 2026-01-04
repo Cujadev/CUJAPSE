@@ -6,10 +6,13 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import logic.clases.game.Game;
 import javafx.application.Application;
+import logic.clases.game.Scenary;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameControler extends Application implements MenuInicioController.MenuInicioListener {
     private Game game;
@@ -40,7 +43,9 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void iniciarNuevaPartida() {
         System.out.println("Iniciando nueva partida...");
-        showTutorial(()-> showPrincipal());
+        Scenary scene = game.getScenary();
+
+        showTutorial(()-> showPrincipal(scene.giveData(0)));
     }
 
     private void cargarPartida() {
@@ -75,11 +80,13 @@ public class GameControler extends Application implements MenuInicioController.M
             throw new RuntimeException(e);
         }
     }
-    private void showPrincipal() {
+    private void showPrincipal(PrincipalData data) {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Principal.fxml"));
             Parent root = loader.load();
             PrincipalController controller = loader.getController();
+            controller.setStats(data.getStats());
+            controller.loadEvent(data);
 
             Scene scene = new Scene(root, 900, 550);
             primaryStage.setTitle("Principal");
