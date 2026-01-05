@@ -1,4 +1,5 @@
 package main;
+
 import interfaz.controllers.MenuInicioController;
 import interfaz.controllers.PrincipalController;
 import interfaz.controllers.TutorialController;
@@ -7,12 +8,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
+import logic.auxiliars.files.Convert;
+import logic.auxiliars.files.FileReaders;
+import logic.auxiliars.files.FileWriters;
+import logic.clases.character.GameCharacter;
 import logic.clases.game.Game;
 import javafx.application.Application;
 import logic.clases.game.Scenary;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameControler extends Application implements MenuInicioController.MenuInicioListener {
     private Game game;
@@ -28,6 +35,7 @@ public class GameControler extends Application implements MenuInicioController.M
         primaryStage = stage;
         showMainMenu();
     }
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -42,12 +50,10 @@ public class GameControler extends Application implements MenuInicioController.M
     }
 
     private void iniciarNuevaPartida() {
-        System.out.println("Iniciando nueva partida...");
-        Scenary scene = game.getScenary();
-
-        showTutorial(()-> showPrincipal(scene.giveData(0)));
+        System.out.println("Iniciando partida");
+        Scenary scenary = game.getScenary();
+        showTutorial(()-> showPrincipal(scenary.giveData(0)));
     }
-
     private void cargarPartida() {
         System.out.println("Cargando partida...");
     }
@@ -57,7 +63,7 @@ public class GameControler extends Application implements MenuInicioController.M
         System.exit(0);
     }
 
-    private void showTutorial (Runnable onFinish)  {
+    private void showTutorial(Runnable onFinish) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Tutorial.fxml"));
             Parent root = loader.load();
@@ -71,17 +77,18 @@ public class GameControler extends Application implements MenuInicioController.M
             primaryStage.setScene(new Scene(root, 900, 550));
 
             controller.setListener(() -> {
-                    onFinish.run();
+                onFinish.run();
             });
 
             primaryStage.show();
 
-        }  catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     private void showPrincipal(PrincipalData data) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Principal.fxml"));
             Parent root = loader.load();
             PrincipalController controller = loader.getController();
@@ -94,16 +101,19 @@ public class GameControler extends Application implements MenuInicioController.M
 
             primaryStage.show();
 
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
+
     private void showMainMenu() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/MenuInicio.fxml"));
-            Parent root = loader.load(); MenuInicioController controller = loader.getController();
-            controller.setListener(this); Scene scene = new Scene(root, 972, 866);
+            Parent root = loader.load();
+            MenuInicioController controller = loader.getController();
+            controller.setListener(this);
+            Scene scene = new Scene(root, 972, 866);
 
             primaryStage.setTitle("Menú Inicio");
             primaryStage.setScene(scene);
