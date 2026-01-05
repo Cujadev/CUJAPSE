@@ -346,4 +346,10 @@ public class PrincipalController {
         void onDecisionSelected(int codigo);
     }
     public void setDecisionListener(DecisionListener listener) { this.decisionListener = listener; }
+    public void habilitarOpciones() {
+        btnOptionYes.setDisable(false);
+        btnOptionNo.setDisable(false);
+        labelDecisionMessage.setText("Elige de nuevo...");
+        decisionEnviada = false; // permitir otra elección }
+    }
     }
