@@ -17,15 +17,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class InitNewGame {
-    private static final HashMap <String, String> tutorial = new HashMap<>();
-    private static final HashMap <String, String> miguel = new HashMap<>();
-    private static final HashMap <String, String> omar = new HashMap<>();
+    private static  HashMap <String, String> tutorial = new HashMap<>();
+    private static  HashMap <String, String> miguel = new HashMap<>();
+    private static  HashMap <String, String> omar = new HashMap<>();
 
 
     static {
-        tutorial.put("1","1");
-        tutorial.put("2","0");
-        tutorial.put("3","0");
+        tutorial.put("20","1");
+        tutorial.put("21","1");
+        tutorial.put("22","1");
     }
     public static ArrayList<String> giveTutorialDialogues () {
         GameCharacter character = findGameCharacter("1");
@@ -94,6 +94,9 @@ public class InitNewGame {
         switch (character.getId()){
             case "1":{
                 map = tutorial;
+                tutorial.put("1","1");
+                tutorial.put("2","0");
+                tutorial.put("3","0");
                 break;
             }
             case "2":{
