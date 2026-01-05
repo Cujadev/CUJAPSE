@@ -23,10 +23,7 @@ import logic.auxiliars.tree.DecisionTree;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class PrincipalController {
@@ -91,6 +88,7 @@ public class PrincipalController {
     private VisualTree visualTree;
     private DecisionTree<?> logicTree;
     private DecisionNode<?> currentNode;
+    private DecisionListener decisionListener;
 
     private PrincipalData currentData;
 
@@ -178,10 +176,8 @@ public class PrincipalController {
         this.currentData = data;
 
         if (data != null && data.getMessages() != null) {
-            List<Menssage> messages = data.getMessages();
-            for (Menssage menssage : messages) {
-                addMessageAnimated(menssage.getNameAutor(), menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
-            }
+            Menssage menssage = data.getMessages().get(0);
+            addMessageAnimated(menssage.getNameAutor(), menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
         }
 
         labelDecisionMessage.setText("");
@@ -197,9 +193,9 @@ public class PrincipalController {
         if (decisionEnviada) return;
         selectedOption = 1;
         if (currentData != null && currentData.getMessages().size() > 2) {
-            selectedOptionText = currentData.getMessages().get(2).getText();
+            selectedOptionText = currentData.getMessages().get(1).getText();
         } else {
-            selectedOptionText = "No creo estar preparado aún..."; // fallback }
+            selectedOptionText = "Error, no ha cargado nada"; // fallback }
             updateDecisionDisplay();
         }
         updateDecisionDisplay();
@@ -212,9 +208,9 @@ public class PrincipalController {
         if (currentData != null && currentData.getMessages().size() > 2) {
             selectedOptionText = currentData.getMessages().get(2).getText();
         } else {
-            selectedOptionText = "No creo estar preparado aún..."; // fallback }
-            updateDecisionDisplay();
+            selectedOptionText = "Error, no ha cargado nada"; // fallback }
         }
+        updateDecisionDisplay();
     }
 
         private void updateDecisionDisplay () {
@@ -250,6 +246,7 @@ public class PrincipalController {
 
         @FXML
         private void onSendDecisionClick () {
+
             if (selectedOption == 0 || decisionEnviada) return;
 
             decisionEnviada = true;
@@ -261,8 +258,7 @@ public class PrincipalController {
 
             labelDecisionMessage.setText("");
 
-            System.out.println("Decision enviada al engine -> codigo: "
-                    + selectedOption + ", texto: " + selectedOptionText);
+            if (decisionListener != null) { decisionListener.onDecisionSelected(selectedOption); }
         }
 
         // ================================================================
@@ -346,4 +342,8 @@ public class PrincipalController {
             }
             return null;
         }
+    public interface DecisionListener {
+        void onDecisionSelected(int codigo);
+    }
+    public void setDecisionListener(DecisionListener listener) { this.decisionListener = listener; }
     }
