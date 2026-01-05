@@ -2,6 +2,8 @@ package logic.clases.game;
 
 
 import logic.auxiliars.chargers.ChargerMenssage;
+import logic.auxiliars.dataOfInterfaces.Menssage;
+import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import logic.auxiliars.files.FileReaders;
 import logic.clases.character.Answer;
 import logic.clases.character.Dialogue;
@@ -16,6 +18,7 @@ import java.io.File;
 import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Scenary implements ChargerMenssage {
     private Event event;
@@ -28,7 +31,6 @@ public class Scenary implements ChargerMenssage {
 
     /// ==== Constructor ====
     public Scenary (){
-
     }
 
     /// ==== Getters and Setters ====
@@ -50,39 +52,37 @@ public class Scenary implements ChargerMenssage {
     ///==== Métodos necesarios ====
 
     //====Entregar los diálogos====
-    public ArrayList<String> giveSituation(int branch){
+    private List<Menssage> generateMessages(int branch){
         Situation s = event.getNextSituaion(branch); //Se obtiene la situación
-        ArrayList <String> dialogues = new ArrayList<>();
+        List <Menssage> dialogues = new ArrayList<>();
         Dialogue seconDialogue = s.getCharacterDialogue(s.getAssociation().getIdCharacter());//Se carga el dialogo del personaje secundario
-        dialogues.add(seconDialogue.getContenido());
+        dialogues.add(new Menssage(seconDialogue.getContenido(),giveCharacterName(),findPathAvatarCharacter()));
         if (s.getAssociation().getIdAnswer() != null){//Si existe respuesta posible del jugador también se cargan
             Answer a = s.getPrincipalAnswers(s.getAssociation().getIdAnswer());
             Dialogue [] answers = a.getAnswers();
             for (Dialogue answer : answers) {
-                dialogues.add(answer.getContenido());
+                dialogues.add(new Menssage(answer.getContenido(),Game.getInstance().getMainCharacter().getName(),null));
             }
         }
         return dialogues;
     }
+    public PrincipalData giveData (int branch){
+        List <Menssage> dialogues = generateMessages(branch);
+        ArrayList <Integer> stats = findStats();
+        String scenary = findPathAvatarCharacter();
+        return new PrincipalData(dialogues, stats, scenary);
+    }
+
 
     //Entregar la imagen de personaje secundario
-    public Image giveImageCharacter(){
+    private String findPathAvatarCharacter(){
         Game game = Game.getInstance();
         Situation s = event.getNextSituaion(0);//Se obtiene la situación actual
         GameCharacter c = game.findCharacter(s.getAssociation().getIdCharacter());//Se busca el personaje
-        return convertStringToImage(c.getImagePath());
-    }
-    //Entregar la imagen del personaje principal
-    public Image giveMainCharacterImage (){
-        Game game = Game.getInstance();
-        PrincipalCharacter p = game.getMainCharacter();// Se busca el personaje principal en el game
-        return convertStringToImage(p.getImagePath());
+        return c.getImagePath();
     }
     //Entregar la imagen del escenario
-
-    public Image giveSceneryImage (){
-        return convertStringToImage(event.getImagePath());
-    }
+    private String findSceneryImagePath(){return event.getImagePath();}
 
     //Entregar estado del personaje
     public boolean isHeroDeath(){
@@ -105,6 +105,10 @@ public class Scenary implements ChargerMenssage {
 
         return result;
     }
+    public ArrayList <Integer> findStats(){
+        ArrayList<Integer> stats = Game.getInstance().getMainCharacter().getStats();
+        return stats;
+    }
 
     @Override
     public Dialogue ChargeDialogue(String id) {
@@ -114,13 +118,10 @@ public class Scenary implements ChargerMenssage {
         FileReaders.closeFile(raf);
         return result;
     }
-    public String giveCharacterName (){
+    private String giveCharacterName (){
         return  Game.getInstance().findCharacter(event.getNextSituaion(0).getAssociation().getIdCharacter()).getName();
     }
-    public String giveMainCharacterName(){
-       return Game.getInstance().getMainCharacter().getName();
-    }
-    private Image convertStringToImage(String string){
+    /*private Image convertStringToImage(String string){
         Image i = null;
         try {
             URL imageUrl = getClass().getResource(string);
@@ -133,6 +134,6 @@ public class Scenary implements ChargerMenssage {
             e.printStackTrace();
         }
         return i;
-    }
+    }*/
 
 }

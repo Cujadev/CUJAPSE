@@ -1,7 +1,7 @@
 package interfaz.controllers;
 
-import interfaz.auxiliars.Evento;
-import interfaz.auxiliars.Mensaje;
+import logic.auxiliars.dataOfInterfaces.Menssage;
+import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import interfaz.auxiliars.VisualTree;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
@@ -23,6 +23,9 @@ import logic.auxiliars.tree.DecisionTree;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PrincipalController  {
@@ -95,22 +98,29 @@ public class PrincipalController  {
     // ================================================================
     //                         ESTADISTICAS (UI)
     // ================================================================
-    public void setStatValue(int index, int value) {
+    private void setStatValue(int index, int value) {
         if (value < 0) value = 0;
         if (value > 100) value = 100;
 
         Label target = switch (index) {
-            case 1 -> labelDineroTexto;
-            case 2 -> labelCafeinaTexto;
+            case 1 -> labelCafeinaTexto;
+            case 2 -> labelEstudiosTexto;
             case 3 -> labelPopularidadTexto;
-            case 4 -> labelEstudiosTexto;
+            case 4 -> labelDineroTexto;
             default -> null;
         };
+
 
         if (target != null) {
             target.setText(value + "%");
             System.out.println("Actualizando estadística " + index + " a " + value + "%");
         }
+    }
+    public void setStats(ArrayList<Integer> stats) {
+        setStatValue(1, stats.get(0));
+        setStatValue(2, stats.get(1));
+        setStatValue(3, stats.get(2));
+        setStatValue(4, stats.get(3));
     }
 
     // ================================================================
@@ -138,13 +148,14 @@ public class PrincipalController  {
     // ================================================================
     //                              CHAT
     // ================================================================
-    public void loadEvent(Evento evento) {
+    public void loadEvent(PrincipalData data) {
         vboxMensajes.getChildren().clear();
         decisionEnviada = false;
 
-        if (evento != null && evento.getMensajes() != null) {
-            for (Mensaje m : evento.getMensajes()) {
-                addMessageAnimated(m.autor, m.texto, m.avatarPath, m.imagePath);
+        if (data != null && data.getMessages() != null) {
+            List<Menssage> messages = data.getMessages();
+            for (Menssage menssage : messages) {
+                addMessageAnimated(menssage.getNameAutor(),menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
             }
         }
 
@@ -238,7 +249,7 @@ public class PrincipalController  {
         bubble.setSpacing(5);
         bubble.setMaxWidth(500);
         bubble.getStyleClass().add(
-                sender.equalsIgnoreCase("Tú") ? "burbuja-player" : "burbuja-npc"
+                sender.equalsIgnoreCase("User") ? "burbuja-player" : "burbuja-npc"
         );
 
         Label lblSender = new Label(sender);

@@ -10,11 +10,6 @@ public class ChargerSituation_Dialogue {
         setIdDialogueCharacter(idDialogueCharacter);
         setIdAnswer(idAnswer);
     }
-    public ChargerSituation_Dialogue(String idCharacter, String idDialogueCharacter) {
-        setIdCharacter(idCharacter);
-        setIdDialogueCharacter(idDialogueCharacter);
-        setIdAnswer(null);
-    }
 
     public String getIdCharacter() {
         return idCharacter;
