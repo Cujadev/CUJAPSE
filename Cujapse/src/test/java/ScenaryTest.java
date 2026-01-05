@@ -30,7 +30,7 @@ public class ScenaryTest {
     @Test
     public void checkEventInescenary (){
         Event event = scenary.getEvent();
-        Situation s =event.getNextSituaion(0);
+        Situation s =event.getNextSituaion(2);
         ChargerSituation_Dialogue ch = s.getAssociation();
 
         System.out.println(ch.getIdAnswer());
