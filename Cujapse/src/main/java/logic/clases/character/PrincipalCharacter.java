@@ -9,8 +9,9 @@ import java.util.Iterator;
 public class PrincipalCharacter extends GameCharacter {
 
     private final ArrayList<Answer> answers;
-    private final ArrayList<Integer> stats;
+    private  ArrayList<Integer> stats;
     private final String consequences;
+    private ArrayList <String> idEvents;
 
     /// ==== Constructor ====
     public PrincipalCharacter(String id, String name, String imagenPath, String dialoguePath, String consequensesPath) {
@@ -27,6 +28,26 @@ public class PrincipalCharacter extends GameCharacter {
     /// Getters And Setters
     public String getConsequences() {
         return consequences;
+    }
+
+    public ArrayList<String> getIdEvents() {
+        return idEvents;
+    }
+
+    public void setIdEvents(ArrayList<String> idEvents) {
+        this.idEvents = idEvents;
+    }
+    public void addIdEvent(String event){
+        idEvents.add(event);
+    }
+
+
+    public ArrayList<Integer> getStats() {
+        return stats;
+    }
+
+    public void setStats(ArrayList<Integer> stats) {
+        this.stats = stats;
     }
 
     /// ==== Métodos útiles ====
