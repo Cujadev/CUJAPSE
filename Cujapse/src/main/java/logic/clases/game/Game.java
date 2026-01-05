@@ -106,6 +106,7 @@ public class Game {
         ArrayList <Event> events = new ArrayList();
         events.add(InitNewGame.createFirstEvent());
         inQuequeEvents(events, true);
+        scenary.setEvent(getNextEvent());
         return list;
     }
 }

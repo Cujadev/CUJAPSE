@@ -22,6 +22,11 @@ public class InitNewGame {
     private static final HashMap <String, String> omar = new HashMap<>();
 
 
+    static {
+        tutorial.put("1","1");
+        tutorial.put("2","0");
+        tutorial.put("3","0");
+    }
     public static ArrayList<String> giveTutorialDialogues () {
         GameCharacter character = findGameCharacter("1");
         ArrayList <Dialogue> dialogues = getDialogues(character);
@@ -66,7 +71,7 @@ public class InitNewGame {
 
         if (character.getId().equals("1")){
             ArrayList <Dialogue> tutorialDialogues = getDialogues(character);
-            int lastIndex = tutorialDialogues.size() - 1;
+            int lastIndex = tutorialDialogues.size();
             List<Dialogue> temporal = tutorialDialogues.subList(lastIndex - 3, lastIndex);
             dialogues = new ArrayList<>(temporal);
             for (Dialogue dialogue : dialogues) {

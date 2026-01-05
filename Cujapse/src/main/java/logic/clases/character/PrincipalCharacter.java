@@ -41,6 +41,15 @@ public class PrincipalCharacter extends GameCharacter {
         idEvents.add(event);
     }
 
+
+    public ArrayList<Integer> getStats() {
+        return stats;
+    }
+
+    public void setStats(ArrayList<Integer> stats) {
+        this.stats = stats;
+    }
+
     /// ==== Métodos útiles ====
     public void setAnswers() throws IllegalArgumentException {
         RandomAccessFile draf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));//Abre el fichero de dialogos
