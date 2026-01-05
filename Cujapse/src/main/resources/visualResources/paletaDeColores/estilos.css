@@ -576,5 +576,12 @@
 .btn-continue-arrow:pressed {
     -fx-background-color: rgba(0,0,0,0.10);       /* Ligero oscurecimiento */
 }
+.fondo-inicio {
+    -fx-background-image: url("/visualResources/escenarios/fondoPantallaInicio.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
 
 
