@@ -133,7 +133,11 @@ public class MenuInicioController {
     //  LISTENER
     // ============================================================
 
+<<<<<<< Updated upstream
     public void setListener(MenuInicioListener listener) {this.listener = listener;}
+=======
+    public void setListener(MenuInicioListener listener) { this.listener=listener;}
+>>>>>>> Stashed changes
 
     public interface MenuInicioListener {
         void onMenuOptionSelected(int codigo);
