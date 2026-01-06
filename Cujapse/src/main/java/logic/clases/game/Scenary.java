@@ -69,7 +69,7 @@ public class Scenary implements ChargerMenssage {
     public PrincipalData giveData (int branch){
         List <Menssage> dialogues = generateMessages(branch);
         ArrayList <Integer> stats = findStats();
-        String scenary = findPathAvatarCharacter();
+        String scenary = findSceneryImagePath();
         return new PrincipalData(dialogues, stats, scenary);
     }
 

@@ -24,38 +24,56 @@ import logic.auxiliars.tree.DecisionTree;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class PrincipalController  {
+public class PrincipalController {
 
     // ================================================================
     //                        FXML ELEMENTOS
     // ================================================================
-    @FXML private VBox panelIzquierdo;
-    @FXML private VBox panelChat;
-    @FXML private VBox vboxMensajes;
-    @FXML private ScrollPane scrollChat;
+    @FXML
+    private VBox panelIzquierdo;
+    @FXML
+    private VBox panelChat;
+    @FXML
+    private VBox vboxMensajes;
+    @FXML
+    private ScrollPane scrollChat;
 
-    @FXML private HBox statsTopBar;
-    @FXML private HBox labelDinero;
-    @FXML private HBox labelCafeina;
-    @FXML private HBox labelPopularidad;
-    @FXML private HBox labelEstudios;
+    @FXML
+    private HBox statsTopBar;
+    @FXML
+    private HBox labelDinero;
+    @FXML
+    private HBox labelCafeina;
+    @FXML
+    private HBox labelPopularidad;
+    @FXML
+    private HBox labelEstudios;
 
-    @FXML private Label labelDineroTexto;
-    @FXML private Label labelCafeinaTexto;
-    @FXML private Label labelPopularidadTexto;
-    @FXML private Label labelEstudiosTexto;
+    @FXML
+    private Label labelDineroTexto;
+    @FXML
+    private Label labelCafeinaTexto;
+    @FXML
+    private Label labelPopularidadTexto;
+    @FXML
+    private Label labelEstudiosTexto;
 
-    @FXML private AnchorPane decisionArea;
-    @FXML private VBox decisionBox;
-    @FXML private Label labelDecisionMessage;
-    @FXML private Button btnOptionYes;
-    @FXML private Button btnOptionNo;
-    @FXML private Button btnSendDecision;
-    @FXML private VBox panelArbol;
+    @FXML
+    private AnchorPane decisionArea;
+    @FXML
+    private VBox decisionBox;
+    @FXML
+    private Label labelDecisionMessage;
+    @FXML
+    private Button btnOptionYes;
+    @FXML
+    private Button btnOptionNo;
+    @FXML
+    private Button btnSendDecision;
+    @FXML
+    private VBox panelArbol;
 
     // ================================================================
     //                        VARIABLES INTERNAS
@@ -70,6 +88,9 @@ public class PrincipalController  {
     private VisualTree visualTree;
     private DecisionTree<?> logicTree;
     private DecisionNode<?> currentNode;
+    private DecisionListener decisionListener;
+
+    private PrincipalData currentData;
 
     // ================================================================
     //                           INITIALIZE
@@ -116,6 +137,7 @@ public class PrincipalController  {
             System.out.println("Actualizando estadística " + index + " a " + value + "%");
         }
     }
+
     public void setStats(ArrayList<Integer> stats) {
         setStatValue(1, stats.get(0));
         setStatValue(2, stats.get(1));
@@ -151,12 +173,11 @@ public class PrincipalController  {
     public void loadEvent(PrincipalData data) {
         vboxMensajes.getChildren().clear();
         decisionEnviada = false;
+        this.currentData = data;
 
         if (data != null && data.getMessages() != null) {
-            List<Menssage> messages = data.getMessages();
-            for (Menssage menssage : messages) {
-                addMessageAnimated(menssage.getNameAutor(),menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
-            }
+            Menssage menssage = data.getMessages().get(0);
+            addMessageAnimated(menssage.getNameAutor(), menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
         }
 
         labelDecisionMessage.setText("");
@@ -171,7 +192,12 @@ public class PrincipalController  {
     private void onOptionYesClick() {
         if (decisionEnviada) return;
         selectedOption = 1;
-        selectedOptionText = "¡Claro que sí, estoy listo!";
+        if (currentData != null && currentData.getMessages().size() > 2) {
+            selectedOptionText = currentData.getMessages().get(1).getText();
+        } else {
+            selectedOptionText = "Error, no ha cargado nada"; // fallback }
+            updateDecisionDisplay();
+        }
         updateDecisionDisplay();
     }
 
@@ -179,135 +205,151 @@ public class PrincipalController  {
     private void onOptionNoClick() {
         if (decisionEnviada) return;
         selectedOption = 2;
-        selectedOptionText = "No creo estar preparado aún...";
+        if (currentData != null && currentData.getMessages().size() > 2) {
+            selectedOptionText = currentData.getMessages().get(2).getText();
+        } else {
+            selectedOptionText = "Error, no ha cargado nada"; // fallback }
+        }
         updateDecisionDisplay();
     }
 
-    private void updateDecisionDisplay() {
-        labelDecisionMessage.setText(selectedOptionText);
-        btnSendDecision.setDisable(false);
-        btnSendDecision.setVisible(true);
-        updateOptionStyles();
-    }
-
-    private void clearSelection() {
-        selectedOption = 0;
-        selectedOptionText = "";
-        labelDecisionMessage.setText("");
-        btnSendDecision.setDisable(true);
-        btnSendDecision.setVisible(false);
-        updateOptionStyles();
-    }
-
-    private void updateOptionStyles() {
-        btnOptionYes.getStyleClass().remove("decision-selected");
-        btnOptionNo.getStyleClass().remove("decision-selected");
-
-        if (selectedOption == 1) btnOptionYes.getStyleClass().add("decision-selected");
-        if (selectedOption == 2) btnOptionNo.getStyleClass().add("decision-selected");
-    }
-
-    private void styleOptionButtons() {
-        if (!btnOptionYes.getStyleClass().contains("decision-btn"))
-            btnOptionYes.getStyleClass().add("decision-btn");
-        if (!btnOptionNo.getStyleClass().contains("decision-btn"))
-            btnOptionNo.getStyleClass().add("decision-btn");
-    }
-
-    @FXML
-    private void onSendDecisionClick() {
-        if (selectedOption == 0 || decisionEnviada) return;
-
-        decisionEnviada = true;
-
-        addMessageAnimated("Tú", selectedOptionText, AVATAR_PLAYER, null);
-
-        btnOptionYes.setDisable(true);
-        btnOptionNo.setDisable(true);
-
-        labelDecisionMessage.setText("");
-
-        System.out.println("Decision enviada al engine -> codigo: "
-                + selectedOption + ", texto: " + selectedOptionText);
-    }
-
-    // ================================================================
-    //                    MENSAJES CON ANIMACIÓN
-    // ================================================================
-    private void addMessageAnimated(String sender, String text,
-                                    String avatarPath, String imgPath) {
-
-        HBox row = new HBox();
-        row.setAlignment(sender.equalsIgnoreCase("Tú")
-                ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
-        row.setSpacing(10);
-        row.setPadding(new Insets(6));
-
-        ImageView avatar = makeAvatar(avatarPath);
-
-        VBox bubble = new VBox();
-        bubble.setSpacing(5);
-        bubble.setMaxWidth(500);
-        bubble.getStyleClass().add(
-                sender.equalsIgnoreCase("User") ? "burbuja-player" : "burbuja-npc"
-        );
-
-        Label lblSender = new Label(sender);
-        lblSender.getStyleClass().add("label-usuario");
-
-        Label lblText = new Label(text);
-        lblText.setWrapText(true);
-        lblText.getStyleClass().add("label-mensaje");
-
-        bubble.getChildren().addAll(lblSender, lblText);
-
-        if (imgPath != null && !imgPath.isEmpty()) {
-            ImageView iv = new ImageView(safeLoadImage(imgPath));
-            iv.setFitWidth(300);
-            iv.setPreserveRatio(true);
-            bubble.getChildren().add(iv);
+        private void updateDecisionDisplay () {
+            labelDecisionMessage.setText(selectedOptionText);
+            btnSendDecision.setDisable(false);
+            btnSendDecision.setVisible(true);
+            updateOptionStyles();
         }
 
-        if (sender.equalsIgnoreCase("Tú"))
-            row.getChildren().addAll(bubble, avatar);
-        else
-            row.getChildren().addAll(avatar, bubble);
-
-        row.setOpacity(0);
-        row.setTranslateY(12);
-        vboxMensajes.getChildren().add(row);
-
-        FadeTransition ft = new FadeTransition(Duration.millis(250), row);
-        ft.setFromValue(0); ft.setToValue(1);
-
-        TranslateTransition tt = new TranslateTransition(Duration.millis(250), row);
-        tt.setFromY(12); tt.setToY(0);
-
-        new SequentialTransition(ft, tt).play();
-    }
-
-    private ImageView makeAvatar(String path) {
-        Image img = safeLoadImage(path);
-        if (img == null) img = safeLoadImage(FALLBACK_AVATAR);
-
-        ImageView iv = new ImageView(img);
-        iv.setFitWidth(44);
-        iv.setFitHeight(44);
-        iv.setClip(new Circle(22, 22, 22));
-        return iv;
-    }
-
-    private Image safeLoadImage(String path) {
-        if (path == null || path.isEmpty()) return null;
-
-        try {
-            if (!path.startsWith("/")) path = "/" + path;
-            InputStream is = getClass().getResourceAsStream(path);
-            if (is != null) return new Image(is);
-            System.err.println("No se pudo cargar imagen: " + path);
-        } catch (Exception e) {
-            System.err.println("Error cargando imagen " + path + ": " + e.getMessage());
+        private void clearSelection () {
+            selectedOption = 0;
+            selectedOptionText = "";
+            labelDecisionMessage.setText("");
+            btnSendDecision.setDisable(true);
+            btnSendDecision.setVisible(false);
+            updateOptionStyles();
         }
-        return null;
+
+        private void updateOptionStyles () {
+            btnOptionYes.getStyleClass().remove("decision-selected");
+            btnOptionNo.getStyleClass().remove("decision-selected");
+
+            if (selectedOption == 1) btnOptionYes.getStyleClass().add("decision-selected");
+            if (selectedOption == 2) btnOptionNo.getStyleClass().add("decision-selected");
+        }
+
+        private void styleOptionButtons () {
+            if (!btnOptionYes.getStyleClass().contains("decision-btn"))
+                btnOptionYes.getStyleClass().add("decision-btn");
+            if (!btnOptionNo.getStyleClass().contains("decision-btn"))
+                btnOptionNo.getStyleClass().add("decision-btn");
+        }
+
+        @FXML
+        private void onSendDecisionClick () {
+
+            if (selectedOption == 0 || decisionEnviada) return;
+
+            decisionEnviada = true;
+
+            addMessageAnimated("Tú", selectedOptionText, AVATAR_PLAYER, null);
+
+            btnOptionYes.setDisable(true);
+            btnOptionNo.setDisable(true);
+
+            labelDecisionMessage.setText("");
+
+            if (decisionListener != null) { decisionListener.onDecisionSelected(selectedOption); }
+        }
+
+        // ================================================================
+        //                    MENSAJES CON ANIMACIÓN
+        // ================================================================
+        private void addMessageAnimated (String sender, String text,
+                String avatarPath, String imgPath){
+
+            HBox row = new HBox();
+            row.setAlignment(sender.equalsIgnoreCase("Tú")
+                    ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
+            row.setSpacing(10);
+            row.setPadding(new Insets(6));
+
+            ImageView avatar = makeAvatar(avatarPath);
+
+            VBox bubble = new VBox();
+            bubble.setSpacing(5);
+            bubble.setMaxWidth(500);
+            bubble.getStyleClass().add(
+                    sender.equalsIgnoreCase("User") ? "burbuja-player" : "burbuja-npc"
+            );
+
+            Label lblSender = new Label(sender);
+            lblSender.getStyleClass().add("label-usuario");
+
+            Label lblText = new Label(text);
+            lblText.setWrapText(true);
+            lblText.getStyleClass().add("label-mensaje");
+
+            bubble.getChildren().addAll(lblSender, lblText);
+
+            if (imgPath != null && !imgPath.isEmpty()) {
+                ImageView iv = new ImageView(safeLoadImage(imgPath));
+                iv.setFitWidth(300);
+                iv.setPreserveRatio(true);
+                bubble.getChildren().add(iv);
+            }
+
+            if (sender.equalsIgnoreCase("Tú"))
+                row.getChildren().addAll(bubble, avatar);
+            else
+                row.getChildren().addAll(avatar, bubble);
+
+            row.setOpacity(0);
+            row.setTranslateY(12);
+            vboxMensajes.getChildren().add(row);
+
+            FadeTransition ft = new FadeTransition(Duration.millis(250), row);
+            ft.setFromValue(0);
+            ft.setToValue(1);
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(250), row);
+            tt.setFromY(12);
+            tt.setToY(0);
+
+            new SequentialTransition(ft, tt).play();
+        }
+
+        private ImageView makeAvatar (String path){
+            Image img = safeLoadImage(path);
+            if (img == null) img = safeLoadImage(FALLBACK_AVATAR);
+
+            ImageView iv = new ImageView(img);
+            iv.setFitWidth(44);
+            iv.setFitHeight(44);
+            iv.setClip(new Circle(22, 22, 22));
+            return iv;
+        }
+
+        private Image safeLoadImage (String path){
+            if (path == null || path.isEmpty()) return null;
+
+            try {
+                if (!path.startsWith("/")) path = "/" + path;
+                InputStream is = getClass().getResourceAsStream(path);
+                if (is != null) return new Image(is);
+                System.err.println("No se pudo cargar imagen: " + path);
+            } catch (Exception e) {
+                System.err.println("Error cargando imagen " + path + ": " + e.getMessage());
+            }
+            return null;
+        }
+    public interface DecisionListener {
+        void onDecisionSelected(int codigo);
     }
-}
+    public void setDecisionListener(DecisionListener listener) { this.decisionListener = listener; }
+    public void habilitarOpciones() {
+        btnOptionYes.setDisable(false);
+        btnOptionNo.setDisable(false);
+        labelDecisionMessage.setText("Elige de nuevo...");
+        decisionEnviada = false; // permitir otra elección }
+    }
+    }

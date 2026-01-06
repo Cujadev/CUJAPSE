@@ -23,9 +23,9 @@ public class InitNewGame {
 
 
     static {
-        tutorial.put("1","1");
-        tutorial.put("2","0");
-        tutorial.put("3","0");
+        tutorial.put("20","1");
+        tutorial.put("21","1");
+        tutorial.put("22","1");
     }
     public static ArrayList<String> giveTutorialDialogues () {
         GameCharacter character = findGameCharacter("1");

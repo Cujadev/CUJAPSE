@@ -121,6 +121,8 @@
                             <Button fx:id="btnOptionYes" onAction="#onOptionYesClick" prefWidth="120" styleClass="decision-btn" text="Sí" />
 
                             <Button fx:id="btnOptionNo" onAction="#onOptionNoClick" prefWidth="120" styleClass="decision-btn" text="No" />
+
+                            <Button fx:id="btnSendDecision" onAction="#onSendDecisionClick" prefWidth="120" styleClass="decision-btn" text="Enviar" />
                         </HBox>
 
                     </VBox>

@@ -1,4 +1,5 @@
 package main;
+
 import interfaz.controllers.MenuInicioController;
 import interfaz.controllers.PrincipalController;
 import interfaz.controllers.TutorialController;
@@ -7,20 +8,38 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
+import logic.auxiliars.tree.DecisionTree;
+import logic.clases.event.Situation;
 import logic.clases.game.Game;
 import javafx.application.Application;
 import logic.clases.game.Scenary;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.security.Principal;
 
-public class GameControler extends Application implements MenuInicioController.MenuInicioListener {
+public class GameControler extends Application implements MenuInicioController.MenuInicioListener, PrincipalController.DecisionListener {
     private Game game;
     private Stage primaryStage;
+    private static GameControler intance;
+    private Integer ultimaDesicion;
+    private PrincipalController principalController;
+    private boolean inTutorial;
+    private PrincipalData rep;
 
     public GameControler() {
         this.game = Game.getInstance();
         primaryStage = new Stage();
+        ultimaDesicion = null;
+    }
+
+    public static GameControler getInstance() {
+        GameControler gc;
+        if (intance == null) {
+            gc = new GameControler();
+        } else {
+            gc = intance;
+        }
+        return gc;
     }
 
     @Override
@@ -28,6 +47,7 @@ public class GameControler extends Application implements MenuInicioController.M
         primaryStage = stage;
         showMainMenu();
     }
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -42,10 +62,14 @@ public class GameControler extends Application implements MenuInicioController.M
     }
 
     private void iniciarNuevaPartida() {
-        System.out.println("Iniciando nueva partida...");
-        Scenary scene = game.getScenary();
+        System.out.println("Iniciando partida");
+        game.startNewGame();
+        Scenary scenary = game.getScenary();
+        inTutorial = true;
+        PrincipalData data = scenary.giveData(0);
+        rep = scenary.giveData(2);
+        showTutorial(() -> showPrincipal(data, scenary.getEvent().getSituations()));
 
-        showTutorial(()-> showPrincipal(scene.giveData(0)));
     }
 
     private void cargarPartida() {
@@ -57,7 +81,7 @@ public class GameControler extends Application implements MenuInicioController.M
         System.exit(0);
     }
 
-    private void showTutorial (Runnable onFinish)  {
+    private void showTutorial(Runnable onFinish) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Tutorial.fxml"));
             Parent root = loader.load();
@@ -71,39 +95,47 @@ public class GameControler extends Application implements MenuInicioController.M
             primaryStage.setScene(new Scene(root, 900, 550));
 
             controller.setListener(() -> {
-                    onFinish.run();
+                onFinish.run();
             });
 
             primaryStage.show();
 
-        }  catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    private void showPrincipal(PrincipalData data) {
-        try{
+
+    private void showPrincipal(PrincipalData data, DecisionTree <Situation> decisionTree) {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Principal.fxml"));
             Parent root = loader.load();
             PrincipalController controller = loader.getController();
             controller.setStats(data.getStats());
             controller.loadEvent(data);
+            //controller.initTree(decisionTree);
+
+            controller.setDecisionListener(this);
 
             Scene scene = new Scene(root, 900, 550);
             primaryStage.setTitle("Principal");
             primaryStage.setScene(scene);
+            principalController = controller;
 
             primaryStage.show();
 
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
-    private void showMainMenu() {
+
+    private void showMainMenu() {Scenary scenary = game.getScenary();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/MenuInicio.fxml"));
-            Parent root = loader.load(); MenuInicioController controller = loader.getController();
-            controller.setListener(this); Scene scene = new Scene(root, 972, 866);
+            Parent root = loader.load();
+            MenuInicioController controller = loader.getController();
+            controller.setListener(this);
+            Scene scene = new Scene(root, 972, 866);
 
             primaryStage.setTitle("Menú Inicio");
             primaryStage.setScene(scene);
@@ -113,7 +145,31 @@ public class GameControler extends Application implements MenuInicioController.M
         }
     }
 
+    @Override
+    public void onDecisionSelected(int codigo) {
+        ultimaDesicion = codigo;
+        if (inTutorial){
+            loopDecisiones();
+        }
+    }
+
+    private void loopDecisiones() {
+        Scenary scenary = game.getScenary();
+        if (ultimaDesicion == null) {
+            System.out.println("Esperando decisión del jugador...");
+            return;
+        }
+        if (ultimaDesicion == 2) {
+            principalController.loadEvent(rep);
+            principalController.habilitarOpciones(); // vuelve a habilitar botones // 🔑 aquí NO usamos while, dejamos que el jugador elija de nuevo return;
+        }
+        if (ultimaDesicion == 1) {
+            System.out.println("Decisión buena, avanzamos...");
+            principalController.loadEvent(scenary.giveData(1));
+        }
+    }
 }
+
 
 //RandomAccessFile raf = FileReaders.openFile(Game.getInstance().getPersonajesFichero());
 //try{
