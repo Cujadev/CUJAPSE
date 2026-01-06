@@ -6,11 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Pane?>
 
 <AnchorPane fx:id="rootPane"
-            prefWidth="972" prefHeight="866"
-            styleClass="root-principal"
+            prefHeight="670" prefWidth="700"
             stylesheets="@../visualResources/paletaDeColores/estilos.css"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -18,63 +16,55 @@
 
     <children>
 
-        <!-- CONTENEDOR ESCALABLE -->
+        <!-- ⭐ CONTENEDOR PRINCIPAL -->
         <StackPane fx:id="scalableRoot"
                    AnchorPane.topAnchor="0"
                    AnchorPane.bottomAnchor="0"
                    AnchorPane.leftAnchor="0"
                    AnchorPane.rightAnchor="0">
 
-            <!-- PANEL BASE (TAMAÑO ORIGINAL DE LA IMAGEN) -->
-            <Pane fx:id="panelBase"
-                  prefWidth="972"
-                  prefHeight="866">
+            <!-- ⭐ FONDO -->
+            <ImageView fx:id="backgroundImage"
+                       preserveRatio="false"
+                       pickOnBounds="true">
+                <image>
+                    <Image url="@../visualResources/escenarios/fondoPantallaInicio.png"/>
+                </image>
+            </ImageView>
 
-                <!-- FONDO COMPLETO -->
-                <ImageView fx:id="fondo"
-                           fitWidth="972"
-                           fitHeight="866"
-                           preserveRatio="false"
-                           StackPane.alignment="CENTER">
-                    <image>
-                        <Image url="@../visualResources/escenarios/fondoPantallaInicio.png"/>
-                    </image>
-                </ImageView>
+            <Button fx:id="btnFullscreen"
+                    text="Pantalla Completa"
+                    styleClass="btn-menu-principal"
+                    onAction="#onToggleFullscreen"
+                    StackPane.alignment="TOP_RIGHT"/>
 
-                <!-- PANEL DEL MENÚ  -->
-                <Pane fx:id="panelMenu"
-                      layoutX="269"
-                      layoutY="369"
-                      prefWidth="450"
-                      prefHeight="300">
 
-                    <VBox alignment="TOP_CENTER" spacing="25"
-                          prefWidth="450" prefHeight="300">
+            <!-- ⭐ MENÚ DEBAJO DEL LOGO -->
+            <VBox fx:id="vboxMenu"
+                  alignment="TOP_CENTER"
+                  spacing="25"
+                  prefWidth="229" prefHeight="190"
+                  StackPane.alignment="TOP_CENTER">
 
-                        <Button fx:id="btnNuevaPartida"
-                                prefWidth="200" prefHeight="45"
-                                styleClass="btn-menu-principal"
-                                text="Nueva Partida"
-                                onAction="#onNuevaPartidaClick"/>
+                <Button fx:id="btnNuevaPartida"
+                        onAction="#onNuevaPartidaClick"
+                        prefWidth="200" prefHeight="45"
+                        styleClass="btn-menu-principal"
+                        text="Nueva Partida"/>
 
-                        <Button fx:id="btnCargarPartida"
-                                prefWidth="200" prefHeight="45"
-                                styleClass="btn-menu-principal"
-                                text="Cargar Partida"
-                                onAction="#onCargarPartidaClick"/>
+                <Button fx:id="btnCargarPartida"
+                        onAction="#onCargarPartidaClick"
+                        prefWidth="200" prefHeight="45"
+                        styleClass="btn-menu-principal"
+                        text="Cargar Partida"/>
 
-                        <Button fx:id="btnSalir"
-                                prefWidth="200" prefHeight="45"
-                                styleClass="btn-menu-principal"
-                                text="Salir del Juego"
-                                onAction="#onSalirClick"/>
+                <Button fx:id="btnSalir"
+                        onAction="#onSalirClick"
+                        prefWidth="200" prefHeight="45"
+                        styleClass="btn-menu-principal"
+                        text="Salir del Juego"/>
 
-                    </VBox>
-
-                </Pane>
-
-            </Pane>
-
+            </VBox>
 
         </StackPane>
 
