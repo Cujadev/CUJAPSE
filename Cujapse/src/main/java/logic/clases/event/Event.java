@@ -80,4 +80,8 @@ public class Event {
     public void addSituation (DecisionNode<Situation> newNode, DecisionNode<Situation> father, int branch){
             situations.addNode(newNode, father,branch);
     }
+    public DecisionNode <Situation> getActualSituation(){
+        return it.getNode();
+    }
+
 }
