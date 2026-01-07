@@ -57,8 +57,6 @@ public class MenuInicioController {
                         btnFullscreen.setMouseTransparent(true); // No se puede clicar
                         btnFullscreen.setFocusTraversable(false); // No recibe foco
 
-                        stage.setWidth(870);
-                        stage.setHeight(820);
                         stage.setResizable(false);
                         Platform.runLater(() -> { stage.setFullScreen(true); });
                         stage.setFullScreenExitHint("");
@@ -133,7 +131,8 @@ public class MenuInicioController {
     //  LISTENER
     // ============================================================
 
-    public void setListener(MenuInicioListener listener) {this.listener = listener;}
+
+    public void setListener(MenuInicioListener listener) { this.listener=listener;}
 
     public interface MenuInicioListener {
         void onMenuOptionSelected(int codigo);
