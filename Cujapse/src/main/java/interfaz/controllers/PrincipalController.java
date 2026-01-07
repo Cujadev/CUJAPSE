@@ -87,7 +87,7 @@ public class PrincipalController  {
     private VisualTree visualTree;
     private DecisionTree<?> logicTree;
     private DecisionNode<?> currentNode;
-
+    private ContinuarListener continuarListener;
     // ================================================================
     //                           INITIALIZE
     // ================================================================
@@ -117,6 +117,7 @@ public class PrincipalController  {
         setStatValue(3, 0);
         setStatValue(4, 0);
     }
+
 
     // ================================================================
     //                         MÉTODO EXTRA PARA GAMECONTROLER
@@ -190,10 +191,8 @@ public class PrincipalController  {
         decisionEnviada = false;
 
         if (data != null && data.getMessages() != null) {
-            List<Menssage> messages = data.getMessages();
-            for (Menssage menssage : messages) {
-                addMessageAnimated(menssage.getNameAutor(), menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
-            }
+            Menssage  menssage = data.getMessages().get(0);
+            addMessageAnimated(menssage.getNameAutor(),menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
         }
 
         labelDecisionMessage.setText("");
@@ -267,20 +266,33 @@ public class PrincipalController  {
             btnContinuar.setVisible(true);
             btnContinuar.setManaged(true);
         }
-
-        if (decisionListener != null) {
-            decisionListener.onDecisionSelected(selectedOption);
-        }
+        btnSendDecision.setVisible(false);
+    }
+    public int getSelectedOption (){
+        return selectedOption;
     }
 
     @FXML
     private void onContinuarClick() {
-        clearSelection();
         if (btnContinuar != null) {
             btnContinuar.setVisible(false);
             btnContinuar.setManaged(false);
         }
+        if (continuarListener != null){
+            continuarListener.onContinuarSelected();
+        }
+        if (decisionListener != null) {
+            decisionListener.onDecisionSelected(selectedOption);
+        }
+        clearSelection();
     }
+    public interface ContinuarListener {
+        void onContinuarSelected();
+    }
+    public void setContinuarListener(ContinuarListener continuarListener) {
+        this.continuarListener = continuarListener;
+    }
+
 
     // ================================================================
     //                    MENSAJES CON ANIMACIÓN
@@ -359,4 +371,5 @@ public class PrincipalController  {
 
         return null;
     }
+
 }

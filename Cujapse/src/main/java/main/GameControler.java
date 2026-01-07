@@ -3,7 +3,10 @@ package main;
 import interfaz.controllers.MenuInicioController;
 import interfaz.controllers.PrincipalController;
 import interfaz.controllers.TutorialController;
+import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyCombination;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +14,7 @@ import javafx.scene.Scene;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
+import logic.clases.character.Dialogue;
 import logic.clases.event.Event;
 import logic.clases.event.Situation;
 import logic.clases.game.Game;
@@ -19,6 +23,7 @@ import logic.clases.game.Scenary;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 public class GameControler extends Application implements MenuInicioController.MenuInicioListener, PrincipalController.DecisionListener {
     private static GameControler intance;
@@ -32,7 +37,6 @@ public class GameControler extends Application implements MenuInicioController.M
 
     public GameControler() {
         this.game = Game.getInstance();
-        primaryStage = new Stage();
     }
 
     public static GameControler getInstance() {
@@ -66,12 +70,12 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void iniciarNuevaPartida() {
         System.out.println("Iniciando partida");
-        game.startNewGame();
+        List<String> stringList = game.startNewGame();
         Scenary scenary = game.getScenary();
         inTutorial = true;
         PrincipalData data = scenary.giveData(0);
         rep = scenary.giveData(2);
-        showTutorial(() -> showPrincipal(data, scenary.getEvent().getSituations()));
+        showTutorial(stringList, () -> showPrincipal(data, scenary.getEvent().getSituations()));
 
     }
 
@@ -84,17 +88,19 @@ public class GameControler extends Application implements MenuInicioController.M
         System.exit(0);
     }
 
-    private void showTutorial(Runnable onFinish) {
+    private void showTutorial(List<String> dialogues, Runnable onFinish) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Tutorial.fxml"));
             Parent root = loader.load();
             TutorialController controller = loader.getController();
 
-            controller.setDialogLines(game.startNewGame());
+            controller.setDialogLines(dialogues);
             controller.startTutorial();
 
 
             primaryStage.setTitle("Tutorial");
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.setFullScreen(true);
             primaryStage.setScene(new Scene(root));
 
             controller.setListener(() -> {
@@ -102,15 +108,13 @@ public class GameControler extends Application implements MenuInicioController.M
             });
 
             primaryStage.show();
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void showPrincipal(PrincipalData data, DecisionTree <Situation> decisionTree) {
+    private void showPrincipal(PrincipalData data, DecisionTree<Situation> decisionTree) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Principal.fxml"));
             Parent root = loader.load();
@@ -120,15 +124,20 @@ public class GameControler extends Application implements MenuInicioController.M
             //controller.initTree(decisionTree);
 
             controller.setDecisionListener(this);
+            controller.setContinuarListener(() -> {
+                onDecisionSelected(controller.getSelectedOption());
+            });
 
             Scene scene = new Scene(root);
             primaryStage.setTitle("Principal");
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.setFullScreen(true);
             primaryStage.setScene(scene);
             principalController = controller;
 
             primaryStage.show();
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.requestFocus();
+            primaryStage.toFront();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -136,7 +145,8 @@ public class GameControler extends Application implements MenuInicioController.M
 
     }
 
-    private void showMainMenu() {Scenary scenary = game.getScenary();
+    private void showMainMenu() {
+        Scenary scenary = game.getScenary();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/MenuInicio.fxml"));
             Parent root = loader.load();
@@ -145,10 +155,13 @@ public class GameControler extends Application implements MenuInicioController.M
             Scene scene = new Scene(root, 972, 866);
 
             primaryStage.setTitle("Menú Inicio");
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.setFullScreen(true);
+
             primaryStage.setScene(scene);
             primaryStage.show();
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -157,10 +170,9 @@ public class GameControler extends Application implements MenuInicioController.M
     @Override
     public void onDecisionSelected(int codigo) {
         int result = codigo;
-        if (inTutorial){
+        if (inTutorial) {
             loopDecisiones(result);
-        }
-        else{
+        } else {
             processResult(result);
         }
     }
@@ -178,27 +190,27 @@ public class GameControler extends Application implements MenuInicioController.M
         }
     }
 
-    private void playGame () {
+    private void playGame() {
         inTutorial = false;
         this.scenary.setEvent(game.getNextEvent());
-        showPrincipal(scenary.giveData(0),scenary.getEvent().getSituations());
+        showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations());
     }
-    private void processResult (int result){
-        Event current = scenary.getEvent();
-        DecisionNode <Situation> actual = current.getActualSituation();
 
-        if (!actual.isLeaf()){
-            if (result == 1){
+    private void processResult(int result) {
+        Event current = scenary.getEvent();
+        DecisionNode<Situation> actual = current.getActualSituation();
+
+        if (!actual.isLeaf()) {
+            if (result == 1) {
                 principalController.loadEvent(scenary.giveData(1));
-            }
-            else {
+            } else {
                 principalController.loadEvent(scenary.giveData(2));
             }
-        }
-        else{
+        } else {
             scenary.setEvent(game.getNextEvent());
         }
     }
+
 }
 
 
