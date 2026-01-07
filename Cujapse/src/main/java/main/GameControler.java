@@ -133,7 +133,6 @@ public class GameControler extends Application implements MenuInicioController.M
             throw new RuntimeException(e);
         }
     }
-
     private void showPrincipal(PrincipalData data, DecisionTree<Situation> decisionTree) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Principal.fxml"));
