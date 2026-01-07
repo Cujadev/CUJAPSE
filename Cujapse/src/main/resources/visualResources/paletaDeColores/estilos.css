@@ -661,12 +661,21 @@
 .btn-continue-arrow:pressed {
     -fx-background-color: rgba(0,0,0,0.10);       /* Ligero oscurecimiento */
 }
-.fondo-inicio {
-    -fx-background-image: url("/visualResources/escenarios/fondoPantallaInicio.png");
+
+.menu-background {
+    -fx-background-image: url("../escenarios/fondoPantallaInicio.png");
     -fx-background-size: cover;
-    -fx-background-position: center;
     -fx-background-repeat: no-repeat;
+    -fx-background-position: 58% center;
+
 }
+.tutorial-background{
+     -fx-background-image: url("../escenarios/fondoTutorial.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
 
 
 
