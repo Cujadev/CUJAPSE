@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
+import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
+import logic.clases.event.Event;
 import logic.clases.event.Situation;
 import logic.clases.game.Game;
 import javafx.application.Application;
@@ -18,10 +20,11 @@ import java.io.IOException;
 import java.security.Principal;
 
 public class GameControler extends Application implements MenuInicioController.MenuInicioListener, PrincipalController.DecisionListener {
+    private static GameControler intance;
     private Game game;
     private Stage primaryStage;
-    private static GameControler intance;
-    private Integer ultimaDesicion;
+
+    private Scenary scenary;
     private PrincipalController principalController;
     private boolean inTutorial;
     private PrincipalData rep;
@@ -29,7 +32,6 @@ public class GameControler extends Application implements MenuInicioController.M
     public GameControler() {
         this.game = Game.getInstance();
         primaryStage = new Stage();
-        ultimaDesicion = null;
     }
 
     public static GameControler getInstance() {
@@ -147,25 +149,47 @@ public class GameControler extends Application implements MenuInicioController.M
 
     @Override
     public void onDecisionSelected(int codigo) {
-        ultimaDesicion = codigo;
+        int result = codigo;
         if (inTutorial){
-            loopDecisiones();
+            loopDecisiones(result);
+        }
+        else{
+            processResult(result);
         }
     }
 
-    private void loopDecisiones() {
+    private void loopDecisiones(int result) {
         Scenary scenary = game.getScenary();
-        if (ultimaDesicion == null) {
-            System.out.println("Esperando decisión del jugador...");
-            return;
-        }
-        if (ultimaDesicion == 2) {
+        if (result == 2) {
             principalController.loadEvent(rep);
-            principalController.habilitarOpciones(); // vuelve a habilitar botones // 🔑 aquí NO usamos while, dejamos que el jugador elija de nuevo return;
+            principalController.habilitarOpciones();
         }
-        if (ultimaDesicion == 1) {
+        if (result == 1) {
             System.out.println("Decisión buena, avanzamos...");
             principalController.loadEvent(scenary.giveData(1));
+            scenary = game.getScenary();
+        }
+    }
+
+    private void playGame () {
+        inTutorial = false;
+        this.scenary.setEvent(game.getNextEvent());
+        showPrincipal(scenary.giveData(0),scenary.getEvent().getSituations());
+    }
+    private void processResult (int result){
+        Event current = scenary.getEvent();
+        DecisionNode <Situation> actual = current.getActualSituation();
+
+        if (!actual.isLeaf()){
+            if (result == 1){
+                principalController.loadEvent(scenary.giveData(1));
+            }
+            else {
+                principalController.loadEvent(scenary.giveData(2));
+            }
+        }
+        else{
+            scenary.setEvent(game.getNextEvent());
         }
     }
 }
