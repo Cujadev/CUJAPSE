@@ -12,9 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
-import javafx.application.Platform;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +21,6 @@ import javafx.util.Duration;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
-import logic.clases.character.Dialogue;
 import logic.clases.event.Event;
 import logic.clases.event.Situation;
 import logic.clases.game.Game;
@@ -117,7 +113,7 @@ public class GameControler extends Application implements MenuInicioController.M
     }
 
     // ⭐ Versión fusionada: usa diálogos + callback
-    private void showTutorial(List<String> dialogues, Runnable onFinish) {
+    private void showTutorial(List<String> dialogues, TutorialController.TutorialListener onFinish) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Tutorial.fxml"));
             Parent root = loader.load();
