@@ -1,5 +1,6 @@
 package logic.auxiliars.tree;
 
+import com.sun.source.tree.Tree;
 import logic.auxiliars.tree.Iterator.TreeIterator;
 import logic.clases.event.Situation;
 
@@ -71,6 +72,16 @@ public class DecisionTree<E>{
             else{
                 throw new NullPointerException("No existen datos en este arbol");
             }
+        }
+        return it;
+    }
+    public TreeIterator<E> resetIterator(){
+        TreeIterator <E> it = null;
+        if (this.root != null){
+            it = new TreeIterator<>(this.root);
+        }
+        else{
+            throw new NullPointerException("No existen datos en este arbol");
         }
         return it;
     }

@@ -38,4 +38,6 @@ public class DecisionNode<E>{
     public void setRight(DecisionNode<E> right) {
         this.right = (DecisionNode<E>) right;
     }
+
+    public boolean isLeaf(){return left == null && right == null;}
 }

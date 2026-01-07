@@ -186,6 +186,91 @@
     -fx-border-width: 3; /* Borde más grueso para destacar */
 }
 
+/* BOTÓN ENVIAR DENTRO DEL ÓVALO */
+.btn-send-decision-inside {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 4;
+    -fx-cursor: hand;
+    -fx-background-radius: 50%;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-opacity: 0.85;
+    -fx-transition: all 0.15s ease-in-out;
+}
+
+.btn-send-decision-inside:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-scale-x: 1.15;
+    -fx-scale-y: 1.15;
+    -fx-opacity: 1;
+}
+
+.btn-send-decision-inside:pressed {
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+    -fx-opacity: 0.7;
+}
+
+/* ANIMACIÓN AL APARECER */
+.btn-send-decision-appear {
+    -fx-opacity: 0;
+    -fx-translate-y: 8;
+}
+
+
+
+/* ============================================================
+   TREEVIEW DEL ÁRBOL DE DECISIONES
+   ============================================================ */
+
+.tree-view {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+}
+
+.tree-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3C0E05;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.tree-cell:hover {
+    -fx-background-color: rgba(255, 230, 128, 0.4);
+}
+
+.tree-cell:selected {
+    -fx-background-color: linear-gradient(to right, #E8B839 0%, #D8A315 100%);
+    -fx-text-fill: #3C0E05;
+    -fx-border-color: #3C0E05;
+    -fx-border-width: 1;
+}
+
+
+/* ============================================================
+   MENÚ SUPERIOR (MenuBar y MenuItem)
+   ============================================================ */
+
+.menu-bar {
+    -fx-background-color: transparent;
+}
+
+.menu-bar .label {
+    -fx-text-fill: #FFEEC0;
+    -fx-font-weight: bold;
+}
+
+.menu-item {
+    -fx-background-color: #F0B75E;
+    -fx-text-fill: #3C0E05;
+}
+
+.menu-item:hover {
+    -fx-background-color: #FFD24C;
+}
+
+
 /* ============================================================
    ScrollPane del árbol - mejorado
    ============================================================ */
@@ -576,5 +661,12 @@
 .btn-continue-arrow:pressed {
     -fx-background-color: rgba(0,0,0,0.10);       /* Ligero oscurecimiento */
 }
+.fondo-inicio {
+    -fx-background-image: url("/visualResources/escenarios/fondoPantallaInicio.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
 
 

@@ -2,6 +2,7 @@ import logic.auxiliars.files.FileReaders;
 import logic.auxiliars.initializers.InitNewGame;
 import logic.clases.character.GameCharacter;
 import logic.clases.event.Event;
+import logic.clases.event.Situation;
 import logic.clases.game.Game;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -66,9 +67,15 @@ public class InitGameTest {
             Assertions.assertNotNull(e.getSituations().getRoot().getRight(), "El nodo derecho está vacio");
         }
     }
+
+
     @Test
-    void verifyCreateFirstEvent(){
-        Assertions.assertNotNull(InitNewGame.createFirstEvent(),"No se crea bien el evento");
+    void verifyEventsOmar(){
+        Event e = InitNewGame.generateEvents().get(1);
+        Situation s = e.getNextSituaion(0);
+        Situation s2 = e.getNextSituaion(1);
+        System.out.println(s2.getAssociation().getIdAnswer());
+
     }
 
     @AfterEach

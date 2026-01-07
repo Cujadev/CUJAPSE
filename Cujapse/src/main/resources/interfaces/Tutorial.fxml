@@ -1,72 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="564.0" prefWidth="923.0"
-            styleClass="root"
-            stylesheets="@../visualResources/paletaDeColores/estilos.css"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="interfaz.controllers.TutorialController">
+<BorderPane fx:id="rootPane" styleClass="root" stylesheets="@../visualResources/paletaDeColores/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaz.controllers.TutorialController">
 
-    <children>
+    <!-- ========================= -->
+    <!-- CENTRO: CONTENIDO PRINCIPAL -->
+    <!-- ========================= -->
+    <center>
+        <StackPane fx:id="stackCenter">
 
-        <!-- Fondo del tutorial -->
-        <ImageView fitHeight="564" fitWidth="923" preserveRatio="false"
-                   AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-                   AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-            <image>
-                <Image url="@../visualResources/escenarios/fondoTutorial.png"/>
-            </image>
-        </ImageView>
+            <!-- FONDO RESPONSIVE -->
+            <ImageView fx:id="backgroundImage" preserveRatio="false" StackPane.alignment="CENTER">
+                <image>
+                    <Image url="@../visualResources/escenarios/fondoTutorial.png" />
+                </image>
+            </ImageView>
 
-        <!-- Personaje del tutorial -->
-        <ImageView fitHeight="379" fitWidth="277" layoutX="14" layoutY="69" preserveRatio="true">
-            <image>
-                <Image url="@../visualResources/characters/Omar_tutorial.png"/>
-            </image>
-        </ImageView>
+            <!-- CONTENIDO SUPERIOR (PERSONAJE + CAJA) -->
+            <AnchorPane fx:id="contentLayer">
 
-        <!-- Caja de diálogo inferior -->
-        <AnchorPane fx:id="dialogBox"
-                    opacity="0.94"
-                    prefHeight="120" prefWidth="895"
-                    styleClass="dialogo-caja"
-                    AnchorPane.bottomAnchor="10"
-                    AnchorPane.leftAnchor="10"
-                    AnchorPane.rightAnchor="10">
+                <!-- PERSONAJE -->
+                <ImageView fx:id="personaje" fitHeight="461.0" fitWidth="362.0" layoutX="10.0" layoutY="141.0" preserveRatio="true" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="10.0">
+                    <image>
+                        <Image url="@../visualResources/characters/Omar_tutorial.png" />
+                    </image>
+                </ImageView>
 
-            <children>
-                <VBox alignment="TOP_LEFT"
-                      AnchorPane.topAnchor="10"
-                      AnchorPane.bottomAnchor="10"
-                      AnchorPane.leftAnchor="15"
-                      AnchorPane.rightAnchor="15"
-                      spacing="8">
+                <!-- CAJA DE DIÁLOGO -->
+                <AnchorPane fx:id="dialogBox" layoutX="4.0" minHeight="150" opacity="0.94" prefHeight="219.0" prefWidth="1170.0" styleClass="dialogo-caja" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="10">
 
-                    <!-- Texto del diálogo -->
-                    <Label fx:id="labelDialogo"
-                           wrapText="true"
-                           prefHeight="80"
-                           styleClass="tutorial-text"/>
+                    <VBox alignment="TOP_LEFT" spacing="8" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="15" AnchorPane.rightAnchor="15" AnchorPane.topAnchor="10">
 
-                </VBox>
+                        <Label fx:id="labelDialogo" styleClass="tutorial-text" wrapText="true" VBox.vgrow="ALWAYS" />
+                    </VBox>
 
-                <!-- Botón continuar (flecha) -->
-                <Button fx:id="btnContinuar"
-                        text="▶"
-                        onAction="#onContinuarClick"
-                        prefHeight="55" prefWidth="40"
-                        styleClass="btn-continue-arrow"
-                        AnchorPane.bottomAnchor="10"
-                        AnchorPane.rightAnchor="15"/>
-            </children>
+                          <Button fx:id="btnContinuar" onAction="#onContinuarClick" prefHeight="98.0" prefWidth="18.0" styleClass="btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="31.0" AnchorPane.rightAnchor="40.0" />
+                </AnchorPane>
 
-        </AnchorPane>
+            </AnchorPane>
 
-    </children>
-</AnchorPane>
+        </StackPane>
+    </center>
+
+</BorderPane>
