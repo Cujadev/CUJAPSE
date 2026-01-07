@@ -3,10 +3,7 @@ package main;
 import interfaz.controllers.MenuInicioController;
 import interfaz.controllers.PrincipalController;
 import interfaz.controllers.TutorialController;
-import javafx.application.Platform;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyCombination;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +11,6 @@ import javafx.scene.Scene;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
-import logic.clases.character.Dialogue;
 import logic.clases.event.Event;
 import logic.clases.event.Situation;
 import logic.clases.game.Game;
@@ -22,7 +18,6 @@ import javafx.application.Application;
 import logic.clases.game.Scenary;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.List;
 
 public class GameControler extends Application implements MenuInicioController.MenuInicioListener, PrincipalController.DecisionListener {
@@ -42,11 +37,9 @@ public class GameControler extends Application implements MenuInicioController.M
     public static GameControler getInstance() {
         GameControler gc;
         if (intance == null) {
-            gc = new GameControler();
-        } else {
-            gc = intance;
+            intance= new GameControler();
         }
-        return gc;
+        return intance;
     }
 
     @Override
@@ -71,12 +64,14 @@ public class GameControler extends Application implements MenuInicioController.M
     private void iniciarNuevaPartida() {
         System.out.println("Iniciando partida");
         List<String> stringList = game.startNewGame();
-        Scenary scenary = game.getScenary();
+
+        this.scenary  = game.getScenary();
+
         inTutorial = true;
         PrincipalData data = scenary.giveData(0);
         rep = scenary.giveData(2);
+        scenary.getEvent().resetEvent();
         showTutorial(stringList, () -> showPrincipal(data, scenary.getEvent().getSituations()));
-
     }
 
     private void cargarPartida() {
@@ -178,7 +173,6 @@ public class GameControler extends Application implements MenuInicioController.M
     }
 
     private void loopDecisiones(int result) {
-        Scenary scenary = game.getScenary();
         if (result == 2) {
             principalController.loadEvent(rep);
             principalController.habilitarOpciones();
@@ -186,7 +180,7 @@ public class GameControler extends Application implements MenuInicioController.M
         if (result == 1) {
             System.out.println("Decisión buena, avanzamos...");
             principalController.loadEvent(scenary.giveData(1));
-            scenary = game.getScenary();
+            playGame();
         }
     }
 
@@ -202,12 +196,23 @@ public class GameControler extends Application implements MenuInicioController.M
 
         if (!actual.isLeaf()) {
             if (result == 1) {
-                principalController.loadEvent(scenary.giveData(1));
+                scenary.callModificationStats(result);
+                if (!scenary.isHeroDeath()){
+                    principalController.loadEvent(scenary.giveData(1));
+                }
             } else {
-                principalController.loadEvent(scenary.giveData(2));
+                scenary.callModificationStats(result);
+                if (!scenary.isHeroDeath()){
+                    principalController.loadEvent(scenary.giveData(2));
+                }
             }
         } else {
-            scenary.setEvent(game.getNextEvent());
+            scenary.callModificationStats(result);
+            if (!scenary.isHeroDeath()){
+                scenary.setEvent(game.getNextEvent());
+                showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations());
+            }
+
         }
     }
 
