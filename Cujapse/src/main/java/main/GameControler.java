@@ -120,7 +120,10 @@ public class GameControler extends Application implements MenuInicioController.M
 
             controller.setDecisionListener(this);
             controller.setContinuarListener(() -> {
-                onDecisionSelected(controller.getSelectedOption());
+               int opt = controller.getSelectedOption();
+               if (opt > 0) {
+                   onDecisionSelected(opt);
+               }
             });
 
             Scene scene = new Scene(root);
@@ -165,6 +168,7 @@ public class GameControler extends Application implements MenuInicioController.M
     @Override
     public void onDecisionSelected(int codigo) {
         int result = codigo;
+
         if (inTutorial) {
             loopDecisiones(result);
         } else {
