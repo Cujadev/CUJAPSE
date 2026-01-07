@@ -3,6 +3,7 @@ package main;
 import interfaz.controllers.MenuInicioController;
 import interfaz.controllers.PrincipalController;
 import interfaz.controllers.TutorialController;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -92,13 +93,15 @@ public class GameControler extends Application implements MenuInicioController.M
 
 
             primaryStage.setTitle("Tutorial");
-            primaryStage.setScene(new Scene(root, 900, 550));
+            primaryStage.setScene(new Scene(root));
 
             controller.setListener(() -> {
                 onFinish.run();
             });
 
             primaryStage.show();
+            primaryStage.setFullScreen(true);
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -116,12 +119,14 @@ public class GameControler extends Application implements MenuInicioController.M
 
             controller.setDecisionListener(this);
 
-            Scene scene = new Scene(root, 900, 550);
+            Scene scene = new Scene(root);
             primaryStage.setTitle("Principal");
             primaryStage.setScene(scene);
             principalController = controller;
 
             primaryStage.show();
+            primaryStage.setFullScreen(true);
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -140,6 +145,8 @@ public class GameControler extends Application implements MenuInicioController.M
             primaryStage.setTitle("Menú Inicio");
             primaryStage.setScene(scene);
             primaryStage.show();
+            primaryStage.setFullScreen(true);
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
