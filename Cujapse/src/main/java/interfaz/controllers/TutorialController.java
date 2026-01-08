@@ -76,9 +76,6 @@ public class TutorialController {
                         stage.setFullScreenExitHint("");
                         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
-                        // Fondo responsive
-                        backgroundImage.fitWidthProperty().bind(rootPane.widthProperty());
-                        backgroundImage.fitHeightProperty().bind(rootPane.heightProperty());
                     }
                 });
             }

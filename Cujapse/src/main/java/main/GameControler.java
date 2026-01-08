@@ -3,11 +3,21 @@ package main;
 import interfaz.controllers.MenuInicioController;
 import interfaz.controllers.PrincipalController;
 import interfaz.controllers.TutorialController;
+
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.util.Duration;
+
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
@@ -30,14 +40,19 @@ public class GameControler extends Application implements MenuInicioController.M
     private boolean inTutorial;
     private PrincipalData rep;
 
+    // ⭐ Una sola escena global
+    private Scene mainScene;
+
+    private Integer ultimaDesicion;
+
     public GameControler() {
         this.game = Game.getInstance();
+        ultimaDesicion = null;
     }
 
     public static GameControler getInstance() {
-        GameControler gc;
         if (intance == null) {
-            intance= new GameControler();
+            intance = new GameControler();
         }
         return intance;
     }
@@ -45,6 +60,15 @@ public class GameControler extends Application implements MenuInicioController.M
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
+
+        StackPane emptyRoot = new StackPane();
+        mainScene = new Scene(emptyRoot);
+
+        primaryStage.setScene(mainScene);
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        primaryStage.setFullScreen(true);
+
+
         showMainMenu();
     }
 
@@ -71,7 +95,9 @@ public class GameControler extends Application implements MenuInicioController.M
         PrincipalData data = scenary.giveData(0);
         rep = scenary.giveData(2);
         scenary.getEvent().resetEvent();
-        showTutorial(stringList, () -> showPrincipal(data, scenary.getEvent().getSituations()));
+
+        // Mostrar pantalla de carga y luego el tutorial
+        showLoadingScreen(() -> showTutorial(stringList, () -> showPrincipal(data, scenary.getEvent().getSituations())));
     }
 
     private void cargarPartida() {
@@ -92,17 +118,10 @@ public class GameControler extends Application implements MenuInicioController.M
             controller.setDialogLines(dialogues);
             controller.startTutorial();
 
-
             primaryStage.setTitle("Tutorial");
-            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-            primaryStage.setFullScreen(true);
-            primaryStage.setScene(new Scene(root));
+            mainScene.setRoot(root);
 
-            controller.setListener(() -> {
-                onFinish.run();
-            });
-
-            primaryStage.show();
+            controller.setListener((TutorialController.TutorialListener) onFinish);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -114,50 +133,41 @@ public class GameControler extends Application implements MenuInicioController.M
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Principal.fxml"));
             Parent root = loader.load();
             PrincipalController controller = loader.getController();
+
             controller.setStats(data.getStats());
             controller.loadEvent(data);
-            //controller.initTree(decisionTree);
-
             controller.setDecisionListener(this);
             controller.setContinuarListener(() -> {
-               int opt = controller.getSelectedOption();
-               if (opt > 0) {
-                   onDecisionSelected(opt);
-               }
+                int opt = controller.getSelectedOption();
+                if (opt > 0) {
+                    onDecisionSelected(opt);
+                }
             });
 
-            Scene scene = new Scene(root);
+            controller.setMenuListener(this::volverAlMenuInicial);
             primaryStage.setTitle("Principal");
+
+            mainScene.setRoot(root);
+
+            principalController = controller;
             primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             primaryStage.setFullScreen(true);
-            primaryStage.setScene(scene);
-            principalController = controller;
 
-            primaryStage.show();
-            primaryStage.requestFocus();
-            primaryStage.toFront();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private void showMainMenu() {
-        Scenary scenary = game.getScenary();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/MenuInicio.fxml"));
             Parent root = loader.load();
             MenuInicioController controller = loader.getController();
             controller.setListener(this);
-            Scene scene = new Scene(root, 972, 866);
 
             primaryStage.setTitle("Menú Inicio");
-            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-            primaryStage.setFullScreen(true);
-
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            mainScene.setRoot(root);
 
 
         } catch (IOException e) {
@@ -167,12 +177,11 @@ public class GameControler extends Application implements MenuInicioController.M
 
     @Override
     public void onDecisionSelected(int codigo) {
-        int result = codigo;
-
+        ultimaDesicion = codigo;
         if (inTutorial) {
-            loopDecisiones(result);
+            loopDecisiones(codigo);
         } else {
-            processResult(result);
+            processResult(codigo);
         }
     }
 
@@ -199,79 +208,76 @@ public class GameControler extends Application implements MenuInicioController.M
         DecisionNode<Situation> actual = current.getActualSituation();
 
         if (!actual.isLeaf()) {
-            if (result == 1) {
-                scenary.callModificationStats(result);
-                if (!scenary.isHeroDeath()){
+            scenary.callModificationStats(result);
+            if (!scenary.isHeroDeath()) {
+                if (result == 1) {
                     principalController.loadEvent(scenary.giveData(1));
-                }
-            } else {
-                scenary.callModificationStats(result);
-                if (!scenary.isHeroDeath()){
+                } else {
                     principalController.loadEvent(scenary.giveData(2));
                 }
             }
         } else {
             scenary.callModificationStats(result);
-            if (!scenary.isHeroDeath()){
+            if (!scenary.isHeroDeath()) {
                 scenary.setEvent(game.getNextEvent());
                 showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations());
             }
-
         }
     }
 
+    private void showLoadingScreen(Runnable onFinish) {
+        try {
+            Image[] frames = new Image[]{
+                    new Image(getClass().getResource("/visualResources/pantallaCarga/frame1.png").toExternalForm()),
+                    new Image(getClass().getResource("/visualResources/pantallaCarga/frame2.png").toExternalForm()),
+                    new Image(getClass().getResource("/visualResources/pantallaCarga/frame3.png").toExternalForm()),
+                    new Image(getClass().getResource("/visualResources/pantallaCarga/frame4.png").toExternalForm()),
+                    new Image(getClass().getResource("/visualResources/pantallaCarga/frame5.png").toExternalForm()),
+                    new Image(getClass().getResource("/visualResources/pantallaCarga/frame6.png").toExternalForm()),
+                    new Image(getClass().getResource("/visualResources/pantallaCarga/frame7.png").toExternalForm())
+            };
+
+            ImageView view = new ImageView(frames[0]);
+            view.fitWidthProperty().bind(primaryStage.widthProperty());
+            view.fitHeightProperty().bind(primaryStage.heightProperty());
+            view.setPreserveRatio(false);
+
+            StackPane root = new StackPane(view);
+            root.setStyle("-fx-background-color: black;");
+            mainScene.setRoot(root);
+
+            Timeline frameAnimation = new Timeline();
+            int frameDuration = 120;
+
+            for (int i = 0; i < frames.length; i++) {
+                int index = i;
+                frameAnimation.getKeyFrames().add(
+                        new KeyFrame(Duration.millis(i * frameDuration),
+                                e -> view.setImage(frames[index]))
+                );
+            }
+
+            frameAnimation.setCycleCount(4);
+
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(400), root);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(400), root);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+
+            SequentialTransition seq = new SequentialTransition(fadeIn, frameAnimation, fadeOut);
+            seq.setOnFinished(e -> onFinish.run());
+            seq.play();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            onFinish.run();
+        }
+    }
+
+    private void volverAlMenuInicial() {
+        showMainMenu();
+    }
 }
-
-
-//RandomAccessFile raf = FileReaders.openFile(Game.getInstance().getPersonajesFichero());
-//try{
-//           int cant = raf.readInt();
-//           for (int i = 0; i < cant; i++){
-//               long ptr = raf.getFilePointer();
-//               int tam = raf.readInt();
-//               byte[] string = new byte[tam];
-//               raf.read(string);
-//               GameCharacter c = (GameCharacter) Convert.toObject(string);
-//               System.out.println(c.getDialoguesPath() + " "+ c.getImagePath() + " " + c.getName());
-//           }
-//           FileWriters.closeFile(raf);
-//       } catch (IOException e) {
-//           e.printStackTrace();
-//       } catch (ClassNotFoundException e) {
-//           e.printStackTrace();
-//        }}
-
-//RandomAccessFile raf = FileWriters.openFile(Game.getInstance().getPersonajesFichero());
-//        try {
-//            int cant = raf.readInt();
-//            for (int i = 0; i < cant; i++) {
-//                long ptr = raf.getFilePointer();
-//                int tam = raf.readInt();
-//                byte[] string = new byte[tam];
-//                raf.readFully(string);
-//
-//                GameCharacter c = (GameCharacter) Convert.toObject(string);
-//                System.out.println(c.getDialoguesPath() + " " + c.getImagePath() + " " + c.getName());
-//
-//                if (i == 0){
-//                    c.setDialoguesPath("/data/characters/dialogues/dialogues_1.dat");
-//                }
-//                if (i == 1){
-//                    c.setDialoguesPath("/data/characters/dialogues/dialogues_2.dat");
-//                }
-//                if (i == 2){
-//                    c.setDialoguesPath("/data/characters/dialogues/dialogues_3.dat");
-//                }
-//                byte[] data = Convert.toBytes(c);
-//
-//                raf.seek(ptr);
-//                raf.writeInt(data.length);
-//                raf.write(data);
-//            }
-//            FileWriters.closeFile(raf);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//
-//        }
