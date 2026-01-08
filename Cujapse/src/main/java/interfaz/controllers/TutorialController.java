@@ -57,6 +57,7 @@ public class TutorialController {
         void onTutorialFinished();
     }
 
+
     // ========== RESPONSIVE (solo fullscreen + fondo adaptable) ==========
     private Stage stage;
 

@@ -67,6 +67,7 @@ public class GameControler extends Application implements MenuInicioController.M
         primaryStage.setScene(mainScene);
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setFullScreen(true);
+
         primaryStage.show();
 
         showMainMenu();
@@ -89,7 +90,7 @@ public class GameControler extends Application implements MenuInicioController.M
         System.out.println("Iniciando partida");
         List<String> stringList = game.startNewGame();
 
-        this.scenary = game.getScenary();
+game.getScenary();
 
         inTutorial = true;
         PrincipalData data = scenary.giveData(0);
@@ -121,7 +122,13 @@ public class GameControler extends Application implements MenuInicioController.M
             primaryStage.setTitle("Tutorial");
             mainScene.setRoot(root);
 
-            controller.setListener(onFinish);
+
+            controller.setListener(() -> {
+                Scenary scenary = game.getScenary();
+                PrincipalData data = scenary.giveData(0);
+                rep = scenary.giveData(2);
+                showPrincipal(data, scenary.getEvent().getSituations());
+            });
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -153,9 +160,6 @@ public class GameControler extends Application implements MenuInicioController.M
             primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             primaryStage.setFullScreen(true);
 
-            primaryStage.show();
-            primaryStage.requestFocus();
-            primaryStage.toFront();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -171,7 +175,6 @@ public class GameControler extends Application implements MenuInicioController.M
 
             primaryStage.setTitle("Menú Inicio");
             mainScene.setRoot(root);
-
             primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             primaryStage.setFullScreen(true);
             primaryStage.show();
@@ -287,3 +290,4 @@ public class GameControler extends Application implements MenuInicioController.M
         showMainMenu();
     }
 }
+
