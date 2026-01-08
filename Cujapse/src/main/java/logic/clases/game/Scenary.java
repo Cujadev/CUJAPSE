@@ -5,6 +5,7 @@ import logic.auxiliars.chargers.ChargerMenssage;
 import logic.auxiliars.dataOfInterfaces.Menssage;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import logic.auxiliars.files.FileReaders;
+import logic.auxiliars.tree.DecisionNode;
 import logic.clases.character.Answer;
 import logic.clases.character.Dialogue;
 import logic.clases.character.GameCharacter;
@@ -32,7 +33,6 @@ public class Scenary implements ChargerMenssage {
     /// ==== Constructor ====
     public Scenary (){
     }
-
     /// ==== Getters and Setters ====
     public Event getEvent() {
         return event;
@@ -120,6 +120,12 @@ public class Scenary implements ChargerMenssage {
     }
     private String giveCharacterName (){
         return  Game.getInstance().findCharacter(event.getNextSituaion(0).getAssociation().getIdCharacter()).getName();
+    }
+    public void callModificationStats (int selection){
+        DecisionNode <Situation> node = event.getActualSituation();
+        Situation s = node.getInfo();
+
+        Game.getInstance().modifyStats(selection, s.getAssociation().getIdAnswer());
     }
     /*private Image convertStringToImage(String string){
         Image i = null;

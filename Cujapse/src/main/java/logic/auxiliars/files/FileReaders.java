@@ -85,6 +85,7 @@ public class FileReaders {
         boolean found = false;
 
         try {
+            raf.seek(0);
             int cant = raf.readInt();
             for (int i = 0; i < cant && !found; i++){
                 int tam = raf.readInt();

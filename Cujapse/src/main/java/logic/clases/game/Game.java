@@ -112,4 +112,8 @@ public class Game {
         scenary.setEvent(getNextEvent());
         return list;
     }
+
+    public void modifyStats (int selection, String id){
+        mainCharacter.modifyStats(selection, id);
+    }
 }
