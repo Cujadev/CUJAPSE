@@ -73,9 +73,8 @@ public class InitGameTest {
     void verifyEventsOmar(){
         Event e = InitNewGame.generateEvents().get(1);
         Situation s = e.getNextSituaion(0);
-        Situation s2 = e.getNextSituaion(1);
-        System.out.println(s2.getAssociation().getIdAnswer());
-
+        System.out.println(s.getAssociation().getIdAnswer());
+        System.out.println(e.getSituations().getRoot().getLeft().getLeft());
     }
 
     @AfterEach

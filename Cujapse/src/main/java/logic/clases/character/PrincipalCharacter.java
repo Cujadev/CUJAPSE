@@ -49,6 +49,9 @@ public class PrincipalCharacter extends GameCharacter {
     public void setStats(ArrayList<Integer> stats) {
         this.stats = stats;
     }
+    public ArrayList<Answer> getAnswers() {
+        return answers;
+    }
 
     /// ==== Métodos útiles ====
     public void setAnswers() throws IllegalArgumentException {
