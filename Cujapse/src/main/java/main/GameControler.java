@@ -68,6 +68,7 @@ public class GameControler extends Application implements MenuInicioController.M
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setFullScreen(true);
 
+        primaryStage.show();
 
         showMainMenu();
     }
@@ -121,7 +122,12 @@ public class GameControler extends Application implements MenuInicioController.M
             primaryStage.setTitle("Tutorial");
             mainScene.setRoot(root);
 
-            controller.setListener((TutorialController.TutorialListener) onFinish);
+            controller.setListener(() -> {
+                Scenary scenary = game.getScenary();
+                PrincipalData data = scenary.giveData(0);
+                rep = scenary.giveData(2);
+                showPrincipal(data, scenary.getEvent().getSituations());
+            });
 
         } catch (IOException e) {
             throw new RuntimeException(e);
