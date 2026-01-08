@@ -1,5 +1,6 @@
 package interfaz.controllers;
 
+import javafx.scene.control.MenuItem;
 import logic.auxiliars.dataOfInterfaces.Menssage;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import interfaz.auxiliars.VisualTree;
@@ -22,6 +23,7 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
+import main.GameControler;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -71,6 +73,8 @@ public class PrincipalController  {
     @FXML private Button btnOptionNo;
     @FXML private Button btnSendDecision;
     @FXML private Button btnContinuar;
+    @FXML private MenuItem menuSalirMenu;
+
 
     @FXML private VBox panelArbol;
 
@@ -91,14 +95,13 @@ public class PrincipalController  {
     // ================================================================
     //                           INITIALIZE
     // ================================================================
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize() {
 
-        // Auto-scroll del chat
         vboxMensajes.heightProperty().addListener((obs, oldV, newV) ->
                 scrollChat.setVvalue(1.0)
         );
 
-        // Estado inicial
         btnSendDecision.setVisible(false);
         btnSendDecision.setDisable(true);
 
@@ -111,7 +114,6 @@ public class PrincipalController  {
 
         styleOptionButtons();
 
-        // Inicializar estadísticas
         setStatValue(1, 0);
         setStatValue(2, 0);
         setStatValue(3, 0);
@@ -371,5 +373,22 @@ public class PrincipalController  {
 
         return null;
     }
+    public interface MenuPrincipalListener {
+        void onSalirAlMenu();
+    }
+
+    private MenuPrincipalListener menuListener;
+
+    public void setMenuListener(MenuPrincipalListener listener) {
+        this.menuListener = listener;
+    }
+
+    @FXML
+    private void onSalirMenuClick() {
+        if (menuListener != null) {
+            menuListener.onSalirAlMenu();
+        }
+    }
+
 
 }
