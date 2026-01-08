@@ -31,15 +31,17 @@ public class Scenary implements ChargerMenssage {
     // Poder pedir al juego un nuevo evento
 
     /// ==== Constructor ====
-    public Scenary (){
+    public Scenary() {
     }
+
     /// ==== Getters and Setters ====
     public Event getEvent() {
         return event;
     }
 
     public void setEvent(Event event) {
-        this.event = event;    }
+        this.event = event;
+    }
 
     public ArrayList<String> getDeathCasesPath() {
         return deathCasesPath;
@@ -49,50 +51,54 @@ public class Scenary implements ChargerMenssage {
         this.deathCasesPath = deathCasesPath;
     }
 
-    ///==== Métodos necesarios ====
+    /// ==== Métodos necesarios ====
 
     //====Entregar los diálogos====
-    private List<Menssage> generateMessages(int branch){
+    private List<Menssage> generateMessages(int branch) {
         Situation s = event.getNextSituaion(branch); //Se obtiene la situación
-        List <Menssage> dialogues = new ArrayList<>();
+        List<Menssage> dialogues = new ArrayList<>();
         Dialogue seconDialogue = s.getCharacterDialogue(s.getAssociation().getIdCharacter());//Se carga el dialogo del personaje secundario
-        dialogues.add(new Menssage(seconDialogue.getContenido(),giveCharacterName(),findPathAvatarCharacter()));
-        if (s.getAssociation().getIdAnswer() != null){//Si existe respuesta posible del jugador también se cargan
+        dialogues.add(new Menssage(seconDialogue.getContenido(), giveCharacterName(), findPathAvatarCharacter()));
+        if (s.getAssociation().getIdAnswer() != null) {//Si existe respuesta posible del jugador también se cargan
             Answer a = s.getPrincipalAnswers(s.getAssociation().getIdAnswer());
-            Dialogue [] answers = a.getAnswers();
+            Dialogue[] answers = a.getAnswers();
             for (Dialogue answer : answers) {
-                dialogues.add(new Menssage(answer.getContenido(),Game.getInstance().getMainCharacter().getName(),null));
+                dialogues.add(new Menssage(answer.getContenido(), Game.getInstance().getMainCharacter().getName(), null));
             }
         }
         return dialogues;
     }
-    public PrincipalData giveData (int branch){
-        List <Menssage> dialogues = generateMessages(branch);
-        ArrayList <Integer> stats = findStats();
+
+    public PrincipalData giveData(int branch) {
+        List<Menssage> dialogues = generateMessages(branch);
+        ArrayList<Integer> stats = findStats();
         String scenary = findSceneryImagePath();
         return new PrincipalData(dialogues, stats, scenary);
     }
 
 
     //Entregar la imagen de personaje secundario
-    private String findPathAvatarCharacter(){
+    private String findPathAvatarCharacter() {
         Game game = Game.getInstance();
         Situation s = event.getNextSituaion(0);//Se obtiene la situación actual
         GameCharacter c = game.findCharacter(s.getAssociation().getIdCharacter());//Se busca el personaje
         return c.getImagePath();
     }
+
     //Entregar la imagen del escenario
-    private String findSceneryImagePath(){return event.getImagePath();}
+    private String findSceneryImagePath() {
+        return event.getImagePath();
+    }
 
     //Entregar estado del personaje
-    public boolean isHeroDeath(){
+    public boolean isHeroDeath() {
         PrincipalCharacter p = Game.getInstance().getMainCharacter();
         return p.isDead();//Verifica si el personaje murió
     }
 
     //Se entrega todo lo necesario para poder trabajar la muerte del personaje
-    public ArrayList <Object> giveDeath(){
-        ArrayList <Object> result = new ArrayList<>();
+    public ArrayList<Object> giveDeath() {
+        ArrayList<Object> result = new ArrayList<>();
         PrincipalCharacter p = Game.getInstance().getMainCharacter();// se obtiene el personaje principal
 
         String id = p.causeOfDeath();// Se devuelve el id de la causa de muerte
@@ -100,12 +106,13 @@ public class Scenary implements ChargerMenssage {
 
         String menssage = ChargeDialogue(id).getContenido();// Se utiliza el id para buscar un dialogó de la causa de muerte
         result.add(menssage);// se agrega ese mensaje
-        Image image = new Image (deathCasesPath.get(index));// Se crea la imagen de la muerte
+        Image image = new Image(deathCasesPath.get(index));// Se crea la imagen de la muerte
         result.add(image);//Se agrega al array de objetos
 
         return result;
     }
-    public ArrayList <Integer> findStats(){
+
+    public ArrayList<Integer> findStats() {
         ArrayList<Integer> stats = Game.getInstance().getMainCharacter().getStats();
         return stats;
     }
@@ -118,15 +125,18 @@ public class Scenary implements ChargerMenssage {
         FileReaders.closeFile(raf);
         return result;
     }
-    private String giveCharacterName (){
-        return  Game.getInstance().findCharacter(event.getNextSituaion(0).getAssociation().getIdCharacter()).getName();
+
+    private String giveCharacterName() {
+        return Game.getInstance().findCharacter(event.getNextSituaion(0).getAssociation().getIdCharacter()).getName();
     }
-    public void callModificationStats (int selection){
-        DecisionNode <Situation> node = event.getActualSituation();
+
+    public void callModificationStats(int selection) {
+        DecisionNode<Situation> node = event.getActualSituation();
         Situation s = node.getInfo();
 
         Game.getInstance().modifyStats(selection, s.getAssociation().getIdAnswer());
     }
+
     /*private Image convertStringToImage(String string){
         Image i = null;
         try {

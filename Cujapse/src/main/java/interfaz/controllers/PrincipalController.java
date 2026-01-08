@@ -27,11 +27,12 @@ import main.GameControler;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PrincipalController  {
+public class PrincipalController {
 
     // ================================================================
     //                        LISTENER DE DECISIONES
@@ -49,34 +50,56 @@ public class PrincipalController  {
     // ================================================================
     //                        FXML ELEMENTOS
     // ================================================================
-    @FXML private BorderPane rootPane;      // ⭐ NUEVO: coincide con el FXML responsive
+    @FXML
+    private BorderPane rootPane;      // ⭐ NUEVO: coincide con el FXML responsive
 
-    @FXML private VBox panelIzquierdo;
-    @FXML private VBox panelChat;
-    @FXML private VBox vboxMensajes;
-    @FXML private ScrollPane scrollChat;
+    @FXML
+    private VBox panelIzquierdo;
+    @FXML
+    private VBox panelChat;
+    @FXML
+    private VBox vboxMensajes;
+    @FXML
+    private ScrollPane scrollChat;
 
-    @FXML private HBox statsTopBar;
-    @FXML private HBox labelDinero;
-    @FXML private HBox labelCafeina;
-    @FXML private HBox labelPopularidad;
-    @FXML private HBox labelEstudios;
+    @FXML
+    private HBox statsTopBar;
+    @FXML
+    private HBox labelDinero;
+    @FXML
+    private HBox labelCafeina;
+    @FXML
+    private HBox labelPopularidad;
+    @FXML
+    private HBox labelEstudios;
 
-    @FXML private Label labelDineroTexto;
-    @FXML private Label labelCafeinaTexto;
-    @FXML private Label labelPopularidadTexto;
-    @FXML private Label labelEstudiosTexto;
+    @FXML
+    private Label labelDineroTexto;
+    @FXML
+    private Label labelCafeinaTexto;
+    @FXML
+    private Label labelPopularidadTexto;
+    @FXML
+    private Label labelEstudiosTexto;
 
-    @FXML private VBox decisionArea;        // ⭐ ANTES AnchorPane → AHORA VBox
-    @FXML private Label labelDecisionMessage;
-    @FXML private Button btnOptionYes;
-    @FXML private Button btnOptionNo;
-    @FXML private Button btnSendDecision;
-    @FXML private Button btnContinuar;
-    @FXML private MenuItem menuSalirMenu;
+    @FXML
+    private VBox decisionArea;        // ⭐ ANTES AnchorPane → AHORA VBox
+    @FXML
+    private Label labelDecisionMessage;
+    @FXML
+    private Button btnOptionYes;
+    @FXML
+    private Button btnOptionNo;
+    @FXML
+    private Button btnSendDecision;
+    @FXML
+    private Button btnContinuar;
+    @FXML
+    private MenuItem menuSalirMenu;
 
 
-    @FXML private VBox panelArbol;
+    @FXML
+    private VBox panelArbol;
 
     // ================================================================
     //                        VARIABLES INTERNAS
@@ -92,6 +115,8 @@ public class PrincipalController  {
     private DecisionTree<?> logicTree;
     private DecisionNode<?> currentNode;
     private ContinuarListener continuarListener;
+    private PrincipalData data;
+
     // ================================================================
     //                           INITIALIZE
     // ================================================================
@@ -191,10 +216,11 @@ public class PrincipalController  {
     public void loadEvent(PrincipalData data) {
         vboxMensajes.getChildren().clear();
         decisionEnviada = false;
+        this.data = data;
 
         if (data != null && data.getMessages() != null) {
-            Menssage  menssage = data.getMessages().get(0);
-            addMessageAnimated(menssage.getNameAutor(),menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
+            Menssage menssage = data.getMessages().get(0);
+            addMessageAnimated(menssage.getNameAutor(), menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
         }
 
         labelDecisionMessage.setText("");
@@ -207,16 +233,26 @@ public class PrincipalController  {
     @FXML
     private void onOptionYesClick() {
         if (decisionEnviada) return;
+        if (data != null && data.getMessages().size() > 1) {
+            String text = data.getMessages().get(1).getText();
+            selectedOptionText = (text == null || text.isEmpty()) ? "Nada cargado" : text;
+        } else {
+            selectedOptionText = "Nada cargado";
+        }
         selectedOption = 1;
-        selectedOptionText = "¡Claro que sí, estoy listo!";
         updateDecisionDisplay();
     }
 
     @FXML
     private void onOptionNoClick() {
         if (decisionEnviada) return;
+        if (data != null && data.getMessages().size() > 2) {
+            String text = data.getMessages().get(2).getText();
+            selectedOptionText = (text == null || text.isEmpty()) ? "Nada cargado" : text;
+        } else {
+            selectedOptionText = "Nada cargado";
+        }
         selectedOption = 2;
-        selectedOptionText = "No creo estar preparado aún...";
         updateDecisionDisplay();
     }
 
@@ -269,8 +305,10 @@ public class PrincipalController  {
             btnContinuar.setManaged(true);
         }
         btnSendDecision.setVisible(false);
+        System.out.println(selectedOption);
     }
-    public int getSelectedOption (){
+
+    public int getSelectedOption() {
         return selectedOption;
     }
 
@@ -286,9 +324,11 @@ public class PrincipalController  {
         }
         clearSelection();
     }
+
     public interface ContinuarListener {
         void onContinuarSelected();
     }
+
     public void setContinuarListener(ContinuarListener continuarListener) {
         this.continuarListener = continuarListener;
     }
@@ -341,10 +381,12 @@ public class PrincipalController  {
         vboxMensajes.getChildren().add(row);
 
         FadeTransition ft = new FadeTransition(Duration.millis(250), row);
-        ft.setFromValue(0); ft.setToValue(1);
+        ft.setFromValue(0);
+        ft.setToValue(1);
 
         TranslateTransition tt = new TranslateTransition(Duration.millis(250), row);
-        tt.setFromY(12); tt.setToY(0);
+        tt.setFromY(12);
+        tt.setToY(0);
 
         new SequentialTransition(ft, tt).play();
     }
@@ -367,10 +409,12 @@ public class PrincipalController  {
             if (!path.startsWith("/")) path = "/" + path;
             InputStream is = getClass().getResourceAsStream(path);
             if (is != null) return new Image(is);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         return null;
     }
+
     public interface MenuPrincipalListener {
         void onSalirAlMenu();
     }

@@ -114,10 +114,10 @@ public class PrincipalCharacter extends GameCharacter {
     private  int subbStat (int stat, int consecuence)  throws  IllegalArgumentException{
         int result = stat;
         if (consecuence == 1){
-            result -= 25; //Si es 1 se resta por 25
+            result -= 15; //Si es 1 se resta por 25
         }
         else if (consecuence == 2){
-            result -= 50;// Si es 2 se resta por 50
+            result -= 25;// Si es 2 se resta por 50
         }
         return Math.max(result,0);// Se retorna el mayor entre 0 y resultado
     }
@@ -125,10 +125,10 @@ public class PrincipalCharacter extends GameCharacter {
     private int incrementStat(int stat, int consecuence){
         int result = stat;
         if (consecuence == 3){
-            result += 25;// Si es 3 se resta por 25
+            result += 15;// Si es 3 se resta por 25
         }
         if (consecuence == 4){
-            result += 50;// Si es 4 se resta por 50
+            result += 25;// Si es 4 se resta por 50
         }
         return Math.min(result, 100);// Se retorna el menor entre resultado y 100
     }

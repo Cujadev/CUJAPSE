@@ -8,6 +8,8 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
@@ -90,13 +92,12 @@ public class GameControler extends Application implements MenuInicioController.M
         System.out.println("Iniciando partida");
         List<String> stringList = game.startNewGame();
 
-        this.scenary  = game.getScenary();
+        this.scenary = game.getScenary();
 
         inTutorial = true;
-        PrincipalData data = scenary.giveData(0);
-        rep = scenary.giveData(2);
-        scenary.getEvent().resetEvent();
 
+        PrincipalData data = scenary.giveData(0);
+        System.out.println(data.getMessages().get(0).getText());
         // Mostrar pantalla de carga y luego el tutorial
         showLoadingScreen(() -> showTutorial(stringList, () -> showPrincipal(data, scenary.getEvent().getSituations())));
     }
@@ -123,10 +124,9 @@ public class GameControler extends Application implements MenuInicioController.M
             mainScene.setRoot(root);
 
             controller.setListener(() -> {
-                Scenary scenary = game.getScenary();
-                PrincipalData data = scenary.giveData(0);
                 rep = scenary.giveData(2);
-                showPrincipal(data, scenary.getEvent().getSituations());
+                scenary.getEvent().resetEvent();
+                showLoadingScreen(() -> showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations()));
             });
 
         } catch (IOException e) {
@@ -221,12 +221,16 @@ public class GameControler extends Application implements MenuInicioController.M
                 } else {
                     principalController.loadEvent(scenary.giveData(2));
                 }
+            } else {
+                showDeath();
             }
         } else {
             scenary.callModificationStats(result);
             if (!scenary.isHeroDeath()) {
                 scenary.setEvent(game.getNextEvent());
                 showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations());
+            } else {
+                showDeath();
             }
         }
     }
@@ -286,4 +290,15 @@ public class GameControler extends Application implements MenuInicioController.M
     private void volverAlMenuInicial() {
         showMainMenu();
     }
+
+    private void showDeath() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Has muerto");
+            alert.setHeaderText(null);
+            alert.setContentText("Tu personaje ha muerto. Fin de la partida.");
+            alert.showAndWait();
+            showMainMenu();
+        });}
 }
+
