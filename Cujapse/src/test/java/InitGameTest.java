@@ -74,7 +74,7 @@ public class InitGameTest {
         Event e = InitNewGame.generateEvents().get(1);
         Situation s = e.getNextSituaion(0);
         System.out.println(s.getAssociation().getIdAnswer());
-        System.out.println(e.getSituations().getRoot().getLeft().getLeft());
+        System.out.println(e.getSituations().getRoot().getLeft().getInfo().getAssociation().getIdAnswer());
     }
 
     @AfterEach

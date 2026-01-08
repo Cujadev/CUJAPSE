@@ -6,6 +6,7 @@ module com.example.cujapse {
     requires jdk.compiler;
 
 
+
     // Exportamos controladores si otra parte del programa los necesita
     exports interfaz.controllers;
     exports main;
@@ -22,5 +23,6 @@ module com.example.cujapse {
     opens interfaz.controllers to javafx.fxml;
     opens interfaces to javafx.fxml;
     opens main to javafx.graphics;
+
 
 }

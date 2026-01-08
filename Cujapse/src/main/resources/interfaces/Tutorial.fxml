@@ -9,21 +9,17 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="rootPane" styleClass="root" stylesheets="@../visualResources/paletaDeColores/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaz.controllers.TutorialController">
+<BorderPane fx:id="rootPane"
+            stylesheets="@../visualResources/paletaDeColores/estilos.css"
+            styleClass="tutorial-background"
+            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="interfaz.controllers.TutorialController">
 
     <!-- ========================= -->
     <!-- CENTRO: CONTENIDO PRINCIPAL -->
     <!-- ========================= -->
     <center>
         <StackPane fx:id="stackCenter">
-
-            <!-- FONDO RESPONSIVE -->
-            <ImageView fx:id="backgroundImage" preserveRatio="false" StackPane.alignment="CENTER">
-                <image>
-                    <Image url="@../visualResources/escenarios/fondoTutorial.png" />
-                </image>
-            </ImageView>
-
             <!-- CONTENIDO SUPERIOR (PERSONAJE + CAJA) -->
             <AnchorPane fx:id="contentLayer">
 
