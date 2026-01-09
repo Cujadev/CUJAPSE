@@ -280,11 +280,9 @@ public class PrincipalController  {
             btnContinuar.setVisible(false);
             btnContinuar.setManaged(false);
         }
-        if (continuarListener != null){
-            continuarListener.onContinuarSelected();
-        }
         if (decisionListener != null) {
             decisionListener.onDecisionSelected(selectedOption);
+            clearSelection();
         }
         clearSelection();
     }
@@ -373,6 +371,7 @@ public class PrincipalController  {
 
         return null;
     }
+
     public interface MenuPrincipalListener {
         void onSalirAlMenu();
     }

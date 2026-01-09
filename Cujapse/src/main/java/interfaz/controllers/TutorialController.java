@@ -37,7 +37,7 @@ public class TutorialController {
     }
 
     public void setListener(TutorialListener listener) {
-        this.listener = listener;
+        this.listener =  listener;
     }
 
     @FXML
@@ -56,6 +56,7 @@ public class TutorialController {
     public interface TutorialListener {
         void onTutorialFinished();
     }
+
 
     // ========== RESPONSIVE (solo fullscreen + fondo adaptable) ==========
     private Stage stage;

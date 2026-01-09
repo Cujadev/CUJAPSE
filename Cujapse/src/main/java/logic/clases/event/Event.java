@@ -24,6 +24,8 @@ public class Event {
         it = situations.treeIterator();
         event = id;
     }
+
+
     ///+++++++++++++++++++++++++++++++++++++++++++++++++++++
     ///
     ///
@@ -82,6 +84,9 @@ public class Event {
     }
     public DecisionNode <Situation> getActualSituation(){
         return it.getNode();
+    }
+    public void resetEvent (){
+        it = situations.resetIterator();
     }
 
 }
