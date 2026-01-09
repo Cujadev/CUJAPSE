@@ -3,6 +3,7 @@ package main;
 import interfaz.controllers.MenuInicioController;
 import interfaz.controllers.PrincipalController;
 import interfaz.controllers.TutorialController;
+import interfaz.sounds.SoundManager;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
@@ -47,6 +48,7 @@ public class GameControler extends Application implements MenuInicioController.M
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
         showMainMenu();
+        SoundManager.playBackground("/AUD-20260108-WA0067.mp3");
     }
 
     public static void main(String[] args) {
