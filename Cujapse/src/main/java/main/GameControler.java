@@ -11,13 +11,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
+import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.input.KeyCombination;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.util.Duration;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
+import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
+import logic.clases.character.Dialogue;
+import logic.clases.event.Event;
 import logic.clases.event.Situation;
 import logic.clases.game.Game;
 import javafx.application.Application;
@@ -25,12 +32,15 @@ import logic.clases.game.Scenary;
 
 import java.io.IOException;
 
-public class GameControler extends Application implements MenuInicioController.MenuInicioListener, PrincipalController.DecisionListener {
+import java.security.Principal;
+import java.util.List;
 
+public class GameControler extends Application implements MenuInicioController.MenuInicioListener, PrincipalController.DecisionListener {
+    private static GameControler intance;
     private Game game;
     private Stage primaryStage;
-    private static GameControler intance;
-    private Integer ultimaDesicion;
+
+    private Scenary scenary;
     private PrincipalController principalController;
     private boolean inTutorial;
     private PrincipalData rep;
@@ -81,11 +91,12 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void iniciarNuevaPartida() {
         System.out.println("Iniciando partida");
-        game.startNewGame();
+        List<String> stringList = game.startNewGame();
         Scenary scenary = game.getScenary();
         inTutorial = true;
         PrincipalData data = scenary.giveData(0);
         rep = scenary.giveData(2);
+        showTutorial(stringList, () -> showPrincipal(data, scenary.getEvent().getSituations()));
 
         showLoadingScreen(() -> showTutorial(data, scenary));
     }
@@ -105,7 +116,7 @@ public class GameControler extends Application implements MenuInicioController.M
             Parent root = loader.load();
             TutorialController controller = loader.getController();
 
-            controller.setDialogLines(game.startNewGame());
+            controller.setDialogLines(dialogues);
             controller.startTutorial();
 
             primaryStage.setTitle("Tutorial");
@@ -135,6 +146,9 @@ public class GameControler extends Application implements MenuInicioController.M
             controller.setStats(data.getStats());
             controller.loadEvent(data);
             controller.setDecisionListener(this);
+            controller.setContinuarListener(() -> {
+                onDecisionSelected(controller.getSelectedOption());
+            });
 
             controller.setMenuListener(() -> volverAlMenuInicial());
             primaryStage.setTitle("Principal");
@@ -143,6 +157,14 @@ public class GameControler extends Application implements MenuInicioController.M
             mainScene.setRoot(root);
 
             principalController = controller;
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.setFullScreen(true);
+            primaryStage.setScene(scene);
+            principalController = controller;
+
+            primaryStage.show();
+            primaryStage.requestFocus();
+            primaryStage.toFront();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -150,6 +172,7 @@ public class GameControler extends Application implements MenuInicioController.M
     }
 
     private void showMainMenu() {
+        Scenary scenary = game.getScenary();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/MenuInicio.fxml"));
             Parent root = loader.load();
@@ -160,6 +183,12 @@ public class GameControler extends Application implements MenuInicioController.M
 
             // ⭐ SIN cambiar la escena
             mainScene.setRoot(root);
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.setFullScreen(true);
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -171,10 +200,15 @@ public class GameControler extends Application implements MenuInicioController.M
         ultimaDesicion = codigo;
         if (inTutorial) {
             loopDecisiones();
+        int result = codigo;
+        if (inTutorial) {
+            loopDecisiones(result);
+        } else {
+            processResult(result);
         }
     }
 
-    private void loopDecisiones() {
+    private void loopDecisiones(int result) {
         Scenary scenary = game.getScenary();
         if (ultimaDesicion == null) return;
 
@@ -184,9 +218,39 @@ public class GameControler extends Application implements MenuInicioController.M
         }
 
         if (ultimaDesicion == 1) {
+        if (result == 2) {
+            principalController.loadEvent(rep);
+            principalController.habilitarOpciones();
+        }
+        if (result == 1) {
+            System.out.println("Decisión buena, avanzamos...");
             principalController.loadEvent(scenary.giveData(1));
+            scenary = game.getScenary();
         }
     }
+
+    private void playGame() {
+        inTutorial = false;
+        this.scenary.setEvent(game.getNextEvent());
+        showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations());
+    }
+
+    private void processResult(int result) {
+        Event current = scenary.getEvent();
+        DecisionNode<Situation> actual = current.getActualSituation();
+
+        if (!actual.isLeaf()) {
+            if (result == 1) {
+                principalController.loadEvent(scenary.giveData(1));
+            } else {
+                principalController.loadEvent(scenary.giveData(2));
+            }
+        } else {
+            scenary.setEvent(game.getNextEvent());
+        }
+    }
+
+}
 
     private void showLoadingScreen(Runnable onFinish) {
         try {
