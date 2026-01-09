@@ -74,10 +74,12 @@ public class Game {
         eventQueue.offer(events.get(0));
         events.remove(0);
 
+        if (events == null || events.isEmpty()) { throw new IllegalArgumentException("No hay eventos para encolar"); }
+
         if (!events.isEmpty()) {
             if (newGame) {
                 while (!events.isEmpty()) {// Siempre que no esté vacio
-                    int index = random.nextInt(events.size() - 1);// Se busca un número random entre 0 y el tamaño del array
+                    int index = random.nextInt(events.size());// Se busca un número random entre 0 y el tamaño del array
                     eventQueue.offer(events.get(index));// Se agrega a la cola de elementos ese elemento en el índice random
                     events.remove(index); // Se remueve de la lincked copia de eventos.
                 }
@@ -85,7 +87,7 @@ public class Game {
             else{
                 ArrayList <String> played = mainCharacter.getIdEvents();
                 while (!events.isEmpty()) {// Siempre que no esté vacio
-                    int index = random.nextInt(events.size() - 1);
+                    int index = random.nextInt(events.size());
                     if (played.contains(events.get(index).getIdEvent())) {
                         events.remove(index);
                     }
@@ -104,10 +106,14 @@ public class Game {
 
     public List<String> startNewGame(){
         List <String> list = InitNewGame.giveTutorialDialogues();
-        ArrayList <Event> events = new ArrayList();
-        events.add(InitNewGame.createFirstEvent());
+        ArrayList <Event> events = InitNewGame.generateEvents();
+        System.out.println(events.size());
         inQuequeEvents(events, true);
         scenary.setEvent(getNextEvent());
         return list;
+    }
+
+    public void modifyStats (int selection, String id){
+        mainCharacter.modifyStats(selection, id);
     }
 }

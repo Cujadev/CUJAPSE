@@ -21,4 +21,5 @@ module com.example.cujapse {
     opens interfaces to javafx.fxml;
     opens main to javafx.graphics;
 
+
 }

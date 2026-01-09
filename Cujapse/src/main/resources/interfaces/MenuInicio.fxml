@@ -10,6 +10,7 @@
 <AnchorPane fx:id="rootPane"
             prefHeight="670" prefWidth="700"
             stylesheets="@../visualResources/paletaDeColores/estilos.css"
+            styleClass="menu-background"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="interfaz.controllers.MenuInicioController">
@@ -18,35 +19,23 @@
 
         <!-- ⭐ CONTENEDOR PRINCIPAL -->
         <StackPane fx:id="scalableRoot"
+
                    AnchorPane.topAnchor="0"
                    AnchorPane.bottomAnchor="0"
                    AnchorPane.leftAnchor="0"
-                   AnchorPane.rightAnchor="0">
-
-            <!-- ⭐ FONDO -->
-            <ImageView fx:id="backgroundImage"
-                       preserveRatio="false"
-                       pickOnBounds="true">
-                <image>
-                    <Image url="@../visualResources/escenarios/fondoPantallaInicio.png"/>
-                </image>
-            </ImageView>
-
-            <Button fx:id="btnFullscreen"
-                    text="Pantalla Completa"
-                    styleClass="btn-menu-principal"
-                    onAction="#onToggleFullscreen"
-                    StackPane.alignment="TOP_RIGHT"/>
-
+                   AnchorPane.rightAnchor="0" maxWidth="Infinity" maxHeight="Infinity">
 
             <!-- ⭐ MENÚ DEBAJO DEL LOGO -->
             <VBox fx:id="vboxMenu"
                   alignment="TOP_CENTER"
                   spacing="25"
-                  prefWidth="229" prefHeight="190"
-                  StackPane.alignment="TOP_CENTER">
+                  maxWidth="Infinity"
+                  StackPane.alignment="TOP_CENTER"
+                  style="-fx-padding: 290 0 0 0;">
 
-                <Button fx:id="btnNuevaPartida"
+
+
+            <Button fx:id="btnNuevaPartida"
                         onAction="#onNuevaPartidaClick"
                         prefWidth="200" prefHeight="45"
                         styleClass="btn-menu-principal"

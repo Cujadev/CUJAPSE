@@ -45,7 +45,9 @@
                             </ImageView>
                         </graphic>
                         <items>
-                            <MenuItem fx:id="menuSalirMenu" text="Salir al menú principal"/>
+                            <MenuItem fx:id="menuSalirMenu"
+                                      text="Salir al menú principal"
+                                      onAction="#onSalirMenuClick"/>
                         </items>
                     </Menu>
                 </menus>
