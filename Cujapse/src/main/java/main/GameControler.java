@@ -3,13 +3,7 @@ package main;
 import interfaz.controllers.MenuInicioController;
 import interfaz.controllers.PrincipalController;
 import interfaz.controllers.TutorialController;
-
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import interfaz.sounds.SoundManager;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -71,6 +65,7 @@ public class GameControler extends Application implements MenuInicioController.M
         primaryStage.show();
 
         showMainMenu();
+        SoundManager.playBackground("/AUD-20260108-WA0067.mp3");
     }
 
     public static void main(String[] args) {
