@@ -71,6 +71,7 @@ public class Game {
     //Encolar los eventos
     public void inQuequeEvents(ArrayList <Event> events, boolean newGame) {
         Random random = new Random();// Randomizador
+        eventQueue.clear();
         eventQueue.offer(events.get(0));
         events.remove(0);
 
