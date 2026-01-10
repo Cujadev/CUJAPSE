@@ -111,6 +111,7 @@ public class Game {
         System.out.println(events.size());
         inQuequeEvents(events, true);
         scenary.setEvent(getNextEvent());
+        mainCharacter.resetStats();
         return list;
     }
 

@@ -195,4 +195,12 @@ public class PrincipalCharacter extends GameCharacter {
         }
         return id;
     }
+    public void resetStats() {
+        ArrayList <Integer> stats = new ArrayList<>();
+        stats.add(50);
+        stats.add(50);
+        stats.add(50);
+        stats.add(50);
+        this.stats = stats;
+    }
 }
