@@ -22,33 +22,6 @@ public class InitNewGame {
     private static final HashMap<String, String> omar = new HashMap<>();
 
 
-    static {
-        tutorial.put("20", "1");
-        tutorial.put("21", "1");
-        tutorial.put("22", "1");
-
-        omar.put("1", "2");
-        omar.put("9", "6");
-        omar.put("2", "3");
-        omar.put("6", "5");
-        omar.put("3", "4");
-        omar.put("11", null);
-        omar.put("10", null);
-        omar.put("8", null);
-        omar.put("7", null);
-        omar.put("5", null);
-        omar.put("4", null);
-
-        omar.put("12", "7");
-        omar.put("13", "8");
-        omar.put("14", "9");
-        omar.put("18", "10");
-        omar.put("15", null);
-        omar.put("16", null);
-        omar.put("17", null);
-        omar.put("19", null);
-        omar.put("20", null);
-    }
 
     public static ArrayList<String> giveTutorialDialogues() {
         GameCharacter character = findGameCharacter("1");
@@ -115,14 +88,38 @@ public class InitNewGame {
         switch (character.getId()) {
             case "1": {
                 map = tutorial;
+                tutorial.put("20", "1");
+                tutorial.put("21", "1");
+                tutorial.put("22", "1");
                 break;
             }
             case "2": {
-                map = miguel;
+                map = omar;
+                omar.put("1", "2");
+                omar.put("9", "6");
+                omar.put("2", "3");
+                omar.put("6", "5");
+                omar.put("3", "4");
+                omar.put("11", null);
+                omar.put("10", null);
+                omar.put("8", null);
+                omar.put("7", null);
+                omar.put("5", null);
+                omar.put("4", null);
+
+                omar.put("12", "7");
+                omar.put("13", "8");
+                omar.put("14", "9");
+                omar.put("18", "10");
+                omar.put("15", null);
+                omar.put("16", null);
+                omar.put("17", null);
+                omar.put("19", null);
+                omar.put("20", null);
                 break;
             }
             case "3": {
-                map = omar;
+                map = miguel;
                 break;
             }
         }
@@ -155,11 +152,11 @@ public class InitNewGame {
 
         Situation situation2 = generateSituation("9", character);
         DecisionNode<Situation> node2 = new DecisionNode<>(situation2);
-        e1.addSituation(node2, node1, 1);
+        e1.addSituation(node2, e1.getSituations().getRoot(), 1);
 
         Situation situation3 = generateSituation("2", character);
         DecisionNode<Situation> node3 = new DecisionNode<>(situation3);
-        e1.addSituation(node3, node1, 2);
+        e1.addSituation(node3, e1.getSituations().getRoot(), 2);
 
         Situation situation4 = generateSituation("11", character);
         DecisionNode<Situation> node4 = new DecisionNode<>(situation4);
@@ -201,11 +198,11 @@ public class InitNewGame {
 
         Situation situation14 = generateSituation("18", character);
         DecisionNode<Situation> node14 = new DecisionNode<>(situation14);
-        e2.addSituation(node14, node12, 1);
+        e2.addSituation(node14, e2.getSituations().getRoot(), 1);
 
         Situation situation13 = generateSituation("13", character);
         DecisionNode<Situation> node13 = new DecisionNode<>(situation13);
-        e2.addSituation(node13, node12, 2);
+        e2.addSituation(node13, e2.getSituations().getRoot(), 2);
 
         Situation situation15 = generateSituation("20", character);
         DecisionNode<Situation> node15 = new DecisionNode<>(situation15);
