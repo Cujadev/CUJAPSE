@@ -22,33 +22,6 @@ public class InitNewGame {
     private static final HashMap<String, String> omar = new HashMap<>();
 
 
-    static {
-        tutorial.put("20", "1");
-        tutorial.put("21", "1");
-        tutorial.put("22", "1");
-
-        omar.put("1", "2");
-        omar.put("9", "6");
-        omar.put("2", "3");
-        omar.put("6", "5");
-        omar.put("3", "4");
-        omar.put("11", null);
-        omar.put("10", null);
-        omar.put("8", null);
-        omar.put("7", null);
-        omar.put("5", null);
-        omar.put("4", null);
-
-        omar.put("12", "7");
-        omar.put("13", "8");
-        omar.put("14", "9");
-        omar.put("18", "10");
-        omar.put("15", null);
-        omar.put("16", null);
-        omar.put("17", null);
-        omar.put("19", null);
-        omar.put("20", null);
-    }
 
     public static ArrayList<String> giveTutorialDialogues() {
         GameCharacter character = findGameCharacter("1");
@@ -115,14 +88,38 @@ public class InitNewGame {
         switch (character.getId()) {
             case "1": {
                 map = tutorial;
+                tutorial.put("20", "1");
+                tutorial.put("21", "1");
+                tutorial.put("22", "1");
                 break;
             }
             case "2": {
-                map = miguel;
+                map = omar;
+                omar.put("1", "2");
+                omar.put("9", "6");
+                omar.put("2", "3");
+                omar.put("6", "5");
+                omar.put("3", "4");
+                omar.put("11", null);
+                omar.put("10", null);
+                omar.put("8", null);
+                omar.put("7", null);
+                omar.put("5", null);
+                omar.put("4", null);
+
+                omar.put("12", "7");
+                omar.put("13", "8");
+                omar.put("14", "9");
+                omar.put("18", "10");
+                omar.put("15", null);
+                omar.put("16", null);
+                omar.put("17", null);
+                omar.put("19", null);
+                omar.put("20", null);
                 break;
             }
             case "3": {
-                map = omar;
+                map = miguel;
                 break;
             }
         }

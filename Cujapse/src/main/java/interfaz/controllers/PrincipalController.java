@@ -31,6 +31,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.control.MenuItem;
 
 public class PrincipalController {
 
@@ -217,6 +218,7 @@ public class PrincipalController {
         vboxMensajes.getChildren().clear();
         decisionEnviada = false;
         this.data = data;
+        setStats(data.getStats());
 
         if (data != null && data.getMessages() != null) {
             Menssage menssage = data.getMessages().get(0);
@@ -238,7 +240,7 @@ public class PrincipalController {
             String text = data.getMessages().get(1).getText();
             selectedOptionText = (text == null || text.isEmpty()) ? "Nada cargado" : text;
         } else {
-            selectedOptionText = "Nada cargado";
+            selectedOptionText = "Hemos terminado de hablar";
         }
         selectedOption = 1;
         updateDecisionDisplay();
@@ -252,7 +254,7 @@ public class PrincipalController {
             String text = data.getMessages().get(2).getText();
             selectedOptionText = (text == null || text.isEmpty()) ? "Nada cargado" : text;
         } else {
-            selectedOptionText = "Nada cargado";
+            selectedOptionText = "Hemos terminado de hablar";
         }
         selectedOption = 2;
         updateDecisionDisplay();
@@ -318,14 +320,12 @@ public class PrincipalController {
     @FXML
     private void onContinuarClick() {
         SoundManager.playEffect("/beep-6-96243.mp3");
-        clearSelection();
         if (btnContinuar != null) {
             btnContinuar.setVisible(false);
             btnContinuar.setManaged(false);
         }
         if (decisionListener != null) {
             decisionListener.onDecisionSelected(selectedOption);
-            clearSelection();
         }
         clearSelection();
     }
