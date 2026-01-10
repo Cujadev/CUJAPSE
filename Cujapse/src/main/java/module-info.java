@@ -3,7 +3,6 @@ module com.example.cujapse {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.desktop;
-    requires jdk.compiler;
     requires javafx.media;
 
 

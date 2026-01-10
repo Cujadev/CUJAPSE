@@ -1,6 +1,6 @@
 package interfaz.controllers;
 
-import javafx.scene.control.MenuItem;
+import interfaz.sounds.SoundManager;
 import logic.auxiliars.dataOfInterfaces.Menssage;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import interfaz.auxiliars.VisualTree;
@@ -232,6 +232,7 @@ public class PrincipalController {
     // ================================================================
     @FXML
     private void onOptionYesClick() {
+        SoundManager.playEffect("/button_09-190435.mp3");
         if (decisionEnviada) return;
         if (data != null && data.getMessages().size() > 1) {
             String text = data.getMessages().get(1).getText();
@@ -245,6 +246,7 @@ public class PrincipalController {
 
     @FXML
     private void onOptionNoClick() {
+        SoundManager.playEffect("/error-call-to-attention-129258.mp3");
         if (decisionEnviada) return;
         if (data != null && data.getMessages().size() > 2) {
             String text = data.getMessages().get(2).getText();
@@ -289,6 +291,7 @@ public class PrincipalController {
 
     @FXML
     private void onSendDecisionClick() {
+        SoundManager.playEffect("/interface-2-126517.mp3");
         if (selectedOption == 0 || decisionEnviada) return;
 
         decisionEnviada = true;
@@ -314,6 +317,8 @@ public class PrincipalController {
 
     @FXML
     private void onContinuarClick() {
+        SoundManager.playEffect("/beep-6-96243.mp3");
+        clearSelection();
         if (btnContinuar != null) {
             btnContinuar.setVisible(false);
             btnContinuar.setManaged(false);

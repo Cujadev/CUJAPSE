@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import interfaz.sounds.SoundManager;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -73,6 +74,7 @@ public class GameControler extends Application implements MenuInicioController.M
         primaryStage.show();
 
         showMainMenu();
+        SoundManager.playBackground("/AUD-20260108-WA0067.mp3");
     }
 
     public static void main(String[] args) {
@@ -183,6 +185,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
     @Override
     public void onDecisionSelected(int codigo) {
+        System.out.println("Decision selected: " + codigo);
         ultimaDesicion = codigo;
         if (inTutorial) {
             loopDecisiones(codigo);
@@ -196,7 +199,7 @@ public class GameControler extends Application implements MenuInicioController.M
             principalController.loadEvent(rep);
             principalController.habilitarOpciones();
         }
-        if (result == 1) {
+        else if (result == 1) {
             System.out.println("Decisión buena, avanzamos...");
             principalController.loadEvent(scenary.giveData(1));
             playGame();
@@ -218,19 +221,27 @@ public class GameControler extends Application implements MenuInicioController.M
             if (!scenary.isHeroDeath()) {
                 if (result == 1) {
                     principalController.loadEvent(scenary.giveData(1));
+                    principalController.habilitarOpciones();
                 } else {
                     principalController.loadEvent(scenary.giveData(2));
+                    principalController.habilitarOpciones();
                 }
             } else {
                 showDeath();
             }
         } else {
-            scenary.callModificationStats(result);
-            if (!scenary.isHeroDeath()) {
-                scenary.setEvent(game.getNextEvent());
-                showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations());
-            } else {
-                showDeath();
+            System.out.println("nodo hoja detectado, cambiando escenario");
+            if (!game.getEventQueue().isEmpty()) {
+                scenary.callModificationStats(result);
+                if (!scenary.isHeroDeath()) {
+                    scenary.setEvent(game.getNextEvent());
+                    showLoadingScreen(()->  showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations()));
+                } else {
+                    showDeath();
+                }
+            }
+            else {
+                endGame();
             }
         }
     }
@@ -297,6 +308,15 @@ public class GameControler extends Application implements MenuInicioController.M
             alert.setTitle("Has muerto");
             alert.setHeaderText(null);
             alert.setContentText("Tu personaje ha muerto. Fin de la partida.");
+            alert.showAndWait();
+            showMainMenu();
+        });}
+    private void endGame() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Juego Terminado");
+            alert.setHeaderText(null);
+            alert.setContentText("Felicidades has terminado Cujapse. Si no entendiste nada, yo tampoco. Pero de parte del equipo te agradecemos por jugar");
             alert.showAndWait();
             showMainMenu();
         });}
