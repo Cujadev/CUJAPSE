@@ -56,6 +56,7 @@ public class Scenary implements ChargerMenssage {
     //====Entregar los diálogos====
     private List<Menssage> generateMessages(int branch) {
         Situation s = event.getNextSituaion(branch); //Se obtiene la situación
+        System.out.println("La siguiente situacion pertenece a personaje :" + s.getAssociation().getIdCharacter() + "\nVinculada al dialogo: " + s.getAssociation().getIdDialogueCharacter() + "\nCon respuesta del personaje principal:" + s.getAssociation().getIdAnswer());
         List<Menssage> dialogues = new ArrayList<>();
         Dialogue seconDialogue = s.getCharacterDialogue(s.getAssociation().getIdCharacter());//Se carga el dialogo del personaje secundario
         dialogues.add(new Menssage(seconDialogue.getContenido(), giveCharacterName(), findPathAvatarCharacter()));

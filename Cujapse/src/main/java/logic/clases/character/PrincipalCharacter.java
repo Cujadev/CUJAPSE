@@ -4,6 +4,7 @@ import logic.auxiliars.files.FileReaders;
 
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class PrincipalCharacter extends GameCharacter {
@@ -93,11 +94,14 @@ public class PrincipalCharacter extends GameCharacter {
     // Modificar las estadísticas
     public void modifyStats(int election, String idAnswer) { //Se toma la eleccion y la ID de la respuesta dada en el guion
         Consecuence c = chargeAnswer(idAnswer).getConsecuence();// Se obtiene la consecuencia
+        System.out.println("Se estanmodificando las estadisticas: " );
         Integer[] consecuenses; // Se crea un Array de enteros
         if (election == 1) {// En dependencia si la consecuencia es  1 o 2
             consecuenses = c.getLconsecueces(); // Se toma el array que representa a las consecuencias de la izquierda
+            System.out.println("Se estanmodificando las estadisticas: " + Arrays.toString(consecuenses) + "\nSeleccion :" + election);
         } else if (election == 2) {
             consecuenses = c.getRconsecuences();// Se toma el array que representa a las consecuencias de la derecha
+            System.out.println("Se estanmodificando las estadisticas: " + Arrays.toString(consecuenses) + "\nSeleccion :" + election);
         } else {
             throw new IllegalArgumentException();
         }
