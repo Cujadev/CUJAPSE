@@ -36,6 +36,7 @@ public class MenuInicioController {
     public void initialize() {
 
         rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            btnCargarPartida.setVisible(false);
             if (newScene != null && !initialized) {
                 initialized = true;
 

@@ -161,7 +161,7 @@ public class PrincipalCharacter extends GameCharacter {
 
         switch (index){// Se verifica en esa stat el tipo de muerte
             case 0:{
-                if (stats.get(index) <= 0){
+                if (stats.get(index) >= 100){
                     id = "0";
                 }
                 else{
@@ -170,7 +170,7 @@ public class PrincipalCharacter extends GameCharacter {
                 break;
             }
             case 1:{
-                if (stats.get(index) <= 0){
+                if (stats.get(index) >= 100){
                     id = "2";
                 }
                 else{
@@ -179,7 +179,7 @@ public class PrincipalCharacter extends GameCharacter {
                 break;
             }
             case 2:{
-                if (stats.get(index) <= 0){
+                if (stats.get(index) >= 100){
                     id = "4";
                 }
                 else{
@@ -188,7 +188,7 @@ public class PrincipalCharacter extends GameCharacter {
                 break;
             }
             case 3:{
-                if (stats.get(index) <= 0){
+                if (stats.get(index) >= 100){
                     id = "6";
                 }
                 else{
