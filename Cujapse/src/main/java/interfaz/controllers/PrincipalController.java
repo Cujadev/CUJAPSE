@@ -482,6 +482,7 @@ public class PrincipalController {
     @FXML
     private void onSalirMenuClick() {
         if (menuListener != null) {
+            SoundManager.playEffect("/sound/button_09-190435.mp3");
             menuListener.onSalirAlMenu();
         }
     }

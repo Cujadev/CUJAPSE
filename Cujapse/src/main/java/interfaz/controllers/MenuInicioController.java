@@ -59,16 +59,19 @@ public class MenuInicioController {
 
     @FXML
     private void onNuevaPartidaClick() {
+        SoundManager.playEffect("/sound/button_09-190435.mp3");
         if (listener != null) listener.onMenuOptionSelected(1);
     }
 
     @FXML
     private void onCargarPartidaClick() {
+        SoundManager.playEffect("/sound/button_09-190435.mp3");
         if (listener != null) listener.onMenuOptionSelected(2);
     }
 
     @FXML
     private void onSalirClick() {
+        SoundManager.playEffect("/sound/button_09-190435.mp3");
         if (listener != null) listener.onMenuOptionSelected(3);
     }
 
