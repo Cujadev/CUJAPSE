@@ -38,7 +38,7 @@
                         <Label fx:id="labelDialogo" styleClass="tutorial-text" wrapText="true" VBox.vgrow="ALWAYS" />
                     </VBox>
 
-                          <Button fx:id="btnContinuar" onAction="#onContinuarClick" prefHeight="98.0" prefWidth="18.0" styleClass="btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="31.0" AnchorPane.rightAnchor="40.0" />
+                          <Button fx:id="btnContinuar" onAction="#onContinuarClick" prefHeight="60.0" prefWidth="60.0" styleClass="btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="40.0" />
                 </AnchorPane>
 
             </AnchorPane>

@@ -7,6 +7,7 @@ import interfaz.controllers.TutorialController;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import interfaz.sounds.SoundManager;
@@ -17,7 +18,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.util.Duration;
-
+import javafx.geometry.Pos;
+import javafx.geometry.Insets;
+import javafx.scene.input.KeyEvent;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
@@ -70,8 +73,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
         primaryStage.show();
 
-        showMainMenu();
-        SoundManager.playBackground("/sound/AUD-20260108-WA0067.mp3");
+        showSplashScreen(this::showMainMenu);
     }
 
     public static void main(String[] args) {
@@ -134,6 +136,8 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void showPrincipal(PrincipalData data, DecisionTree<Situation> decisionTree) {
         try {
+            SoundManager.stopBackground();
+            SoundManager.playBackground("/sound/principal.mp3");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Principal.fxml"));
             Parent root = loader.load();
             PrincipalController controller = loader.getController();
@@ -166,6 +170,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void showMainMenu() {
         try {
+            SoundManager.playBackground("/sound/menuInicio.mp3");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/MenuInicio.fxml"));
             Parent root = loader.load();
             MenuInicioController controller = loader.getController();
@@ -293,6 +298,55 @@ public class GameControler extends Application implements MenuInicioController.M
         }
     }
 
+    private void showSplashScreen(Runnable onFinish) {
+        // Imagen de portada
+        ImageView portada = new ImageView(
+                new Image(getClass().getResource("/visualResources/escenarios/portada.png").toExternalForm())
+        );
+
+        portada.setPreserveRatio(true);
+        portada.fitWidthProperty().bind(primaryStage.widthProperty());
+        portada.fitHeightProperty().bind(primaryStage.heightProperty());
+
+        // Texto "Presione cualquier tecla para continuar..."
+        Label pressKey = new Label("Presione cualquier tecla para continuar...");
+        pressKey.setStyle("-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        // Animación de parpadeo
+        FadeTransition ft = new FadeTransition(Duration.seconds(1.2), pressKey);
+        ft.setFromValue(1);
+        ft.setToValue(0.2);
+        ft.setCycleCount(FadeTransition.INDEFINITE);
+        ft.setAutoReverse(true);
+        ft.play();
+
+        StackPane root = new StackPane(portada, pressKey);
+        StackPane.setAlignment(pressKey, Pos.BOTTOM_CENTER);
+        StackPane.setMargin(pressKey, new Insets(0, 0, 60, 0));
+
+        mainScene.setRoot(root);
+
+        // ⭐ Cualquier tecla
+        mainScene.setOnKeyPressed(event -> {
+            onFinish.run();
+            limpiarHandlers();
+        });
+
+        // ⭐ Cualquier clic del mouse
+        mainScene.setOnMouseClicked(event -> {
+            onFinish.run();
+            limpiarHandlers();
+        });
+    }
+
+
+        /*
+        // Duración de la portada
+        Timeline wait = new Timeline(new KeyFrame(Duration.seconds(5), e -> onFinish.run()));
+        wait.play();*/
+
+
+
     private void volverAlMenuInicial() {
         showMainMenu();
     }
@@ -335,5 +389,11 @@ public class GameControler extends Application implements MenuInicioController.M
             showMainMenu();
         });
     }
+
+    private void limpiarHandlers() {
+        mainScene.setOnKeyPressed(null);
+        mainScene.setOnMouseClicked(null);
+    }
+
 }
 

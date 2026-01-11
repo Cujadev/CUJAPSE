@@ -1,5 +1,6 @@
 package interfaz.controllers;
 
+import interfaz.sounds.SoundManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,6 +32,7 @@ public class TutorialController {
     }
 
     public void startTutorial() {
+        SoundManager.playEffect("/sound/button_09-190435.mp3");
         if (dialogLines != null && !dialogLines.isEmpty()) {
             labelDialogo.setText(dialogLines.get(0));
         }
