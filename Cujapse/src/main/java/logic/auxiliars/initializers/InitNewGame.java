@@ -49,7 +49,7 @@ public class InitNewGame {
 
     private static GameCharacter findGameCharacter(String id) {
         Game game = Game.getInstance();
-        RandomAccessFile raf = FileReaders.openFile(game.getPersonajesFichero());
+        RandomAccessFile raf = FileReaders.openFile(game.getFileCharacters());
         GameCharacter c = FileReaders.findCharacter(id, raf);
         FileReaders.closeFile(raf);
         return c;
@@ -250,7 +250,7 @@ public class InitNewGame {
         return result;
     }
     private static ArrayList <Event> generateEventsMiguel(){
-        ArrayList <Event> events = new ArrayList();
+        ArrayList <Event> events = new ArrayList<>();
         GameCharacter character = findGameCharacter("3");
 
         Situation situation1 = generateSituation("1",character);

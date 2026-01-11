@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 
 /// Esta clase se encarga de leer archivos
-/// Nota: Hay código que se repide y puede ser perfeccionado para unir 3 métodos en 1
+/// Nota: Hay código que se repite y puede ser perfeccionado para unir 3 métodos en 1
 public class FileReaders {
 
     /// Abre un RAF en modo de lectura
@@ -38,12 +38,12 @@ public class FileReaders {
         }
     }
 
-    /// Busca el dialogo en el RAF
+    /// Busca el diálogo en el RAF
     public static ArrayList<Dialogue> findDialogues(RandomAccessFile raf) {
         ArrayList <Dialogue> dialogues = new ArrayList<>();
 
         try {
-            int cant = raf.readInt();// Lee la cantidad de dialogos a leer
+            int cant = raf.readInt();// Lee la cantidad de diálogos a leer
             for (int i = 0; i < cant; i++){// Recorre el archivo en la cantidad;
                 int tam = raf.readInt();
                 byte[] string = new byte[tam];

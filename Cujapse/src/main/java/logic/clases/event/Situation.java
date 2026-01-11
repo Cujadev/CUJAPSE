@@ -7,7 +7,7 @@ import logic.clases.character.Dialogue;
 import logic.clases.character.GameCharacter;
 import logic.clases.character.PrincipalCharacter;
 
-// Esta clase se encarga de guardar tanto los dialogos de los personajes secundarios y las respuestas del principal
+// Esta clase se encarga de guardar tanto los diálogos de los personajes secundarios y las respuestas del principal
 public class Situation {
 
     private ChargerSituation_Dialogue association;

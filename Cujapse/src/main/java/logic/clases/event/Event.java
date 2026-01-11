@@ -29,7 +29,7 @@ public class Event {
     ///+++++++++++++++++++++++++++++++++++++++++++++++++++++
     ///
     ///
-    /// ===Getters y Setters===
+    /// ===Getters and Setters===
     public DecisionTree<Situation> getSituations() {
         return situations;
     }
@@ -59,7 +59,7 @@ public class Event {
     /// 1 para izquierda
     /// 2 para derecha
     /// 0 nodo actual
-    public Situation getNextSituaion(int branch){
+    public Situation getNextSituation(int branch){
         Situation s;
 
         if (branch == 1){
@@ -74,7 +74,7 @@ public class Event {
             s = it.getNodeInfo();
         }
         else {
-            throw new IllegalArgumentException("Opción para selecionar la situación es incorrecta");
+            throw new IllegalArgumentException("Opción para seleccionar la situación es incorrecta");
         }
         return s;
     }

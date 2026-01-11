@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-/// Se encarga de escribir en los achivos
+/// Se encarga de escribir en los archivos
 /// Nota: Se debe tener en cuenta la misma observación
 public class FileWriters {
 
@@ -58,21 +58,21 @@ public class FileWriters {
         }
     }
 
-    // Guarda un Dialogo en el fichero
+    // Guarda un diálogo en el fichero
     public  static void saveDialogue (Dialogue dialogue, File file){
         RandomAccessFile raf = null;
-        int cant = 0;
+        int count = 0;
 
         try{
             if (file.exists()){
                 raf =openFile(file);
-                cant = raf.readInt();
+                count = raf.readInt();
             }
             else{
                 raf = openFile(file);
             }
             raf.seek(0);
-            raf.writeInt(cant + 1);
+            raf.writeInt(count + 1);
             byte[] string = Convert.toBytes(dialogue);
             raf.seek(raf.length());
             raf.writeInt(string.length);

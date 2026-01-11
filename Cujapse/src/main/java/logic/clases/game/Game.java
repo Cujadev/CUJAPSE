@@ -13,14 +13,14 @@ import java.util.*;
 
 public class Game {
     private static Game game;
-    private final File personajesFichero;
+    private final File fileCharacters;
     private final Queue<Event> eventQueue;
     private PrincipalCharacter mainCharacter;
     private Scenary scenary;
 
     //====Constructor====
     public Game() {
-        personajesFichero = FileReaders.returnFile("/data/characters/personajes.dat");// Revisar si se crea
+        fileCharacters = FileReaders.returnFile("/data/characters/personajes.dat");// Revisar si se crea
         eventQueue = new ArrayDeque<>();
         scenary = new Scenary();
         mainCharacter  = new PrincipalCharacter("0","User", "/visualResources/characters/player.png","/data/main_character/principal_dialogues.dat","/data/main_character/consecuencias.dat");
@@ -54,16 +54,16 @@ public class Game {
         this.scenary = scenary;
     }
 
-    public File getPersonajesFichero() {
-        return personajesFichero;
+    public File getFileCharacters() {
+        return fileCharacters;
     }
     //====Métodos necesarios====
 
     //Buscar un personaje
     public GameCharacter findCharacter(String id) {
-        RandomAccessFile raf = FileReaders.openFile(personajesFichero);//Abre el fichero
+        RandomAccessFile raf = FileReaders.openFile(fileCharacters);//Abre el fichero
         GameCharacter c = FileReaders.findCharacter(id, raf);//Busca el personaje en el fichero
-        FileReaders.closeFile(raf);// cierra el fichero
+        FileReaders.closeFile(raf);// Cierra el fichero
 
         return c;
     }
@@ -79,15 +79,15 @@ public class Game {
 
         if (!events.isEmpty()) {
             if (newGame) {
-                while (!events.isEmpty()) {// Siempre que no esté vacio
+                while (!events.isEmpty()) {// Siempre que no esté vacío
                     int index = random.nextInt(events.size());// Se busca un número random entre 0 y el tamaño del array
                     eventQueue.offer(events.get(index));// Se agrega a la cola de elementos ese elemento en el índice random
-                    events.remove(index); // Se remueve de la lincked copia de eventos.
+                    events.remove(index); // Se remueve de la linked copia de eventos.
                 }
             }
             else{
                 ArrayList <String> played = mainCharacter.getIdEvents();
-                while (!events.isEmpty()) {// Siempre que no esté vacio
+                while (!events.isEmpty()) {// Siempre que no esté vacío
                     int index = random.nextInt(events.size());
                     if (played.contains(events.get(index).getIdEvent())) {
                         events.remove(index);
