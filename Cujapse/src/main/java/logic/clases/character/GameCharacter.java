@@ -63,14 +63,13 @@ public class GameCharacter implements ChargerMenssage, Serializable {
     @Override
     // Esta función devuelve el diálogo para ser utilizado por el escenario
     public Dialogue ChargeDialogue(String id) {
-        Dialogue menssage = null;
         RandomAccessFile raf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));//Abre un RAF
         Dialogue dialogue = FileReaders.searchDialogue(id,raf);// Busca el diálogo según el ID dado
         FileReaders.closeFile(raf);// Cierra el Fichero
         return dialogue;
     }
 
-    //Esta funcion guarda dialogos
+    //Esta función guarda diálogos
     public void saveDialogue (Dialogue d){
         File f = FileReaders.returnFile(getDialoguesPath());// Crea el file
         FileWriters.saveDialogue(d,f);// Guarda el dialogo

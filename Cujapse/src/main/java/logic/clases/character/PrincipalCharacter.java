@@ -53,9 +53,9 @@ public class PrincipalCharacter extends GameCharacter {
 
     /// ==== Métodos útiles ====
     public void setAnswers() throws IllegalArgumentException {
-        RandomAccessFile draf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));//Abre el fichero de dialogos
+        RandomAccessFile draf = FileReaders.openFile(FileReaders.returnFile(dialoguesPath));//Abre el fichero de diálogos
         RandomAccessFile craf = FileReaders.openFile(FileReaders.returnFile(consequences));//Abre el fichero de consecuencia
-        ArrayList<Dialogue> dialogues = FileReaders.findDialogues(draf);// Se cargan todos los dialogos del personaje principal
+        ArrayList<Dialogue> dialogues = FileReaders.findDialogues(draf);// Se cargan todos los diálogos del personaje principal
         FileReaders.closeFile(draf);// Se cierra el fichero
 
         Iterator<Dialogue> it = dialogues.iterator();
@@ -66,7 +66,7 @@ public class PrincipalCharacter extends GameCharacter {
             Dialogue d1 = it.next();
             Dialogue d2 = it.next();
 
-            String answerID = d1.getId();// Como el d1 y el d2 tienen el mismo ID se le asigna es te ID a la answer
+            String answerID = d1.getId();// Como el d1 y el d2 tienen el mismo ID se le asigna este ID a la answer
             Consecuence c = FileReaders.searchConsecuence(answerID, craf);// Se busca la consecuencia que tiene tomar las distintas respuestas
             Answer a = new Answer(answerID, d1, d2, c);// Se crea la nueva answer
             answers.add(a);// Se agrega al arraylist
@@ -92,16 +92,16 @@ public class PrincipalCharacter extends GameCharacter {
     }
 
     // Modificar las estadísticas
-    public void modifyStats(int election, String idAnswer) { //Se toma la eleccion y la ID de la respuesta dada en el guion
+    public void modifyStats(int election, String idAnswer) { //Se toma la elección y el ID de la respuesta dada en el guion
         Consecuence c = chargeAnswer(idAnswer).getConsecuence();// Se obtiene la consecuencia
-        System.out.println("Se estanmodificando las estadisticas: " );
+        System.out.println("Se están modificando las estadísticas: " );
         Integer[] consecuenses; // Se crea un Array de enteros
         if (election == 1) {// En dependencia si la consecuencia es  1 o 2
             consecuenses = c.getLconsecueces(); // Se toma el array que representa a las consecuencias de la izquierda
-            System.out.println("Se estanmodificando las estadisticas: " + Arrays.toString(consecuenses) + "\nSeleccion :" + election);
+            System.out.println("Se están modificando las estadísticas: " + Arrays.toString(consecuenses) + "\nSelección :" + election);
         } else if (election == 2) {
             consecuenses = c.getRconsecuences();// Se toma el array que representa a las consecuencias de la derecha
-            System.out.println("Se estanmodificando las estadisticas: " + Arrays.toString(consecuenses) + "\nSeleccion :" + election);
+            System.out.println("Se están modificando las estadísticas: " + Arrays.toString(consecuenses) + "\nSelección :" + election);
         } else {
             throw new IllegalArgumentException();
         }
@@ -109,7 +109,7 @@ public class PrincipalCharacter extends GameCharacter {
             if (consecuenses[i] == 1 || consecuenses[i] == 2) {// si se cumple esto restamos
                 stats.set(i, subbStat(stats.get(i), consecuenses[i]));
             }
-            if (consecuenses[i] == 3 || consecuenses[i] == 4) {// si se cumple esto sumamo
+            if (consecuenses[i] == 3 || consecuenses[i] == 4) {// si se cumple esto sumamos
                 stats.set(i, incrementStat(stats.get(i), consecuenses[i]));
             }
         }

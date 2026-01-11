@@ -1,10 +1,8 @@
 package logic.clases.game;
 
 
-import logic.auxiliars.chargers.ChargerMenssage;
 import logic.auxiliars.dataOfInterfaces.Menssage;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
-import logic.auxiliars.files.FileReaders;
 import logic.auxiliars.tree.DecisionNode;
 import logic.clases.character.Answer;
 import logic.clases.character.Dialogue;
@@ -13,17 +11,12 @@ import logic.clases.character.PrincipalCharacter;
 import logic.clases.event.Event;
 import logic.clases.event.Situation;
 
-import javafx.scene.image.Image;
-
-import java.io.File;
-import java.io.RandomAccessFile;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Scenary{
     private Event event;
-    private ArrayList<String> deathCasesPath; //Es un arraylist con las direcciones de los casos de muerte
+    private ArrayList<String> deathCasesPath; //Es un ArrayList con las direcciones de los casos de muerte
 
 
     // Pedir al evento dado una selección una situación
@@ -64,10 +57,10 @@ public class Scenary{
 
     //====Entregar los diálogos====
     private List<Menssage> generateMessages(int branch) {
-        Situation s = event.getNextSituaion(branch); //Se obtiene la situación
-        System.out.println("La siguiente situacion pertenece a personaje :" + s.getAssociation().getIdCharacter() + "\nVinculada al dialogo: " + s.getAssociation().getIdDialogueCharacter() + "\nCon respuesta del personaje principal:" + s.getAssociation().getIdAnswer());
+        Situation s = event.getNextSituation(branch); //Se obtiene la situación
+        System.out.println("La siguiente situación pertenece a personaje :" + s.getAssociation().getIdCharacter() + "\nVinculada al diálogo: " + s.getAssociation().getIdDialogueCharacter() + "\nCon respuesta del personaje principal:" + s.getAssociation().getIdAnswer());
         List<Menssage> dialogues = new ArrayList<>();
-        Dialogue seconDialogue = s.getCharacterDialogue(s.getAssociation().getIdCharacter());//Se carga el dialogo del personaje secundario
+        Dialogue seconDialogue = s.getCharacterDialogue(s.getAssociation().getIdCharacter());//Se carga el diálogo del personaje secundario
         dialogues.add(new Menssage(seconDialogue.getContenido(), giveCharacterName(), findPathAvatarCharacter()));
         if (s.getAssociation().getIdAnswer() != null) {//Si existe respuesta posible del jugador también se cargan
             Answer a = s.getPrincipalAnswers(s.getAssociation().getIdAnswer());
@@ -90,7 +83,7 @@ public class Scenary{
     //Entregar la imagen de personaje secundario
     private String findPathAvatarCharacter() {
         Game game = Game.getInstance();
-        Situation s = event.getNextSituaion(0);//Se obtiene la situación actual
+        Situation s = event.getNextSituation(0);//Se obtiene la situación actual
         GameCharacter c = game.findCharacter(s.getAssociation().getIdCharacter());//Se busca el personaje
         return c.getImagePath();
     }
@@ -121,7 +114,7 @@ public class Scenary{
 
 
     private String giveCharacterName() {
-        return Game.getInstance().findCharacter(event.getNextSituaion(0).getAssociation().getIdCharacter()).getName();
+        return Game.getInstance().findCharacter(event.getNextSituation(0).getAssociation().getIdCharacter()).getName();
     }
 
     public void callModificationStats(int selection) {
