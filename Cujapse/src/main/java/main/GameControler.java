@@ -74,7 +74,7 @@ public class GameControler extends Application implements MenuInicioController.M
         primaryStage.show();
 
         showMainMenu();
-        SoundManager.playBackground("/AUD-20260108-WA0067.mp3");
+        SoundManager.playBackground("/sound/AUD-20260108-WA0067.mp3");
     }
 
     public static void main(String[] args) {
