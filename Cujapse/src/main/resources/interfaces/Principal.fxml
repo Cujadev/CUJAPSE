@@ -7,33 +7,25 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
-<BorderPane fx:id="rootPane"
-            styleClass="root-principal"
-            stylesheets="@../visualResources/paletaDeColores/estilos.css"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="interfaz.controllers.PrincipalController">
+
+<BorderPane fx:id="rootPane" styleClass="root-principal" stylesheets="@../visualResources/paletaDeColores/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaz.controllers.PrincipalController">
 
     <!-- ========================================================= -->
     <!-- TOP: MENÚ SUPERIOR -->
     <!-- ========================================================= -->
     <top>
-        <HBox fx:id="menuSuperior"
-              alignment="CENTER_LEFT"
-              prefHeight="45"
-              styleClass="menu-superior">
+        <HBox fx:id="menuSuperior" alignment="CENTER_LEFT" prefHeight="45" styleClass="menu-superior">
 
             <padding>
-                <Insets left="15" right="15"/>
+                <Insets left="15" right="15" />
             </padding>
 
             <MenuBar fx:id="menuBar" styleClass="menu-bar">
@@ -41,19 +33,17 @@
                     <Menu fx:id="menuOpciones">
                         <graphic>
                             <ImageView fitHeight="22" fitWidth="22">
-                                <image><Image url="@../visualResources/iconos/menu.png"/></image>
+                                <image><Image url="@../visualResources/iconos/menu.png" /></image>
                             </ImageView>
                         </graphic>
                         <items>
-                            <MenuItem fx:id="menuSalirMenu"
-                                      text="Salir al menú principal"
-                                      onAction="#onSalirMenuClick"/>
+                            <MenuItem fx:id="menuSalirMenu" onAction="#onSalirMenuClick" text="Salir al menú principal" />
                         </items>
                     </Menu>
                 </menus>
             </MenuBar>
 
-            <Pane HBox.hgrow="ALWAYS"/>
+            <Pane HBox.hgrow="ALWAYS" />
         </HBox>
     </top>
 
@@ -61,93 +51,85 @@
     <!-- LEFT: PANEL IZQUIERDO -->
     <!-- ========================================================= -->
     <left>
-        <VBox fx:id="panelIzquierdo"
-              minWidth="70"
-              maxWidth="70"
-              styleClass="panel-izquierdo"/>
+        <VBox fx:id="panelIzquierdo" maxWidth="70" minWidth="70" styleClass="panel-izquierdo" />
     </left>
 
     <!-- ========================================================= -->
     <!-- RIGHT: ÁRBOL DE DECISIONES -->
     <!-- ========================================================= -->
     <right>
-        <VBox fx:id="panelArbol"
-              spacing="10"
-              minWidth="270"
-              maxWidth="270"
-              styleClass="panel-arbol">
+        <VBox fx:id="panelArbol" maxWidth="282.0" minWidth="270" prefHeight="272.0" prefWidth="282.0" spacing="10" styleClass="panel-arbol">
 
-            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
 
-            <Label styleClass="titulo-arbol" text="Árbol de decisiones"/>
+            <Label styleClass="titulo-arbol" text="Árbol de decisiones" />
 
-            <TreeView fx:id="treeViewDecisiones" VBox.vgrow="ALWAYS"/>
+            <!-- ScrollPane específico para el árbol -->
+            <ScrollPane fx:id="scrollArbol" fitToHeight="true" fitToWidth="true" styleClass="scroll-pane-arbol" VBox.vgrow="ALWAYS">
+                <content>
+                    <VBox fx:id="treeContainer" alignment="CENTER" />
+                </content>
+            </ScrollPane>
         </VBox>
     </right>
+
 
     <!-- ========================================================= -->
     <!-- CENTER: CHAT + DECISIONES -->
     <!-- ========================================================= -->
     <center>
-        <VBox fx:id="panelChat"
-              spacing="0"
-              VBox.vgrow="ALWAYS">
+        <VBox fx:id="panelChat" spacing="0" VBox.vgrow="ALWAYS">
 
             <!-- =================== -->
             <!-- BARRA DE ESTADÍSTICAS -->
             <!-- =================== -->
-            <HBox fx:id="statsTopBar"
-                  alignment="CENTER_LEFT"
-                  prefHeight="55"
-                  spacing="25"
-                  styleClass="stats-bar">
+            <HBox fx:id="statsTopBar" alignment="CENTER_LEFT" prefHeight="55" spacing="25" styleClass="stats-bar">
 
-                <padding><Insets left="25"/></padding>
+                <padding><Insets left="25" /></padding>
 
-                <HBox fx:id="labelDinero" alignment="CENTER" spacing="8" styleClass="stat-box">
-                    <ImageView fitHeight="26" fitWidth="26">
-                        <image><Image url="@../visualResources/estadisticas/dinero.png"/></image>
-                    </ImageView>
-                    <Label fx:id="labelDineroTexto" styleClass="stat-label" text="0%"/>
-                </HBox>
-
+                <!-- 1. CAFEÍNA -->
                 <HBox fx:id="labelCafeina" alignment="CENTER" spacing="8" styleClass="stat-box">
                     <ImageView fitHeight="26" fitWidth="26">
-                        <image><Image url="@../visualResources/estadisticas/cafeina.png"/></image>
+                        <image><Image url="@../visualResources/estadisticas/cafeina.png" /></image>
                     </ImageView>
-                    <Label fx:id="labelCafeinaTexto" styleClass="stat-label" text="0%"/>
+                    <Label fx:id="labelCafeinaTexto" styleClass="stat-label" text="0%" />
                 </HBox>
 
-                <HBox fx:id="labelPopularidad" alignment="CENTER" spacing="8" styleClass="stat-box">
-                    <ImageView fitHeight="26" fitWidth="26">
-                        <image><Image url="@../visualResources/estadisticas/popularidad.png"/></image>
-                    </ImageView>
-                    <Label fx:id="labelPopularidadTexto" styleClass="stat-label" text="0%"/>
-                </HBox>
-
+                <!-- 2. ESTUDIOS -->
                 <HBox fx:id="labelEstudios" alignment="CENTER" spacing="8" styleClass="stat-box">
                     <ImageView fitHeight="26" fitWidth="26">
-                        <image><Image url="@../visualResources/estadisticas/estudios.png"/></image>
+                        <image><Image url="@../visualResources/estadisticas/estudios.png" /></image>
                     </ImageView>
-                    <Label fx:id="labelEstudiosTexto" styleClass="stat-label" text="0%"/>
+                    <Label fx:id="labelEstudiosTexto" styleClass="stat-label" text="0%" />
                 </HBox>
 
-                <Pane HBox.hgrow="ALWAYS"/>
+                <!-- 3. POPULARIDAD -->
+                <HBox fx:id="labelPopularidad" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image><Image url="@../visualResources/estadisticas/popularidad.png" /></image>
+                    </ImageView>
+                    <Label fx:id="labelPopularidadTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+                <!-- 4. DINERO -->
+                <HBox fx:id="labelDinero" alignment="CENTER" spacing="8" styleClass="stat-box">
+                    <ImageView fitHeight="26" fitWidth="26">
+                        <image><Image url="@../visualResources/estadisticas/dinero.png" /></image>
+                    </ImageView>
+                    <Label fx:id="labelDineroTexto" styleClass="stat-label" text="0%" />
+                </HBox>
+
+                <Pane HBox.hgrow="ALWAYS" />
             </HBox>
+
 
             <!-- =================== -->
             <!-- CHAT -->
             <!-- =================== -->
-            <ScrollPane fx:id="scrollChat"
-                        fitToWidth="true"
-                        styleClass="scroll-chat"
-                        VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="scrollChat" fitToWidth="true" prefHeight="54.0" prefWidth="472.0" styleClass="scroll-chat" VBox.vgrow="ALWAYS">
                 <content>
-                    <VBox fx:id="vboxMensajes"
-                          spacing="15"
-                          styleClass="panel-chat"
-                          VBox.vgrow="ALWAYS">
-                        <padding><Insets bottom="15" left="20" right="20" top="15"/></padding>
+                    <VBox fx:id="vboxMensajes" prefHeight="55.0" prefWidth="471.0" spacing="15" styleClass="panel-chat" VBox.vgrow="ALWAYS">
+                        <padding><Insets bottom="15" left="20" right="20" top="15" /></padding>
                     </VBox>
                 </content>
             </ScrollPane>
@@ -155,61 +137,46 @@
             <!-- =================== -->
             <!-- DECISIONES -->
             <!-- =================== -->
-            <VBox fx:id="decisionArea"
-                  spacing="14"
-                  styleClass="decision-panel"
-                  alignment="CENTER">
+            <VBox fx:id="decisionArea" alignment="CENTER" spacing="14" styleClass="decision-panel">
 
                 <padding>
-                    <Insets top="15" right="15" bottom="15" left="15"/>
+                    <Insets bottom="15" left="15" right="15" top="15" />
                 </padding>
 
                 <!-- ÓVALO DEL MENSAJE + ENVIAR -->
-                <HBox alignment="CENTER_LEFT"
-                      spacing="10"
-                      styleClass="decision-message-container"
-                      HBox.hgrow="ALWAYS">
+                <HBox spacing="10" styleClass="decision-message-container" HBox.hgrow="ALWAYS">
 
                     <Label fx:id="labelDecisionMessage"
                            styleClass="decision-message-text"
                            wrapText="true"
                            HBox.hgrow="ALWAYS"/>
 
+                    <!-- ⭐ ESPACIADOR -->
+                    <Region HBox.hgrow="ALWAYS"/>
+
                     <Button fx:id="btnSendDecision"
                             disable="true"
-                            visible="false"
                             onAction="#onSendDecisionClick"
-                            styleClass="btn-send-decision-inside">
+                            styleClass="btn-send-decision-inside"
+                            visible="false">
                         <graphic>
                             <ImageView fitHeight="28" fitWidth="28" preserveRatio="true">
                                 <image><Image url="@../visualResources/iconos/enviar.png"/></image>
                             </ImageView>
                         </graphic>
                     </Button>
+
                 </HBox>
+
 
                 <!-- BOTONES -->
                 <HBox alignment="CENTER" spacing="40">
 
-                    <Button fx:id="btnOptionYes"
-                            onAction="#onOptionYesClick"
-                            minWidth="120"
-                            styleClass="decision-btn"
-                            text="Sí"/>
+                    <Button fx:id="btnOptionYes" minWidth="120" onAction="#onOptionYesClick" styleClass="decision-btn" text="Sí" />
 
-                    <Button fx:id="btnOptionNo"
-                            onAction="#onOptionNoClick"
-                            minWidth="120"
-                            styleClass="decision-btn"
-                            text="No"/>
+                    <Button fx:id="btnOptionNo" minWidth="120" onAction="#onOptionNoClick" styleClass="decision-btn" text="No" />
 
-                    <Button fx:id="btnContinuar"
-                            text="Continuar"
-                            minWidth="140"
-                            styleClass="decision-btn"
-                            visible="false"
-                            managed="false"
-                            onAction="#onContinuarClick"/>
+                    <Button fx:id="btnContinuar" managed="false" minWidth="140" onAction="#onContinuarClick" styleClass="decision-btn" text="Continuar" visible="false" />
                 </HBox>
 
             </VBox>

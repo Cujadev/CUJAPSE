@@ -37,7 +37,7 @@ public class TutorialController {
     }
 
     public void setListener(TutorialListener listener) {
-        this.listener = listener;
+        this.listener =  listener;
     }
 
     @FXML

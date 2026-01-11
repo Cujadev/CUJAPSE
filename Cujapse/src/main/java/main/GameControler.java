@@ -74,7 +74,7 @@ public class GameControler extends Application implements MenuInicioController.M
         primaryStage.show();
 
         showMainMenu();
-        SoundManager.playBackground("/AUD-20260108-WA0067.mp3");
+        SoundManager.playBackground("/sound/AUD-20260108-WA0067.mp3");
     }
 
     public static void main(String[] args) {
@@ -93,9 +93,7 @@ public class GameControler extends Application implements MenuInicioController.M
     private void iniciarNuevaPartida() {
         System.out.println("Iniciando partida");
         List<String> stringList = game.startNewGame();
-
         this.scenary = game.getScenary();
-
         inTutorial = true;
 
         PrincipalData data = scenary.giveData(0);
@@ -124,6 +122,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
             primaryStage.setTitle("Tutorial");
             mainScene.setRoot(root);
+
 
             controller.setListener(() -> {
                 rep = scenary.giveData(2);
@@ -154,6 +153,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
             controller.setMenuListener(this::volverAlMenuInicial);
             primaryStage.setTitle("Principal");
+            controller.initTree(decisionTree);
 
             mainScene.setRoot(root);
 
@@ -176,7 +176,9 @@ public class GameControler extends Application implements MenuInicioController.M
 
             primaryStage.setTitle("Menú Inicio");
             mainScene.setRoot(root);
-
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -200,6 +202,8 @@ public class GameControler extends Application implements MenuInicioController.M
             principalController.habilitarOpciones();
         } else if (result == 1) {
             System.out.println("Decisión buena, avanzamos...");
+            principalController.clearTree();
+            principalController.initTree(scenary.getEvent().getSituations());
             principalController.loadEvent(scenary.giveData(1));
             playGame();
         }
