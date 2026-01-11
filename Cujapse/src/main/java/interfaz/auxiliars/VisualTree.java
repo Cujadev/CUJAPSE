@@ -8,6 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import logic.auxiliars.tree.DecisionNode;
+import logic.auxiliars.tree.DecisionTree;
 
 import java.util.HashMap;
 
@@ -22,12 +23,43 @@ public class VisualTree extends Canvas {
     private static final double H_SPACING = 140;
     private static final double V_SPACING = 90;
 
-    public VisualTree(DecisionNode<?> root, ScrollPane scroll) {
-        super(2000, 2000);
-        this.gc = getGraphicsContext2D();
-        this.root = root;
+    public VisualTree(DecisionTree<?> tree, ScrollPane scroll) {
+        super(10, 10); // tamaño temporal, se ajustará abajo
+
         this.scroll = scroll;
+        this.root = tree.getRoot();
+
+        // Crear canvas dinámico
+        Canvas dynamic = createDynamicCanvas(tree);
+
+        // Ajustar el tamaño REAL del Canvas
+        setWidth(dynamic.getWidth());
+        setHeight(dynamic.getHeight());
+
+        this.gc = getGraphicsContext2D();
+        setScaleX(0.70);
+        setScaleY(0.70);
+
     }
+
+
+    //=============================================================
+    //                       CREAR CANVAS
+    //=============================================================
+    private Canvas createDynamicCanvas(DecisionTree<?> tree) {
+
+        int depth = tree.getDepth();       // niveles verticales
+        int nodes = tree.countNodes();     // nodos totales
+
+        double horizontalSpacing = 160;    // distancia entre nodos
+        double verticalSpacing = 180;      // distancia entre niveles
+
+        double width = Math.max(1200, nodes * horizontalSpacing);
+        double height = Math.max(800, depth * verticalSpacing);
+
+        return new Canvas(width, height);
+    }
+
 
     // ============================================================
     //                       DIBUJAR ÁRBOL
@@ -38,7 +70,7 @@ public class VisualTree extends Canvas {
         gc.fillRect(0, 0, getWidth(), getHeight());
 
 
-        layout(root, 1000, 40);
+        layout(root, getWidth()/2,40);
         drawConnections(root, currentNode, highlightPath);
         drawNodes(root, currentNode);
     }

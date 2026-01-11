@@ -226,8 +226,12 @@ public class PrincipalController {
         this.currentNode = tree.getRoot();
         this.previewNode = currentNode;   // ⭐ NUEVO
 
-        visualTree = new VisualTree(tree.getRoot(), scrollArbol);
-        treeContainer.getChildren().add(visualTree);
+        visualTree = new VisualTree(tree, scrollArbol);
+        VBox wrapper = new VBox(visualTree);
+        wrapper.setAlignment(Pos.TOP_CENTER); // ⭐ pega el canvas arriba
+
+        treeContainer.getChildren().add(wrapper);
+
         visualTree.drawTree(currentNode,true);
         visualTree.focusNode(currentNode);
     }
@@ -393,30 +397,38 @@ public class PrincipalController {
 
         ImageView avatar = makeAvatar(avatarPath);
 
+        // ============================
+        // BURBUJA
+        // ============================
         VBox bubble = new VBox();
         bubble.setSpacing(5);
 
-// ⭐ Permitir que la burbuja crezca hasta un límite
-        bubble.setMaxWidth(350);       // límite horizontal
-        bubble.setPrefWidth(Region.USE_COMPUTED_SIZE);
-        bubble.setMinWidth(Region.USE_PREF_SIZE);
+        // ⭐ Límite horizontal REAL (la burbuja nunca será más ancha que esto)
+        bubble.setMaxWidth(rootPane.getWidth() * 0.55);
+
+        // ⭐ La burbuja se adapta si cambia el tamaño de la ventana
+        bubble.maxWidthProperty().bind(rootPane.widthProperty().multiply(0.55));
 
         bubble.getStyleClass().add(
                 sender.equalsIgnoreCase("Tú") ? "burbuja-player" : "burbuja-npc"
         );
 
-// ⭐ TEXTO
+        // ============================
+        // TEXTO
+        // ============================
         Label lblText = new Label(text);
         lblText.setWrapText(true);
-        lblText.setMaxWidth(330);      // un poco menos que la burbuja
-        lblText.setPrefWidth(Region.USE_COMPUTED_SIZE);
-        lblText.setMinWidth(Region.USE_PREF_SIZE);
+
+        // ⭐ El texto también tiene límite horizontal
+        lblText.maxWidthProperty().bind(rootPane.widthProperty().multiply(0.50));
+
         lblText.getStyleClass().add("label-mensaje");
 
-// ⭐ AGREGAR TEXTO A LA BURBUJA
         bubble.getChildren().add(lblText);
 
-
+        // ============================
+        // IMAGEN OPCIONAL
+        // ============================
         if (imgPath != null && !imgPath.isEmpty()) {
             ImageView iv = new ImageView(safeLoadImage(imgPath));
             iv.setFitWidth(300);
@@ -424,11 +436,17 @@ public class PrincipalController {
             bubble.getChildren().add(iv);
         }
 
+        // ============================
+        // ORDEN SEGÚN QUIÉN HABLA
+        // ============================
         if (sender.equalsIgnoreCase("Tú"))
             row.getChildren().addAll(bubble, avatar);
         else
             row.getChildren().addAll(avatar, bubble);
 
+        // ============================
+        // ANIMACIÓN
+        // ============================
         row.setOpacity(0);
         row.setTranslateY(12);
         vboxMensajes.getChildren().add(row);
@@ -443,6 +461,7 @@ public class PrincipalController {
 
         new SequentialTransition(ft, tt).play();
     }
+
 
 
     private ImageView makeAvatar(String path) {

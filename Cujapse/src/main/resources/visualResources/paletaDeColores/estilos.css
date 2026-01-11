@@ -317,32 +317,6 @@
     -fx-background-color: #FFD24C;
 }
 
-
-/* ============================================================
-   ScrollPane del árbol - mejorado
-   ============================================================ */
-
-.scroll-pane-arbol {
-    -fx-background-color: transparent;
-    -fx-border-color: #D26900;
-    -fx-border-width: 0 0 0 2;
-}
-
-/* Scrollbars personalizados */
-.scroll-pane-arbol .scroll-bar:vertical {
-    -fx-background-color: transparent;
-    -fx-pref-width: 10;
-}
-
-.scroll-pane-arbol .scroll-bar:vertical .thumb {
-    -fx-background-color: linear-gradient(to bottom, #E57500 0%, #D26900 100%);
-    -fx-background-radius: 5;
-}
-
-.scroll-pane-arbol .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: linear-gradient(to bottom, #ED8500 0%, #E57500 100%);
-}
-
 /* ============================================================
    Botones del menú principal - actualizados
    ============================================================ */
@@ -575,25 +549,33 @@
    ============================================================ */
 
 .scroll-pane-arbol {
-    -fx-background-color: transparent;
-    -fx-border-color: #D26900;
-    -fx-border-width: 0 0 0 2;
+    -fx-background-color: #FFF3E0;
 }
 
-/* Scrollbars personalizados */
-.scroll-pane-arbol .scroll-bar:vertical {
-    -fx-background-color: transparent;
-    -fx-pref-width: 10;
+.scroll-pane-arbol .viewport {
+    -fx-background-color: #FFF3E0;
 }
+
 
 .scroll-pane-arbol .scroll-bar:vertical .thumb {
-    -fx-background-color: linear-gradient(to bottom, #E57500 0%, #D26900 100%);
+    -fx-background-color: linear-gradient(to bottom, #FFC46A, #F0A64D);
     -fx-background-radius: 5;
 }
 
 .scroll-pane-arbol .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: linear-gradient(to bottom, #ED8500 0%, #E57500 100%);
+    -fx-background-color: linear-gradient(to bottom, #FFD080, #F7B25C);
 }
+
+
+.scroll-pane-arbol .scroll-bar:horizontal .thumb {
+    -fx-background-color: linear-gradient(to right, #FFC46A, #F0A64D);
+    -fx-background-radius: 5;
+}
+
+.scroll-pane-arbol .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: linear-gradient(to right, #FFD080, #F7B25C);
+}
+
 
 /* ============================================================
    Botones del menú principal - actualizados

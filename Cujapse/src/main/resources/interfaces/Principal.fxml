@@ -128,8 +128,8 @@
             <!-- =================== -->
             <ScrollPane fx:id="scrollChat" fitToWidth="true" prefHeight="54.0" prefWidth="472.0" styleClass="scroll-chat" VBox.vgrow="ALWAYS">
                 <content>
-                    <VBox fx:id="vboxMensajes" prefHeight="55.0" prefWidth="471.0" spacing="15" styleClass="panel-chat" VBox.vgrow="ALWAYS">
-                        <padding><Insets bottom="15" left="20" right="20" top="15" /></padding>
+                    <VBox fx:id="vboxMensajes" spacing="15" styleClass="panel-chat" VBox.vgrow="ALWAYS">
+                    <padding><Insets bottom="15" left="20" right="20" top="15" /></padding>
                     </VBox>
                 </content>
             </ScrollPane>

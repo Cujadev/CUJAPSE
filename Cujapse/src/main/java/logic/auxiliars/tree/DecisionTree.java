@@ -29,7 +29,6 @@ public class DecisionTree<E>{
 
     //Se agrega un nodo aprovechandose de las llamadas por referencia, simulando la lincked list
 
-
     public void addNode(DecisionNode <E> info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
 
         if (root == null){ // Si se cumple se agrega en  la raíz
@@ -82,6 +81,31 @@ public class DecisionTree<E>{
             throw new NullPointerException("No existen datos en este arbol");
         }
         return iterator;
+    }
+
+    //== Obtener profundidad del arbol ==
+    public int getDepth(){
+        return getDepthRecursive(this.root);
+    }
+
+    private int getDepthRecursive(DecisionNode<E>node){
+        if(node==null)
+            return 0;
+        return 1 + Math.max(
+                getDepthRecursive(node.getLeft()),
+                getDepthRecursive(node.getRight())
+        );
+    }
+
+    //== Obtener cantidad de nodos del arbol ==
+    public int countNodes(){
+        return countNodesRecursive(this.root);
+    }
+
+    private int countNodesRecursive(DecisionNode<E>node){
+        if(node==null)
+            return 0;
+        return 1 + countNodesRecursive(node.getLeft()) + countNodesRecursive(node.getRight());
     }
 
 }
