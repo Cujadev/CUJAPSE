@@ -21,10 +21,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Scenary implements ChargerMenssage {
+public class Scenary{
     private Event event;
     private ArrayList<String> deathCasesPath; //Es un arraylist con las direcciones de los casos de muerte
-    private File deadMenssages;
+
 
     // Pedir al evento dado una selección una situación
     // Poder dar al MVC la imagen a cargar
@@ -32,6 +32,15 @@ public class Scenary implements ChargerMenssage {
 
     /// ==== Constructor ====
     public Scenary() {
+        deathCasesPath = new ArrayList<>();
+        deathCasesPath.add("/visualResources/gameOver/cafeinaMAX.png");
+        deathCasesPath.add("/visualResources/gameOver/cafeinaMIN.png");
+        deathCasesPath.add("/visualResources/gameOver/estudiosMAX.png");
+        deathCasesPath.add("/visualResources/gameOver/estudiosMIN.png");
+        deathCasesPath.add("/visualResources/gameOver/popularidadMAX.png");
+        deathCasesPath.add("/visualResources/gameOver/popularidadMIN.png");
+        deathCasesPath.add("/visualResources/gameOver/dineroMAX.png");
+        deathCasesPath.add("/visualResources/gameOver/dineroMIN.png");
     }
 
     /// ==== Getters and Setters ====
@@ -98,19 +107,11 @@ public class Scenary implements ChargerMenssage {
     }
 
     //Se entrega todo lo necesario para poder trabajar la muerte del personaje
-    public ArrayList<Object> giveDeath() {
-        ArrayList<Object> result = new ArrayList<>();
-        PrincipalCharacter p = Game.getInstance().getMainCharacter();// se obtiene el personaje principal
+    public String giveDeath (){
+        Game game = Game.getInstance();
+        int index = Integer.parseInt(game.getMainCharacter().causeOfDeath());
 
-        String id = p.causeOfDeath();// Se devuelve el id de la causa de muerte
-        int index = Integer.parseInt(id);// Se convierte ese id en un índice
-
-        String menssage = ChargeDialogue(id).getContenido();// Se utiliza el id para buscar un dialogó de la causa de muerte
-        result.add(menssage);// se agrega ese mensaje
-        Image image = new Image(deathCasesPath.get(index));// Se crea la imagen de la muerte
-        result.add(image);//Se agrega al array de objetos
-
-        return result;
+        return deathCasesPath.get(index);
     }
 
     public ArrayList<Integer> findStats() {
@@ -118,14 +119,6 @@ public class Scenary implements ChargerMenssage {
         return stats;
     }
 
-    @Override
-    public Dialogue ChargeDialogue(String id) {
-        Dialogue result;
-        RandomAccessFile raf = FileReaders.openFile(deadMenssages);
-        result = FileReaders.searchDialogue(id, raf);
-        FileReaders.closeFile(raf);
-        return result;
-    }
 
     private String giveCharacterName() {
         return Game.getInstance().findCharacter(event.getNextSituaion(0).getAssociation().getIdCharacter()).getName();

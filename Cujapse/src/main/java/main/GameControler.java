@@ -4,10 +4,7 @@ import interfaz.controllers.MenuInicioController;
 import interfaz.controllers.PrincipalController;
 import interfaz.controllers.TutorialController;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -231,7 +228,7 @@ public class GameControler extends Application implements MenuInicioController.M
                 }
             } else {
                 System.out.println("Muerte detectada en nodo normal con el dialogo: " + scenary.giveData(0).getMessages().get(0) + "\n Con las stats: " + scenary.giveData(0).getStats());
-                showDeath();
+                showDeath(()-> showMainMenu());
             }
         } else {
             System.out.println("nodo hoja detectado, cambiando escenario");
@@ -300,15 +297,32 @@ public class GameControler extends Application implements MenuInicioController.M
         showMainMenu();
     }
 
-    private void showDeath() {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Has muerto");
-            alert.setHeaderText(null);
-            alert.setContentText("Tu personaje ha muerto. Fin de la partida.");
-            alert.showAndWait();
-            showMainMenu();
-        });
+    private void showDeath(Runnable onFinish) {
+        try {
+            Image i = new Image(getClass().getResource(scenary.giveDeath()).toExternalForm());
+            ImageView view = new ImageView(i);
+            view.fitWidthProperty().bind(primaryStage.widthProperty());
+            view.fitHeightProperty().bind(primaryStage.heightProperty());
+            view.setPreserveRatio(false);
+            StackPane root = new StackPane(view);
+            root.setStyle("-fx-background-color: black;");
+            mainScene.setRoot(root); // Fade in
+
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(400), root);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1); // Pausa de 5 segundos
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(400), root);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0); // Secuencia completa
+            SequentialTransition seq = new SequentialTransition(fadeIn, pause, fadeOut);
+            seq.setOnFinished(e -> onFinish.run());
+            seq.play();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void endGame() {
