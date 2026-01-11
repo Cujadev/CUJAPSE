@@ -198,8 +198,7 @@ public class GameControler extends Application implements MenuInicioController.M
         if (result == 2) {
             principalController.loadEvent(rep);
             principalController.habilitarOpciones();
-        }
-        else if (result == 1) {
+        } else if (result == 1) {
             System.out.println("Decisión buena, avanzamos...");
             principalController.loadEvent(scenary.giveData(1));
             playGame();
@@ -227,20 +226,15 @@ public class GameControler extends Application implements MenuInicioController.M
                     principalController.habilitarOpciones();
                 }
             } else {
+                System.out.println("Muerte detectada en nodo normal con el dialogo: " + scenary.giveData(0).getMessages().get(0) + "\n Con las stats: " + scenary.giveData(0).getStats());
                 showDeath();
             }
         } else {
             System.out.println("nodo hoja detectado, cambiando escenario");
             if (!game.getEventQueue().isEmpty()) {
-                scenary.callModificationStats(result);
-                if (!scenary.isHeroDeath()) {
-                    scenary.setEvent(game.getNextEvent());
-                    showLoadingScreen(()->  showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations()));
-                } else {
-                    showDeath();
-                }
-            }
-            else {
+                scenary.setEvent(game.getNextEvent());
+                showLoadingScreen(() -> showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations()));
+            } else {
                 endGame();
             }
         }
@@ -310,7 +304,9 @@ public class GameControler extends Application implements MenuInicioController.M
             alert.setContentText("Tu personaje ha muerto. Fin de la partida.");
             alert.showAndWait();
             showMainMenu();
-        });}
+        });
+    }
+
     private void endGame() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -319,6 +315,7 @@ public class GameControler extends Application implements MenuInicioController.M
             alert.setContentText("Felicidades has terminado Cujapse. Si no entendiste nada, yo tampoco. Pero de parte del equipo te agradecemos por jugar");
             alert.showAndWait();
             showMainMenu();
-        });}
+        });
+    }
 }
 

@@ -98,6 +98,7 @@ public class Game {
                     }
                 }
             }
+            System.out.println("tamaño de cola" +   eventQueue.size());
         }
     }
 
