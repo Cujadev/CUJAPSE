@@ -153,6 +153,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
             controller.setMenuListener(this::volverAlMenuInicial);
             primaryStage.setTitle("Principal");
+            controller.initTree(decisionTree);
 
             mainScene.setRoot(root);
 
@@ -202,6 +203,8 @@ public class GameControler extends Application implements MenuInicioController.M
         }
         else if (result == 1) {
             System.out.println("Decisión buena, avanzamos...");
+            principalController.clearTree();
+            principalController.initTree(scenary.getEvent().getSituations());
             principalController.loadEvent(scenary.giveData(1));
             playGame();
         }
