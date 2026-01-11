@@ -250,7 +250,7 @@ public class InitNewGame {
         return result;
     }
     private static ArrayList <Event> generateEventsMiguel(){
-        ArrayList <Event> events = new ArrayList();
+        ArrayList <Event> events = new ArrayList<>();
         GameCharacter character = findGameCharacter("3");
 
         Situation situation1 = generateSituation("1",character);

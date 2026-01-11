@@ -1,9 +1,8 @@
 package logic.auxiliars.tree;
 
 import logic.auxiliars.tree.Iterator.TreeIterator;
-import logic.clases.event.Situation;
 
-/// Esta es la clase que simula un arbol de desicion
+/// Esta es la clase que simula un arbol de decisión
 public class DecisionTree<E>{
     private DecisionNode<E> root;
     private TreeIterator <E> iterator;
@@ -18,7 +17,7 @@ public class DecisionTree<E>{
         iterator = new TreeIterator<>(this.root);
     }
 
-    /// ==== Getters y Setters ====
+    /// ==== Getters and Setters ====
     public DecisionNode<E> getRoot() {
         return  root;
     }
@@ -27,12 +26,12 @@ public class DecisionTree<E>{
         this.root = root;
     }
 
-    //Se agrega un nodo aprovechandose de las llamadas por referencia, simulando la lincked list
+    //Se agrega un nodo aprovechándose de las llamadas por referencia, simulando la linked list
 
 
     public void addNode(DecisionNode <E> info, DecisionNode <E> father, int branch)throws IllegalArgumentException{
 
-        if (root == null){ // Si se cumple se agrega en  la raíz
+        if (root == null){ // Si se cumple se agrega en la raíz
             setRoot(info);
             this.iterator = new TreeIterator<>(this.root);
         }
@@ -69,7 +68,7 @@ public class DecisionTree<E>{
                 it = new TreeIterator<>(this.root);
             }
             else{
-                throw new NullPointerException("No existen datos en este arbol");
+                throw new NullPointerException("No existen datos en este árbol");
             }
         }
         return iterator =  it;
@@ -79,7 +78,7 @@ public class DecisionTree<E>{
             iterator = new TreeIterator<>(this.root);
         }
         else{
-            throw new NullPointerException("No existen datos en este arbol");
+            throw new NullPointerException("No existen datos en este árbol");
         }
         return iterator;
     }
