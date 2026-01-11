@@ -8,8 +8,11 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import interfaz.sounds.SoundManager;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -71,6 +74,7 @@ public class GameControler extends Application implements MenuInicioController.M
         primaryStage.show();
 
         showMainMenu();
+        SoundManager.playBackground("/sound/AUD-20260108-WA0067.mp3");
     }
 
     public static void main(String[] args) {
@@ -89,14 +93,11 @@ public class GameControler extends Application implements MenuInicioController.M
     private void iniciarNuevaPartida() {
         System.out.println("Iniciando partida");
         List<String> stringList = game.startNewGame();
-
-game.getScenary();
-
+        this.scenary = game.getScenary();
         inTutorial = true;
-        PrincipalData data = scenary.giveData(0);
-        rep = scenary.giveData(2);
-        scenary.getEvent().resetEvent();
 
+        PrincipalData data = scenary.giveData(0);
+        System.out.println(data.getMessages().get(0).getText());
         // Mostrar pantalla de carga y luego el tutorial
         showLoadingScreen(() -> showTutorial(stringList, () -> showPrincipal(data, scenary.getEvent().getSituations())));
     }
@@ -124,10 +125,9 @@ game.getScenary();
 
 
             controller.setListener(() -> {
-                Scenary scenary = game.getScenary();
-                PrincipalData data = scenary.giveData(0);
                 rep = scenary.giveData(2);
-                showPrincipal(data, scenary.getEvent().getSituations());
+                scenary.getEvent().resetEvent();
+                showLoadingScreen(() -> showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations()));
             });
 
         } catch (IOException e) {
@@ -153,6 +153,7 @@ game.getScenary();
 
             controller.setMenuListener(this::volverAlMenuInicial);
             primaryStage.setTitle("Principal");
+            controller.initTree(decisionTree);
 
             mainScene.setRoot(root);
 
@@ -186,6 +187,7 @@ game.getScenary();
 
     @Override
     public void onDecisionSelected(int codigo) {
+        System.out.println("Decision selected: " + codigo);
         ultimaDesicion = codigo;
         if (inTutorial) {
             loopDecisiones(codigo);
@@ -198,9 +200,10 @@ game.getScenary();
         if (result == 2) {
             principalController.loadEvent(rep);
             principalController.habilitarOpciones();
-        }
-        if (result == 1) {
+        } else if (result == 1) {
             System.out.println("Decisión buena, avanzamos...");
+            principalController.clearTree();
+            principalController.initTree(scenary.getEvent().getSituations());
             principalController.loadEvent(scenary.giveData(1));
             playGame();
         }
@@ -221,15 +224,22 @@ game.getScenary();
             if (!scenary.isHeroDeath()) {
                 if (result == 1) {
                     principalController.loadEvent(scenary.giveData(1));
+                    principalController.habilitarOpciones();
                 } else {
                     principalController.loadEvent(scenary.giveData(2));
+                    principalController.habilitarOpciones();
                 }
+            } else {
+                System.out.println("Muerte detectada en nodo normal con el dialogo: " + scenary.giveData(0).getMessages().get(0) + "\n Con las stats: " + scenary.giveData(0).getStats());
+                showDeath();
             }
         } else {
-            scenary.callModificationStats(result);
-            if (!scenary.isHeroDeath()) {
+            System.out.println("nodo hoja detectado, cambiando escenario");
+            if (!game.getEventQueue().isEmpty()) {
                 scenary.setEvent(game.getNextEvent());
-                showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations());
+                showLoadingScreen(() -> showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations()));
+            } else {
+                endGame();
             }
         }
     }
@@ -288,6 +298,28 @@ game.getScenary();
 
     private void volverAlMenuInicial() {
         showMainMenu();
+    }
+
+    private void showDeath() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Has muerto");
+            alert.setHeaderText(null);
+            alert.setContentText("Tu personaje ha muerto. Fin de la partida.");
+            alert.showAndWait();
+            showMainMenu();
+        });
+    }
+
+    private void endGame() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Juego Terminado");
+            alert.setHeaderText(null);
+            alert.setContentText("Felicidades has terminado Cujapse. Si no entendiste nada, yo tampoco. Pero de parte del equipo te agradecemos por jugar");
+            alert.showAndWait();
+            showMainMenu();
+        });
     }
 }
 

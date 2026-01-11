@@ -71,6 +71,7 @@ public class Game {
     //Encolar los eventos
     public void inQuequeEvents(ArrayList <Event> events, boolean newGame) {
         Random random = new Random();// Randomizador
+        eventQueue.clear();
         eventQueue.offer(events.get(0));
         events.remove(0);
 
@@ -97,6 +98,7 @@ public class Game {
                     }
                 }
             }
+            System.out.println("tamaño de cola" +   eventQueue.size());
         }
     }
 
@@ -110,6 +112,7 @@ public class Game {
         System.out.println(events.size());
         inQuequeEvents(events, true);
         scenary.setEvent(getNextEvent());
+        mainCharacter.resetStats();
         return list;
     }
 

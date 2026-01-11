@@ -32,26 +32,80 @@
 /* ============================================================
    PANEL ÁRBOL (DERECHA) - más dinámico
    ============================================================ */
-
+/* PANEL DERECHO: ÁRBOL DE DECISIONES */
 .panel-arbol {
-    -fx-background-color: linear-gradient(to bottom, #F0B75E 0%, #E57500 100%);
-    -fx-border-color: #D26900;
+    -fx-background-color: #FFF3E0; /* naranja claro tipo beige */
+    -fx-border-color: #E57500;
     -fx-border-width: 0 0 0 2;
-    -fx-border-style: solid;
+    -fx-padding: 12;
 }
+
+/* TÍTULO DEL ÁRBOL */
+.titulo-arbol {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #9A2325; /* rojo vino */
+    -fx-padding: 0 0 10 0;
+}
+
+/* SCROLLPANE DEL ÁRBOL */
+.scroll-pane-arbol {
+    -fx-background-color: #FFF3E0; /* mismo fondo que el panel */
+    -fx-border-color: #E57500;
+    -fx-border-width: 1;
+}
+
+/* SCROLLBARS PERSONALIZADOS */
+.scroll-pane-arbol .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 10;
+}
+
+.scroll-pane-arbol .scroll-bar:vertical .thumb {
+    -fx-background-color: linear-gradient(to bottom, #F0A64D, #E57500);
+    -fx-background-radius: 5;
+}
+
+.scroll-pane-arbol .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: linear-gradient(to bottom, #ED8500, #E57500);
+}
+
+.scroll-pane-arbol .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 10;
+}
+
+.scroll-pane-arbol .scroll-bar:horizontal .thumb {
+    -fx-background-color: linear-gradient(to right, #F0A64D, #E57500);
+    -fx-background-radius: 5;
+}
+
+.scroll-pane-arbol .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: linear-gradient(to right, #ED8500, #E57500);
+}
+
+
 
 /* ============================================================
    CHAT CENTRAL - más luminoso
    ============================================================ */
 
 .panel-chat {
-    -fx-background-color: #FFFDF5;
+    -fx-background-color: transparent;
 }
 
+
 .scroll-chat {
-    -fx-background-color: transparent;
-    -fx-background: transparent;
+    -fx-background-color: #FFF3E0; /* beige suave */
+    -fx-padding: 10;
+    -fx-border-color: #E57500;
+    -fx-border-width: 1;
 }
+
+.scroll-chat .viewport {
+    -fx-background-color: #FFF3E0;
+}
+
 
 /* ============================================================
    BARRA SUPERIOR CON ESTADÍSTICAS - más elegante
@@ -223,29 +277,22 @@
 /* ============================================================
    TREEVIEW DEL ÁRBOL DE DECISIONES
    ============================================================ */
-
-.tree-view {
-    -fx-background-color: transparent;
-    -fx-padding: 5;
-}
-
 .tree-cell {
-    -fx-background-color: transparent;
+    -fx-background-color: #FFD966; /* amarillo cálido */
     -fx-text-fill: #3C0E05;
-    -fx-font-weight: bold;
     -fx-font-size: 14px;
-}
-
-.tree-cell:hover {
-    -fx-background-color: rgba(255, 230, 128, 0.4);
+    -fx-font-weight: bold;
+    -fx-border-radius: 10;
+    -fx-padding: 6 12;
 }
 
 .tree-cell:selected {
-    -fx-background-color: linear-gradient(to right, #E8B839 0%, #D8A315 100%);
-    -fx-text-fill: #3C0E05;
-    -fx-border-color: #3C0E05;
-    -fx-border-width: 1;
+    -fx-background-color: #E85D04; /* naranja para nodo actual */
+    -fx-text-fill: white;
+    -fx-border-color: #9A2325;
+    -fx-border-width: 2;
 }
+
 
 
 /* ============================================================
@@ -347,15 +394,8 @@
 .btn-menu-principal:pressed {
     -fx-background-color: linear-gradient(to bottom, #FFD966 0%, #FFCC33 100%);
 }
-=======
-/* =========================================================
-   ESTILOS CUJAPSE - PALETA AMARILLO/ROJO/NARANJA
-   ========================================================= */
-=======
-/* ============================================================
-   PALETA GENERAL (DESATURADA) - VERSIÓN SIN BORDES DIFUMINADOS
-   ============================================================ */
->>>>>>> cc0d5ecc282de2669d58933de0372d8beab19a55
+
+
 
 /* Fondo general - más suave y elegante */
 .root-principal {
@@ -394,18 +434,7 @@
     -fx-border-style: solid;
 }
 
-/* ============================================================
-   CHAT CENTRAL - más luminoso
-   ============================================================ */
 
-.panel-chat {
-    -fx-background-color: #FFFDF5;
-}
-
-.scroll-chat {
-    -fx-background-color: transparent;
-    -fx-background: transparent;
-}
 
 /* ============================================================
    BARRA SUPERIOR CON ESTADÍSTICAS - más elegante

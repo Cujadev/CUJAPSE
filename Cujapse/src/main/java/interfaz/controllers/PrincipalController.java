@@ -1,6 +1,8 @@
 package interfaz.controllers;
 
-import javafx.scene.control.MenuItem;
+import interfaz.sounds.SoundManager;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Region;
 import logic.auxiliars.dataOfInterfaces.Menssage;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import interfaz.auxiliars.VisualTree;
@@ -23,19 +25,13 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
-import main.GameControler;
 
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import javafx.scene.control.MenuItem;
 
-public class PrincipalController  {
+public class PrincipalController {
 
-    // ================================================================
-    //                        LISTENER DE DECISIONES
-    // ================================================================
     public interface DecisionListener {
         void onDecisionSelected(int codigo);
     }
@@ -46,41 +42,62 @@ public class PrincipalController  {
         this.decisionListener = listener;
     }
 
-    // ================================================================
-    //                        FXML ELEMENTOS
-    // ================================================================
-    @FXML private BorderPane rootPane;      // ⭐ NUEVO: coincide con el FXML responsive
+    @FXML
+    private BorderPane rootPane;
 
-    @FXML private VBox panelIzquierdo;
-    @FXML private VBox panelChat;
-    @FXML private VBox vboxMensajes;
-    @FXML private ScrollPane scrollChat;
+    @FXML
+    private VBox panelIzquierdo;
+    @FXML
+    private VBox panelChat;
+    @FXML
+    private VBox vboxMensajes;
+    @FXML
+    private ScrollPane scrollChat;
 
-    @FXML private HBox statsTopBar;
-    @FXML private HBox labelDinero;
-    @FXML private HBox labelCafeina;
-    @FXML private HBox labelPopularidad;
-    @FXML private HBox labelEstudios;
+    @FXML
+    private HBox statsTopBar;
+    @FXML
+    private HBox labelDinero;
+    @FXML
+    private HBox labelCafeina;
+    @FXML
+    private HBox labelPopularidad;
+    @FXML
+    private HBox labelEstudios;
 
-    @FXML private Label labelDineroTexto;
-    @FXML private Label labelCafeinaTexto;
-    @FXML private Label labelPopularidadTexto;
-    @FXML private Label labelEstudiosTexto;
+    @FXML
+    private Label labelDineroTexto;
+    @FXML
+    private Label labelCafeinaTexto;
+    @FXML
+    private Label labelPopularidadTexto;
+    @FXML
+    private Label labelEstudiosTexto;
 
-    @FXML private VBox decisionArea;        // ⭐ ANTES AnchorPane → AHORA VBox
-    @FXML private Label labelDecisionMessage;
-    @FXML private Button btnOptionYes;
-    @FXML private Button btnOptionNo;
-    @FXML private Button btnSendDecision;
-    @FXML private Button btnContinuar;
-    @FXML private MenuItem menuSalirMenu;
+    @FXML
+    private VBox decisionArea;
+    @FXML
+    private Label labelDecisionMessage;
+    @FXML
+    private Button btnOptionYes;
+    @FXML
+    private Button btnOptionNo;
+    @FXML
+    private Button btnSendDecision;
+    @FXML
+    private Button btnContinuar;
+    @FXML
+    private MenuItem menuSalirMenu;
 
+    @FXML
+    private ScrollPane scrollArbol;
 
-    @FXML private VBox panelArbol;
+    @FXML
+    private VBox treeContainer;
 
-    // ================================================================
-    //                        VARIABLES INTERNAS
-    // ================================================================
+    @FXML
+    private VBox panelArbol;
+
     private int selectedOption = 0;
     private String selectedOptionText = "";
     private boolean decisionEnviada = false;
@@ -91,10 +108,12 @@ public class PrincipalController  {
     private VisualTree visualTree;
     private DecisionTree<?> logicTree;
     private DecisionNode<?> currentNode;
+
+    private DecisionNode<?> previewNode;   // ⭐ NUEVO
+
     private ContinuarListener continuarListener;
-    // ================================================================
-    //                           INITIALIZE
-    // ================================================================
+    private PrincipalData data;
+
     @FXML
     public void initialize() {
 
@@ -120,10 +139,6 @@ public class PrincipalController  {
         setStatValue(4, 0);
     }
 
-
-    // ================================================================
-    //                         MÉTODO EXTRA PARA GAMECONTROLER
-    // ================================================================
     public void habilitarOpciones() {
         btnOptionYes.setDisable(false);
         btnOptionNo.setDisable(false);
@@ -136,9 +151,6 @@ public class PrincipalController  {
         }
     }
 
-    // ================================================================
-    //                         ESTADISTICAS (UI)
-    // ================================================================
     private void setStatValue(int index, int value) {
         if (value < 0) value = 0;
         if (value > 100) value = 100;
@@ -156,12 +168,55 @@ public class PrincipalController  {
         }
     }
 
+    // ⭐ Variables para recordar valores anteriores
+    private int lastCafeina = 0;
+    private int lastEstudios = 0;
+    private int lastPopularidad = 0;
+    private int lastDinero = 0;
+
     public void setStats(ArrayList<Integer> stats) {
+
+        // ⭐ Animaciones ANTES de actualizar los textos
+        animateStatChange(labelCafeina, labelCafeinaTexto, lastCafeina, stats.get(0));
+        animateStatChange(labelEstudios, labelEstudiosTexto, lastEstudios, stats.get(1));
+        animateStatChange(labelPopularidad, labelPopularidadTexto, lastPopularidad, stats.get(2));
+        animateStatChange(labelDinero, labelDineroTexto, lastDinero, stats.get(3));
+
+        // ⭐ Tu código original (NO modificado)
         setStatValue(1, stats.get(0));
         setStatValue(2, stats.get(1));
         setStatValue(3, stats.get(2));
         setStatValue(4, stats.get(3));
+
+        // ⭐ Guardar valores nuevos para la próxima comparación
+        lastCafeina = stats.get(0);
+        lastEstudios = stats.get(1);
+        lastPopularidad = stats.get(2);
+        lastDinero = stats.get(3);
     }
+
+
+    private void animateStatChange(HBox container, Label label, int oldValue, int newValue) {
+
+        label.setText(newValue + "%");
+
+        if (oldValue == newValue) return;
+
+        String color = newValue > oldValue ? "#4CAF50" : "#E53935"; // verde o rojo
+
+        container.setStyle("-fx-background-color: " + color + "; -fx-background-radius: 8;");
+
+        FadeTransition ft = new FadeTransition(Duration.millis(600), container);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.3);
+        ft.setAutoReverse(true);
+        ft.setCycleCount(2);
+
+        ft.setOnFinished(e -> container.setStyle("")); // volver al estilo normal
+
+        ft.play();
+    }
+
 
     // ================================================================
     //                         ÁRBOL DE DECISIONES
@@ -169,32 +224,26 @@ public class PrincipalController  {
     public void initTree(DecisionTree<?> tree) {
         this.logicTree = tree;
         this.currentNode = tree.getRoot();
-        visualTree = new VisualTree(createTreeCanvas(), tree.getRoot());
-        panelArbol.getChildren().add(visualTree);
-        visualTree.drawTree();
-        visualTree.focusNode(tree.getRoot());
-    }
+        this.previewNode = currentNode;   // ⭐ NUEVO
 
-    public void moveToNode(DecisionNode<?> newNode) {
-        currentNode = newNode;
-        visualTree.drawTree();
-        visualTree.focusNode(newNode);
+        visualTree = new VisualTree(tree.getRoot(), scrollArbol);
+        treeContainer.getChildren().add(visualTree);
+        visualTree.drawTree(currentNode,true);
+        visualTree.focusNode(currentNode);
     }
 
     private Canvas createTreeCanvas() {
         return new Canvas(2000, 2000);
     }
 
-    // ================================================================
-    //                              CHAT
-    // ================================================================
     public void loadEvent(PrincipalData data) {
-        vboxMensajes.getChildren().clear();
         decisionEnviada = false;
+        this.data = data;
+        setStats(data.getStats());
 
         if (data != null && data.getMessages() != null) {
-            Menssage  menssage = data.getMessages().get(0);
-            addMessageAnimated(menssage.getNameAutor(),menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
+            Menssage menssage = data.getMessages().get(0);
+            addMessageAnimated(menssage.getNameAutor(), menssage.getText(), menssage.getAvatarAutor(), data.getPathEscenary());
         }
 
         labelDecisionMessage.setText("");
@@ -206,18 +255,48 @@ public class PrincipalController  {
     // ================================================================
     @FXML
     private void onOptionYesClick() {
+        SoundManager.playEffect("/sound/button_09-190435.mp3");
         if (decisionEnviada) return;
+
+        if (data != null && data.getMessages().size() > 1) {
+            String text = data.getMessages().get(1).getText();
+            selectedOptionText = (text == null || text.isEmpty()) ? "Nada cargado" : text;
+        } else {
+            selectedOptionText = "Hemos terminado de hablar";
+        }
+
         selectedOption = 1;
-        selectedOptionText = "¡Claro que sí, estoy listo!";
         updateDecisionDisplay();
+
+        // ⭐ VISTA PREVIA SIN MOVER EL NODO REAL
+        if (currentNode != null && currentNode.getLeft() != null) {
+            previewNode = currentNode.getLeft();
+            visualTree.drawTree(previewNode, true);
+            visualTree.focusNode(previewNode);
+        }
     }
 
     @FXML
     private void onOptionNoClick() {
+        SoundManager.playEffect("/sound/error-call-to-attention-129258.mp3");
         if (decisionEnviada) return;
+
+        if (data != null && data.getMessages().size() > 2) {
+            String text = data.getMessages().get(2).getText();
+            selectedOptionText = (text == null || text.isEmpty()) ? "Nada cargado" : text;
+        } else {
+            selectedOptionText = "Hemos terminado de hablar";
+        }
+
         selectedOption = 2;
-        selectedOptionText = "No creo estar preparado aún...";
         updateDecisionDisplay();
+
+        // ⭐ VISTA PREVIA SIN MOVER EL NODO REAL
+        if (currentNode != null && currentNode.getRight() != null) {
+            previewNode = currentNode.getRight();
+            visualTree.drawTree(previewNode, true);
+            visualTree.focusNode(previewNode);
+        }
     }
 
     private void updateDecisionDisplay() {
@@ -253,9 +332,15 @@ public class PrincipalController  {
 
     @FXML
     private void onSendDecisionClick() {
+        SoundManager.playEffect("/sound/interface-2-126517.mp3");
         if (selectedOption == 0 || decisionEnviada) return;
 
         decisionEnviada = true;
+
+        // ⭐ AHORA SÍ SE MUEVE EL NODO REAL
+        currentNode = previewNode;
+        visualTree.drawTree(currentNode, true);
+        visualTree.focusNode(currentNode);
 
         addMessageAnimated("Tú", selectedOptionText, AVATAR_PLAYER, null);
 
@@ -269,34 +354,34 @@ public class PrincipalController  {
             btnContinuar.setManaged(true);
         }
         btnSendDecision.setVisible(false);
+        System.out.println(selectedOption);
     }
-    public int getSelectedOption (){
+
+    public int getSelectedOption() {
         return selectedOption;
     }
 
     @FXML
     private void onContinuarClick() {
+        SoundManager.playEffect("/sound/beep-6-96243.mp3");
         if (btnContinuar != null) {
             btnContinuar.setVisible(false);
             btnContinuar.setManaged(false);
         }
         if (decisionListener != null) {
             decisionListener.onDecisionSelected(selectedOption);
-            clearSelection();
         }
         clearSelection();
     }
+
     public interface ContinuarListener {
         void onContinuarSelected();
     }
+
     public void setContinuarListener(ContinuarListener continuarListener) {
         this.continuarListener = continuarListener;
     }
 
-
-    // ================================================================
-    //                    MENSAJES CON ANIMACIÓN
-    // ================================================================
     private void addMessageAnimated(String sender, String text,
                                     String avatarPath, String imgPath) {
 
@@ -310,19 +395,27 @@ public class PrincipalController  {
 
         VBox bubble = new VBox();
         bubble.setSpacing(5);
-        bubble.setMaxWidth(500);
+
+// ⭐ Permitir que la burbuja crezca hasta un límite
+        bubble.setMaxWidth(350);       // límite horizontal
+        bubble.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        bubble.setMinWidth(Region.USE_PREF_SIZE);
+
         bubble.getStyleClass().add(
-                sender.equalsIgnoreCase("User") ? "burbuja-player" : "burbuja-npc"
+                sender.equalsIgnoreCase("Tú") ? "burbuja-player" : "burbuja-npc"
         );
 
-        Label lblSender = new Label(sender);
-        lblSender.getStyleClass().add("label-usuario");
-
+// ⭐ TEXTO
         Label lblText = new Label(text);
         lblText.setWrapText(true);
+        lblText.setMaxWidth(330);      // un poco menos que la burbuja
+        lblText.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        lblText.setMinWidth(Region.USE_PREF_SIZE);
         lblText.getStyleClass().add("label-mensaje");
 
-        bubble.getChildren().addAll(lblSender, lblText);
+// ⭐ AGREGAR TEXTO A LA BURBUJA
+        bubble.getChildren().add(lblText);
+
 
         if (imgPath != null && !imgPath.isEmpty()) {
             ImageView iv = new ImageView(safeLoadImage(imgPath));
@@ -341,13 +434,16 @@ public class PrincipalController  {
         vboxMensajes.getChildren().add(row);
 
         FadeTransition ft = new FadeTransition(Duration.millis(250), row);
-        ft.setFromValue(0); ft.setToValue(1);
+        ft.setFromValue(0);
+        ft.setToValue(1);
 
         TranslateTransition tt = new TranslateTransition(Duration.millis(250), row);
-        tt.setFromY(12); tt.setToY(0);
+        tt.setFromY(12);
+        tt.setToY(0);
 
         new SequentialTransition(ft, tt).play();
     }
+
 
     private ImageView makeAvatar(String path) {
         Image img = safeLoadImage(path);
@@ -367,7 +463,8 @@ public class PrincipalController  {
             if (!path.startsWith("/")) path = "/" + path;
             InputStream is = getClass().getResourceAsStream(path);
             if (is != null) return new Image(is);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         return null;
     }
@@ -388,6 +485,30 @@ public class PrincipalController  {
             menuListener.onSalirAlMenu();
         }
     }
+
+    //=============================================================
+    //                 LIMPIAR ÁRBOL
+    //=============================================================
+    public void clearTree() {
+        // 1. Borrar el canvas
+        if (visualTree != null) {
+            GraphicsContext gc = visualTree.getGraphicsContext2D();
+            gc.clearRect(0, 0, visualTree.getWidth(), visualTree.getHeight());
+        }
+
+        // 2. Borrar el contenedor
+        treeContainer.getChildren().clear();
+
+        // 3. Resetear referencias
+        visualTree = null;
+        currentNode = null;
+        previewNode = null;
+
+        // 4. Resetear scroll
+        scrollArbol.setHvalue(0);
+        scrollArbol.setVvalue(0);
+    }
+
 
 
 }
