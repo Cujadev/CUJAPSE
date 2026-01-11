@@ -20,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.util.Duration;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
-import javafx.scene.input.KeyEvent;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
@@ -34,7 +33,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class GameControler extends Application implements MenuInicioController.MenuInicioListener, PrincipalController.DecisionListener {
-    private static GameControler intance;
+    private static GameControler instance;
     private Game game;
     private Stage primaryStage;
 
@@ -46,18 +45,18 @@ public class GameControler extends Application implements MenuInicioController.M
     // ⭐ Una sola escena global
     private Scene mainScene;
 
-    private Integer ultimaDesicion;
+    private Integer lastDecision;
 
     public GameControler() {
         this.game = Game.getInstance();
-        ultimaDesicion = null;
+        lastDecision = null;
     }
 
     public static GameControler getInstance() {
-        if (intance == null) {
-            intance = new GameControler();
+        if (instance == null) {
+            instance = new GameControler();
         }
-        return intance;
+        return instance;
     }
 
     @Override
@@ -83,13 +82,13 @@ public class GameControler extends Application implements MenuInicioController.M
     @Override
     public void onMenuOptionSelected(int codigo) {
         switch (codigo) {
-            case 1 -> iniciarNuevaPartida();
-            case 2 -> cargarPartida();
-            case 3 -> salirDelJuego();
+            case 1 -> StartNewGame();
+            case 2 -> ChargeGame();
+            case 3 -> Exit();
         }
     }
 
-    private void iniciarNuevaPartida() {
+    private void StartNewGame() {
         System.out.println("Iniciando partida");
         List<String> stringList = game.startNewGame();
         this.scenary = game.getScenary();
@@ -101,11 +100,11 @@ public class GameControler extends Application implements MenuInicioController.M
         showLoadingScreen(() -> showTutorial(stringList, () -> showPrincipal(data, scenary.getEvent().getSituations())));
     }
 
-    private void cargarPartida() {
+    private void ChargeGame() {
         System.out.println("Cargando partida...");
     }
 
-    private void salirDelJuego() {
+    private void Exit() {
         System.out.println("Saliendo del juego...");
         System.exit(0);
     }
@@ -152,7 +151,7 @@ public class GameControler extends Application implements MenuInicioController.M
                 }
             });
 
-            controller.setMenuListener(this::volverAlMenuInicial);
+            controller.setMenuListener(this::returnToInitialMenu);
             primaryStage.setTitle("Principal");
             controller.initTree(decisionTree);
 
@@ -188,17 +187,17 @@ public class GameControler extends Application implements MenuInicioController.M
     }
 
     @Override
-    public void onDecisionSelected(int codigo) {
-        System.out.println("Decision selected: " + codigo);
-        ultimaDesicion = codigo;
+    public void onDecisionSelected(int id) {
+        System.out.println("Decision selected: " + id);
+        lastDecision = id;
         if (inTutorial) {
-            loopDecisiones(codigo);
+            loopDecisions(id);
         } else {
-            processResult(codigo);
+            processResult(id);
         }
     }
 
-    private void loopDecisiones(int result) {
+    private void loopDecisions(int result) {
         if (result == 2) {
             principalController.loadEvent(rep);
             principalController.habilitarOpciones();
@@ -236,7 +235,7 @@ public class GameControler extends Application implements MenuInicioController.M
                 showDeath(()-> showMainMenu());
             }
         } else {
-            System.out.println("nodo hoja detectado, cambiando escenario");
+            System.out.println("Nodo hoja detectado, cambiando escenario");
             if (!game.getEventQueue().isEmpty()) {
                 scenary.setEvent(game.getNextEvent());
                 showLoadingScreen(() -> showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations()));
@@ -299,14 +298,14 @@ public class GameControler extends Application implements MenuInicioController.M
     }
 
     private void showSplashScreen(Runnable onFinish) {
-        // Imagen de portada
-        ImageView portada = new ImageView(
+        // Imagen de cover
+        ImageView cover = new ImageView(
                 new Image(getClass().getResource("/visualResources/escenarios/portada.png").toExternalForm())
         );
 
-        portada.setPreserveRatio(true);
-        portada.fitWidthProperty().bind(primaryStage.widthProperty());
-        portada.fitHeightProperty().bind(primaryStage.heightProperty());
+        cover.setPreserveRatio(true);
+        cover.fitWidthProperty().bind(primaryStage.widthProperty());
+        cover.fitHeightProperty().bind(primaryStage.heightProperty());
 
         // Texto "Presione cualquier tecla para continuar..."
         Label pressKey = new Label("Presione cualquier tecla para continuar...");
@@ -320,7 +319,7 @@ public class GameControler extends Application implements MenuInicioController.M
         ft.setAutoReverse(true);
         ft.play();
 
-        StackPane root = new StackPane(portada, pressKey);
+        StackPane root = new StackPane(cover, pressKey);
         StackPane.setAlignment(pressKey, Pos.BOTTOM_CENTER);
         StackPane.setMargin(pressKey, new Insets(0, 0, 60, 0));
 
@@ -347,7 +346,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
 
 
-    private void volverAlMenuInicial() {
+    private void returnToInitialMenu() {
         showMainMenu();
     }
 

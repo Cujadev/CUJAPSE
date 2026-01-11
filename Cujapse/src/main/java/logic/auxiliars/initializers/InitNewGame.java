@@ -49,7 +49,7 @@ public class InitNewGame {
 
     private static GameCharacter findGameCharacter(String id) {
         Game game = Game.getInstance();
-        RandomAccessFile raf = FileReaders.openFile(game.getPersonajesFichero());
+        RandomAccessFile raf = FileReaders.openFile(game.getFileCharacters());
         GameCharacter c = FileReaders.findCharacter(id, raf);
         FileReaders.closeFile(raf);
         return c;
