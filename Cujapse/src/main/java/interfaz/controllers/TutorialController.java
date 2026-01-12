@@ -15,7 +15,7 @@ import java.util.List;
 public class TutorialController {
 
     // ========== FXML ==========
-    @FXML private BorderPane rootPane;   // ⭐ CORREGIDO: antes AnchorPane
+    @FXML private BorderPane rootPane;
     @FXML private ImageView backgroundImage;
     @FXML private ImageView personaje;
     @FXML private Label labelDialogo;

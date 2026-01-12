@@ -4,6 +4,7 @@ module com.example.cujapse {
     requires javafx.graphics;
     requires java.desktop;
     requires javafx.media;
+    requires org.controlsfx.controls;
 
     // Exportamos controladores si otra parte del programa los necesita
     exports interfaz.controllers;
