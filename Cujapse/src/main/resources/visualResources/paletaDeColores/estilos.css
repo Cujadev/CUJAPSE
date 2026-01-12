@@ -316,23 +316,35 @@
    MENÚ SUPERIOR (MenuBar y MenuItem)
    ============================================================ */
 
+/* Fondo del MenuBar */
 .menu-bar {
     -fx-background-color: transparent;
 }
 
+/* Texto del menú principal (los <Menu>) */
 .menu-bar .label {
     -fx-text-fill: #FFEEC0;
     -fx-font-weight: bold;
 }
 
-.menu-item {
+/* Fondo de los items del menú */
+.context-menu {
     -fx-background-color: #F0B75E;
-    -fx-text-fill: #3C0E05;
+    -fx-padding: 4;
+    -fx-background-radius: 6;
 }
 
-.menu-item:hover {
+/* Texto de los MenuItem */
+.context-menu .label {
+    -fx-text-fill: #3C0E05;
+    -fx-font-weight: bold;
+}
+
+/* Hover del MenuItem */
+.menu-item:focused {
     -fx-background-color: #FFD24C;
 }
+
 
 /* ============================================================
    Botones del menú principal - actualizados
@@ -717,6 +729,23 @@
 
 .info-btn:pressed {
     -fx-background-color: #F0B75E;       /* color al hacer clic */
+}
+
+.btn-skip {
+    -fx-background-color: #E57500;
+    -fx-text-fill: #FFEEC0;
+    -fx-font-size: 35px;      /* ⭐ tamaño de la letra */
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 10 20;       /* ⭐ tamaño del botón */
+}
+
+.btn-skip:hover {
+    -fx-background-color: #FF8C1A;
+}
+
+.btn-skip:pressed {
+    -fx-background-color: #CC6600;
 }
 
 
