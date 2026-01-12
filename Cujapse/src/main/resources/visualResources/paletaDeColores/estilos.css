@@ -105,6 +105,23 @@
 .scroll-chat .viewport {
     -fx-background-color: #FFF3E0;
 }
+/* ============================================================
+   SCROLLBAR VERTICAL DEL CHAT (tono naranja claro)
+   ============================================================ */
+
+.scroll-chat .scroll-bar:vertical {
+    -fx-background-color: #FFE8C7; /* track claro */
+    -fx-pref-width: 10;
+}
+
+.scroll-chat .scroll-bar:vertical .thumb {
+    -fx-background-color: linear-gradient(to bottom, #FFC46A, #F0A64D); /* naranja claro */
+    -fx-background-radius: 5;
+}
+
+.scroll-chat .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: linear-gradient(to bottom, #FFD080, #F7B25C); /* más brillante al pasar */
+}
 
 
 /* ============================================================
@@ -685,6 +702,21 @@
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
+}
+
+//============================
+.info-btn {
+    -fx-background-color: transparent;   /* fondo transparente */
+    -fx-padding: 4;
+    -fx-background-radius: 50%;          /* opcional: forma circular */
+}
+
+.info-btn:hover {
+    -fx-background-color: #FFD24C;       /* color al pasar el mouse */
+}
+
+.info-btn:pressed {
+    -fx-background-color: #F0B75E;       /* color al hacer clic */
 }
 
 

@@ -72,7 +72,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
         primaryStage.show();
 
-        showSplashScreen(this::showMainMenu);
+        showIntroScreen(( )-> showSplashScreen(this::showMainMenu));
     }
 
     public static void main(String[] args) {
@@ -89,6 +89,7 @@ public class GameControler extends Application implements MenuInicioController.M
     }
 
     private void StartNewGame() {
+        SoundManager.stopBackground();
         System.out.println("Iniciando partida");
         List<String> stringList = game.startNewGame();
         this.scenary = game.getScenary();
@@ -111,6 +112,8 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void showTutorial(List<String> dialogues, Runnable onFinish) {
         try {
+            SoundManager.stopBackground();
+            SoundManager.playBackground("/sound/tutorial.mp3");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/Tutorial.fxml"));
             Parent root = loader.load();
             TutorialController controller = loader.getController();
@@ -169,6 +172,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void showMainMenu() {
         try {
+            SoundManager.stopBackground();
             SoundManager.playBackground("/sound/menuInicio.mp3");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/MenuInicio.fxml"));
             Parent root = loader.load();
@@ -298,6 +302,7 @@ public class GameControler extends Application implements MenuInicioController.M
     }
 
     private void showSplashScreen(Runnable onFinish) {
+        SoundManager.playBackground("/sound/menuInicio.mp3");
         // Imagen de cover
         ImageView cover = new ImageView(
                 new Image(getClass().getResource("/visualResources/escenarios/portada.png").toExternalForm())
@@ -327,12 +332,14 @@ public class GameControler extends Application implements MenuInicioController.M
 
         // ⭐ Cualquier tecla
         mainScene.setOnKeyPressed(event -> {
+            SoundManager.playEffect("/sound/button_09-190435.mp3");
             onFinish.run();
             limpiarHandlers();
         });
 
         // ⭐ Cualquier clic del mouse
         mainScene.setOnMouseClicked(event -> {
+            SoundManager.playEffect("/sound/button_09-190435.mp3");
             onFinish.run();
             limpiarHandlers();
         });
@@ -380,19 +387,100 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void endGame() {
         Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Juego Terminado");
-            alert.setHeaderText(null);
-            alert.setContentText("Felicidades has terminado Cujapse. Si no entendiste nada, yo tampoco. Pero de parte del equipo te agradecemos por jugar");
-            alert.showAndWait();
-            showMainMenu();
+            // Imagen final (banner de cierre)
+            ImageView endImage = new ImageView(
+                    new Image(getClass().getResource("/visualResources/escenarios/juegoTerminado.png").toExternalForm())
+            );
+            endImage.setPreserveRatio(true);
+            endImage.fitWidthProperty().bind(primaryStage.widthProperty());
+            endImage.fitHeightProperty().bind(primaryStage.heightProperty());
+
+            // Texto parpadeante
+            Label pressKey = new Label("Presione cualquier tecla para volver al Menú Principal...");
+            pressKey.setStyle("-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;");
+
+            FadeTransition ft = new FadeTransition(Duration.seconds(1.2), pressKey);
+            ft.setFromValue(1);
+            ft.setToValue(0.2);
+            ft.setCycleCount(FadeTransition.INDEFINITE);
+            ft.setAutoReverse(true);
+            ft.play();
+
+            // Contenedor
+            StackPane root = new StackPane(endImage, pressKey);
+            StackPane.setAlignment(pressKey, Pos.BOTTOM_CENTER);
+            StackPane.setMargin(pressKey, new Insets(0, 0, 60, 0));
+
+            // Cambiar la escena principal al splash final
+            mainScene.setRoot(root);
+
+            // ⭐ Cualquier tecla → volver al menú
+            mainScene.setOnKeyPressed(event -> {
+                showMainMenu();
+                limpiarHandlers();
+            });
+
+            // ⭐ Cualquier clic → volver al menú
+            mainScene.setOnMouseClicked(event -> {
+                showMainMenu();
+                limpiarHandlers();
+            });
         });
     }
+
 
     private void limpiarHandlers() {
         mainScene.setOnKeyPressed(null);
         mainScene.setOnMouseClicked(null);
     }
+
+    private void showIntroScreen(Runnable onFinish) {
+        // Texto a mostrar
+        String mensaje = "Este es un juego desarrollado por estudiantes de 2do año \n" + "de la carrera Ingeniería Informática\n" +
+                "en la Universidad Tecnológica de La Habana,\n" + "José Antonio Echevarría, CUJAE.";
+
+        Label label = new Label();
+        label.setStyle(
+                "-fx-font-family: 'Courier New';" +   // ⭐ Fuente estilo máquina de escribir
+                        "-fx-font-size: 28px;" +       // un poco más grande para fullscreen
+                        "-fx-text-fill: white;" +
+                        "-fx-font-weight: bold;"
+        );
+        label.setWrapText(true);
+        label.setAlignment(Pos.CENTER);
+
+        StackPane root = new StackPane(label);
+        root.setStyle("-fx-background-color: black;");
+        root.setAlignment(Pos.CENTER); // ⭐ asegura que todo esté centrado
+        root.setPadding(new Insets(40));
+
+        // ⭐ Usar la escena global en vez de crear una nueva
+        mainScene.setRoot(root);
+
+        // Mantener fullscreen global
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        primaryStage.setFullScreen(true);
+
+        // Animación tipo máquina de escribir
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < mensaje.length(); i++) {
+            final int index = i;
+            KeyFrame kf = new KeyFrame(Duration.millis(50 * i), e -> {
+                label.setText(mensaje.substring(0, index + 1));
+            });
+            timeline.getKeyFrames().add(kf);
+        }
+
+        // Al terminar la animación → continuar
+        timeline.setOnFinished(e -> {
+            PauseTransition pause = new PauseTransition(Duration.seconds(2)); // espera 2 segundos
+            pause.setOnFinished(ev -> onFinish.run());
+            pause.play();
+        });
+
+        timeline.play();
+    }
+
 
 }
 
