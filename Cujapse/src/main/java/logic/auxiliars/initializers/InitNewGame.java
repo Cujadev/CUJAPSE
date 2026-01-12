@@ -28,7 +28,7 @@ public class InitNewGame {
         ArrayList<Dialogue> dialogues = getDialogues(character);
         ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < dialogues.size() - 3; i++) {
-            result.add(dialogues.get(i).getContenido());
+            result.add(dialogues.get(i).getContent());
         }
         return result.isEmpty() ? null : result;
     }
