@@ -437,7 +437,7 @@ public class InitNewGame {
 
         Situation situation18 = generateSituation("18",character);
         DecisionNode<Situation> node18 = new DecisionNode<>(situation18);
-        e2.addSituation(node18, node17, 1);
+        e2.addSituation(node18, node15, 1);
 
         events.add(e2);
 
