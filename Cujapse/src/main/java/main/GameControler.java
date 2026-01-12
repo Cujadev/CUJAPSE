@@ -21,6 +21,7 @@ import javafx.util.Duration;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import logic.auxiliars.dataOfInterfaces.PrincipalData;
+import logic.auxiliars.files.ProgressManager;
 import logic.auxiliars.tree.DecisionNode;
 import logic.auxiliars.tree.DecisionTree;
 import logic.clases.event.Event;
@@ -29,6 +30,7 @@ import logic.clases.game.Game;
 import javafx.application.Application;
 import logic.clases.game.Scenary;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class GameControler extends Application implements MenuInicioController.M
     private PrincipalController principalController;
     private boolean inTutorial;
     private PrincipalData rep;
+    private MenuInicioController menuInicioController;
 
     // ⭐ Una sola escena global
     private Scene mainScene;
@@ -72,7 +75,7 @@ public class GameControler extends Application implements MenuInicioController.M
 
         primaryStage.show();
 
-        showIntroScreen(( )-> showSplashScreen(this::showMainMenu));
+        showIntroScreen(() -> showSplashScreen(this::showMainMenu));
     }
 
     public static void main(String[] args) {
@@ -103,6 +106,16 @@ public class GameControler extends Application implements MenuInicioController.M
 
     private void ChargeGame() {
         System.out.println("Cargando partida...");
+        SoundManager.stopBackground();
+        boolean canCharge = game.startGame();
+        if (!canCharge) {
+            showCanotCharge(game.getEventQueue().size());
+            menuInicioController.getBtnCargarPartida().setDisable(true);
+        }
+        else {
+            this.scenary = game.getScenary();
+            showLoadingScreen(() -> playGame());
+        }
     }
 
     private void Exit() {
@@ -176,8 +189,16 @@ public class GameControler extends Application implements MenuInicioController.M
             SoundManager.playBackground("/sound/menuInicio.mp3");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/MenuInicio.fxml"));
             Parent root = loader.load();
-            MenuInicioController controller = loader.getController();
-            controller.setListener(this);
+            menuInicioController = loader.getController();
+            menuInicioController.setListener(this);
+
+            File file = new File("data/SavedPlays/Save.dat");
+
+            if (file.exists()) {
+                menuInicioController.getBtnCargarPartida().setDisable(false);
+            } else {
+                menuInicioController.getBtnCargarPartida().setDisable(true);
+            }
 
             primaryStage.setTitle("Menú Inicio");
             mainScene.setRoot(root);
@@ -236,14 +257,26 @@ public class GameControler extends Application implements MenuInicioController.M
                 }
             } else {
                 System.out.println("Muerte detectada en nodo normal con el dialogo: " + scenary.giveData(0).getMessages().get(0) + "\n Con las stats: " + scenary.giveData(0).getStats());
-                showDeath(()-> showMainMenu());
+                showDeath(() -> showMainMenu());
             }
         } else {
             System.out.println("Nodo hoja detectado, cambiando escenario");
             if (!game.getEventQueue().isEmpty()) {
+                game.getMainCharacter().addEvent(scenary.getEvent().getIdEvent());
+                try {
+                    ProgressManager.savePlay(game.getMainCharacter());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 scenary.setEvent(game.getNextEvent());
                 showLoadingScreen(() -> showPrincipal(scenary.giveData(0), scenary.getEvent().getSituations()));
             } else {
+                game.getMainCharacter().addEvent(scenary.getEvent().getIdEvent());
+                try {
+                    ProgressManager.savePlay(game.getMainCharacter());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 endGame();
             }
         }
@@ -350,7 +383,6 @@ public class GameControler extends Application implements MenuInicioController.M
         // Duración de la portada
         Timeline wait = new Timeline(new KeyFrame(Duration.seconds(5), e -> onFinish.run()));
         wait.play();*/
-
 
 
     private void returnToInitialMenu() {
@@ -479,6 +511,19 @@ public class GameControler extends Application implements MenuInicioController.M
         });
 
         timeline.play();
+    }
+
+    public void showCanotCharge(int cant) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información");
+        alerta.setHeaderText("No se puede cargar partida");
+        if (cant == 0) {
+            alerta.setContentText("No hay eventos para cargar. Inicie una nueva partida");
+        }
+        else {
+            alerta.setContentText("Ya se ha terminado el juego en esta partida. Inicie una nueva partida");
+        }
+        alerta.showAndWait();
     }
 
 

@@ -60,13 +60,13 @@ public class Scenary{
         Situation s = event.getNextSituation(branch); //Se obtiene la situación
         System.out.println("La siguiente situación pertenece a personaje :" + s.getAssociation().getIdCharacter() + "\nVinculada al diálogo: " + s.getAssociation().getIdDialogueCharacter() + "\nCon respuesta del personaje principal:" + s.getAssociation().getIdAnswer());
         List<Menssage> dialogues = new ArrayList<>();
-        Dialogue seconDialogue = s.getCharacterDialogue(s.getAssociation().getIdCharacter());//Se carga el diálogo del personaje secundario
-        dialogues.add(new Menssage(seconDialogue.getContenido(), giveCharacterName(), findPathAvatarCharacter()));
+        Dialogue seconDialogue = s.getCharacterDialogue(s.getAssociation().getIdCharacter());//Se carga el dialogo del personaje secundario
+        dialogues.add(new Menssage(seconDialogue.getContent(), giveCharacterName(), findPathAvatarCharacter()));
         if (s.getAssociation().getIdAnswer() != null) {//Si existe respuesta posible del jugador también se cargan
             Answer a = s.getPrincipalAnswers(s.getAssociation().getIdAnswer());
             Dialogue[] answers = a.getAnswers();
             for (Dialogue answer : answers) {
-                dialogues.add(new Menssage(answer.getContenido(), Game.getInstance().getMainCharacter().getName(), null));
+                dialogues.add(new Menssage(answer.getContent(), Game.getInstance().getMainCharacter().getName(), null));
             }
         }
         return dialogues;

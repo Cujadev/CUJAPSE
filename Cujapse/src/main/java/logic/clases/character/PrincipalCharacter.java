@@ -3,11 +3,12 @@ package logic.clases.character;
 import logic.auxiliars.files.FileReaders;
 
 import java.io.RandomAccessFile;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class PrincipalCharacter extends GameCharacter {
+public class PrincipalCharacter extends GameCharacter implements Serializable {
 
     private final ArrayList<Answer> answers;
     private  ArrayList<Integer> stats;
@@ -23,8 +24,16 @@ public class PrincipalCharacter extends GameCharacter {
         }
         answers = new ArrayList<Answer>();
         consequences = consequensesPath;
+        idEvents = new ArrayList<>();
         setAnswers();
 
+    }
+    public PrincipalCharacter (PrincipalCharacter principalCharacter) {
+        super(principalCharacter.getId(),  principalCharacter.getName(), principalCharacter.getDialoguesPath(), principalCharacter.imagePath);
+        this.idEvents = principalCharacter.getIdEvents();
+        this.consequences = principalCharacter.getConsequences();
+        this.answers = principalCharacter.getAnswers();
+        this.stats = principalCharacter.getStats();
     }
     /// Getters And Setters
     public String getConsequences() {
@@ -49,6 +58,13 @@ public class PrincipalCharacter extends GameCharacter {
 
     public void setStats(ArrayList<Integer> stats) {
         this.stats = stats;
+    }
+
+    public ArrayList<Answer> getAnswers() {
+        return answers;
+    }
+    public void addEvent (String event){
+        idEvents.add(event);
     }
 
     /// ==== Métodos útiles ====
@@ -118,10 +134,10 @@ public class PrincipalCharacter extends GameCharacter {
     private  int subbStat (int stat, int consecuence)  throws  IllegalArgumentException{
         int result = stat;
         if (consecuence == 1){
-            result -= 15; //Si es 1 se resta por 25
+            result -= 10; //Si es 1 se resta por 25
         }
         else if (consecuence == 2){
-            result -= 25;// Si es 2 se resta por 50
+            result -= 20;// Si es 2 se resta por 50
         }
         return Math.max(result,0);// Se retorna el mayor entre 0 y resultado
     }
@@ -129,10 +145,10 @@ public class PrincipalCharacter extends GameCharacter {
     private int incrementStat(int stat, int consecuence){
         int result = stat;
         if (consecuence == 3){
-            result += 15;// Si es 3 se resta por 25
+            result += 10;// Si es 3 se resta por 25
         }
         if (consecuence == 4){
-            result += 25;// Si es 4 se resta por 50
+            result += 20;// Si es 4 se resta por 50
         }
         return Math.min(result, 100);// Se retorna el menor entre resultado y 100
     }

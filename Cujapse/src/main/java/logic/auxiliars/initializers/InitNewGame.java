@@ -2,6 +2,7 @@ package logic.auxiliars.initializers;
 
 import logic.auxiliars.chargers.ChargerSituation_Dialogue;
 import logic.auxiliars.files.FileReaders;
+import logic.auxiliars.files.ProgressManager;
 import logic.auxiliars.tree.DecisionNode;
 import logic.clases.character.Dialogue;
 import logic.clases.character.GameCharacter;
@@ -20,6 +21,7 @@ public class InitNewGame {
     private static final HashMap<String, String> tutorial = new HashMap<>();
     private static final HashMap<String, String> miguel = new HashMap<>();
     private static final HashMap<String, String> omar = new HashMap<>();
+    public static final HashMap<String, String> natalia = new HashMap<>();
 
 
 
@@ -28,7 +30,7 @@ public class InitNewGame {
         ArrayList<Dialogue> dialogues = getDialogues(character);
         ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < dialogues.size() - 3; i++) {
-            result.add(dialogues.get(i).getContenido());
+            result.add(dialogues.get(i).getContent());
         }
         return result.isEmpty() ? null : result;
     }
@@ -137,13 +139,37 @@ public class InitNewGame {
                 miguel.put("14", null);
                 break;
             }
+            case "4":{
+                map = natalia;
+                natalia.put("1", "17");
+                natalia.put("2", "18");
+                natalia.put("3", "19");
+                natalia.put("4", "20");
+                natalia.put("5", null);
+                natalia.put("6", null);
+                natalia.put("7", null);
+                natalia.put("8", null);
+                natalia.put("9", null);
+
+                natalia.put("10", "21");
+                natalia.put("11", "22");
+                natalia.put("14", "23");
+                natalia.put("15", "24");
+                natalia.put("16", null);
+                natalia.put("17", null);
+                natalia.put("18", null);
+                natalia.put("13", null);
+                natalia.put("12", null);
+                break;
+            }
+
         }
         ChargerSituation_Dialogue association = new ChargerSituation_Dialogue(character.getId(), idDial, map.get(idDial));
         return new Situation(association);
     }
 
 
-    public static ArrayList<Event> generateEvents() {
+    public static ArrayList<Event> generateNewEvents() {
         ArrayList<Event> result = new ArrayList<>();
         result.add(createFirstEvent());
         ArrayList<Event> omarEvents = generateEventsOmar();
@@ -154,8 +180,32 @@ public class InitNewGame {
         if (miguelEvents != null && !miguelEvents.isEmpty()) {
             result.addAll(miguelEvents);
         }
+        ArrayList <Event> nataliaEvents = generateEventsNatalia();
+        if (nataliaEvents != null && !nataliaEvents.isEmpty()) {
+            result.addAll(nataliaEvents);
+        }
         if (result.isEmpty()) {
             throw new IllegalStateException("No se generaron eventos iniciales");
+        }
+        return result;
+    }
+    public static ArrayList<Event>  generateEvents() {
+        ArrayList<Event> result = new ArrayList<>();
+
+        ArrayList<Event> omarEvents = generateEventsOmar();
+        if (omarEvents != null && !omarEvents.isEmpty()) {
+            result.addAll(omarEvents);
+        }
+        ArrayList <Event> miguelEvents = generateEventsMiguel();
+        if (miguelEvents != null && !miguelEvents.isEmpty()) {
+            result.addAll(miguelEvents);
+        }
+        ArrayList <Event> nataliaEvents = generateEventsNatalia();
+        if (nataliaEvents != null && !nataliaEvents.isEmpty()) {
+            result.addAll(nataliaEvents);
+        }
+        if (result.isEmpty()) {
+            throw new IllegalStateException("No se generaron eventos");
         }
         return result;
     }
@@ -170,43 +220,43 @@ public class InitNewGame {
 
         Situation situation2 = generateSituation("9", character);
         DecisionNode<Situation> node2 = new DecisionNode<>(situation2);
-        e1.addSituation(node2, e1.getSituations().getRoot(), 2);
+        e1.addSituation(node2, e1.getSituations().getRoot(), 1);
 
         Situation situation3 = generateSituation("2", character);
         DecisionNode<Situation> node3 = new DecisionNode<>(situation3);
-        e1.addSituation(node3, e1.getSituations().getRoot(), 1);
+        e1.addSituation(node3, e1.getSituations().getRoot(), 2);
 
         Situation situation4 = generateSituation("11", character);
         DecisionNode<Situation> node4 = new DecisionNode<>(situation4);
-        e1.addSituation(node4, node2, 2);
+        e1.addSituation(node4, node2, 1);
 
         Situation situation5 = generateSituation("10", character);
         DecisionNode<Situation> node5 = new DecisionNode<>(situation5);
-        e1.addSituation(node5, node2, 1);
+        e1.addSituation(node5, node2, 2);
 
         Situation situation6 = generateSituation("6", character);
         DecisionNode<Situation> node6 = new DecisionNode<>(situation6);
-        e1.addSituation(node6, node3, 2);
+        e1.addSituation(node6, node3, 1);
 
         Situation situation7 = generateSituation("3", character);
         DecisionNode<Situation> node7 = new DecisionNode<>(situation7);
-        e1.addSituation(node7, node3, 1);
+        e1.addSituation(node7, node3, 2);
 
         Situation situation8 = generateSituation("8", character);
         DecisionNode<Situation> node8 = new DecisionNode<>(situation8);
-        e1.addSituation(node8, node6, 2);
+        e1.addSituation(node8, node6, 1);
 
         Situation situation9 = generateSituation("7", character);
         DecisionNode<Situation> node9 = new DecisionNode<>(situation9);
-        e1.addSituation(node9, node6, 1);
+        e1.addSituation(node9, node6, 2);
 
         Situation situation10 = generateSituation("5", character);
         DecisionNode<Situation> node10 = new DecisionNode<>(situation10);
-        e1.addSituation(node10, node7, 2);
+        e1.addSituation(node10, node7, 1);
 
         Situation situation11 = generateSituation("4", character);
         DecisionNode<Situation> node11 = new DecisionNode<>(situation11);
-        e1.addSituation(node11, node7, 1);
+        e1.addSituation(node11, node7, 2);
         result.add(e1);
 
         Situation situation12 = generateSituation("12", character);
@@ -216,35 +266,35 @@ public class InitNewGame {
 
         Situation situation14 = generateSituation("18", character);
         DecisionNode<Situation> node14 = new DecisionNode<>(situation14);
-        e2.addSituation(node14, e2.getSituations().getRoot(), 2);
+        e2.addSituation(node14, e2.getSituations().getRoot(), 1);
 
         Situation situation13 = generateSituation("13", character);
         DecisionNode<Situation> node13 = new DecisionNode<>(situation13);
-        e2.addSituation(node13, e2.getSituations().getRoot(), 1);
+        e2.addSituation(node13, e2.getSituations().getRoot(), 2);
 
         Situation situation15 = generateSituation("20", character);
         DecisionNode<Situation> node15 = new DecisionNode<>(situation15);
-        e2.addSituation(node15, node14, 2);
+        e2.addSituation(node15, node14, 1);
 
         Situation situation16 = generateSituation("19", character);
         DecisionNode<Situation> node16 = new DecisionNode<>(situation16);
-        e2.addSituation(node16, node14, 1);
+        e2.addSituation(node16, node14, 2);
 
         Situation situation17 = generateSituation("17", character);
         DecisionNode<Situation> node17 = new DecisionNode<>(situation17);
-        e2.addSituation(node17, node13, 2);
+        e2.addSituation(node17, node13, 1);
 
         Situation situation18 = generateSituation("14", character);
         DecisionNode<Situation> node18 = new DecisionNode<>(situation18);
-        e2.addSituation(node18, node13, 1);
+        e2.addSituation(node18, node13, 2);
 
         Situation situation19 = generateSituation("16", character);
         DecisionNode<Situation> node19 = new DecisionNode<>(situation19);
-        e2.addSituation(node19, node18, 2);
+        e2.addSituation(node19, node18, 1);
 
         Situation situation20 = generateSituation("15", character);
         DecisionNode<Situation> node20 = new DecisionNode<>(situation20);
-        e2.addSituation(node20, node18, 1);
+        e2.addSituation(node20, node18, 2);
 
         result.add(e2);
         return result;
@@ -254,7 +304,7 @@ public class InitNewGame {
         GameCharacter character = findGameCharacter("3");
 
         Situation situation1 = generateSituation("1",character);
-        Event e1 = new Event("3", situation1);
+        Event e1 = new Event("4", situation1);
 
         Situation situation2 = generateSituation("2",character);
         DecisionNode<Situation> node2 = new DecisionNode<>(situation2);
@@ -283,7 +333,7 @@ public class InitNewGame {
         events.add(e1);
 
         Situation situation8 = generateSituation("8",character);
-        Event e2 = new Event("4", situation8);
+        Event e2 = new Event("5", situation8);
 
         Situation situation9 = generateSituation("9",character);
         DecisionNode<Situation> node9 = new DecisionNode<>(situation9);
@@ -308,6 +358,86 @@ public class InitNewGame {
         Situation situation14 = generateSituation("14",character);
         DecisionNode<Situation> node14 = new DecisionNode<>(situation14);
         e2.addSituation(node14, node10, 2);
+
+        events.add(e2);
+
+        return events;
+    }
+    private static ArrayList <Event> generateEventsNatalia (){
+        ArrayList <Event> events = new ArrayList<>();
+        GameCharacter character = findGameCharacter("4");
+
+        Situation situation1 = generateSituation("1",character);
+        Event e1 = new Event("1", situation1);
+
+        Situation situation2 = generateSituation("2",character);
+        DecisionNode<Situation> node2 = new DecisionNode<>(situation2);
+        e1.addSituation(node2, e1.getSituations().getRoot(), 1);
+
+        Situation situation3 = generateSituation("3",character);
+        DecisionNode<Situation> node3 = new DecisionNode<>(situation3);
+        e1.addSituation(node3, e1.getSituations().getRoot(), 2);
+
+        Situation situation4 = generateSituation("4",character);
+        DecisionNode<Situation> node4 = new DecisionNode<>(situation4);
+        e1.addSituation(node4, node2, 1);
+
+        Situation situation5 = generateSituation("5",character);
+        DecisionNode<Situation> node5 = new DecisionNode<>(situation5);
+        e1.addSituation(node5, node2, 2);
+
+        Situation situation6 = generateSituation("6",character);
+        DecisionNode<Situation> node6 = new DecisionNode<>(situation6);
+        e1.addSituation(node6, node3, 2);
+
+        Situation  situation7 = generateSituation("7",character);
+        DecisionNode<Situation> node7 = new DecisionNode<>(situation7);
+        e1.addSituation(node7, node3, 1);
+
+        Situation situation8 = generateSituation("8",character);
+        DecisionNode<Situation> node8 = new DecisionNode<>(situation8);
+        e1.addSituation(node8, node4, 1);
+
+        Situation situation9 = generateSituation("9",character);
+        DecisionNode<Situation> node9 = new DecisionNode<>(situation9);
+        e1.addSituation(node9, node4, 2);
+
+        events.add(e1);
+
+        Situation situation10 = generateSituation("10",character);
+        Event e2 = new Event("6", situation10);
+
+        Situation situation11 = generateSituation("11",character);
+        DecisionNode<Situation> node11 = new DecisionNode<>(situation11);
+        e2.addSituation(node11, e2.getSituations().getRoot(), 1);
+
+        Situation situation12 = generateSituation("12",character);
+        DecisionNode<Situation> node12 = new DecisionNode<>(situation12);
+        e2.addSituation(node12, e2.getSituations().getRoot(), 2);
+
+        Situation situation13 = generateSituation("13",character);
+        DecisionNode<Situation> node13 = new DecisionNode<>(situation13);
+        e2.addSituation(node13, node11, 2);
+
+        Situation situation14 = generateSituation("14",character);
+        DecisionNode<Situation> node14 = new DecisionNode<>(situation14);
+        e2.addSituation(node14, node11, 1);
+
+        Situation situation15 = generateSituation("15",character);
+        DecisionNode<Situation> node15 = new DecisionNode<>(situation15);
+        e2.addSituation(node15, node14, 2);
+
+        Situation situation16 = generateSituation("16",character);
+        DecisionNode<Situation> node16 = new DecisionNode<>(situation16);
+        e2.addSituation(node16, node14, 1);
+
+        Situation situation17 = generateSituation("17",character);
+        DecisionNode<Situation> node17 = new DecisionNode<>(situation17);
+        e2.addSituation(node17, node15, 2);
+
+        Situation situation18 = generateSituation("18",character);
+        DecisionNode<Situation> node18 = new DecisionNode<>(situation18);
+        e2.addSituation(node18, node15, 1);
 
         events.add(e2);
 

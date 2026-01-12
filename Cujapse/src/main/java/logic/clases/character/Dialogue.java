@@ -23,7 +23,7 @@ public class Dialogue implements Serializable {
         }
     }
 
-    public String getContenido() {
+    public String getContent() {
         return contenido;
     }
 
