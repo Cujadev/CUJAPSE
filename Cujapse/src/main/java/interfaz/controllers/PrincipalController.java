@@ -125,6 +125,9 @@ public class PrincipalController {
     private Button infoTeamIcon;
 
     @FXML
+    private HBox menuSuperior;
+
+    @FXML
     public void initialize() {
         createDecisionTreeInfoPanel();
         infoTeamIcon.setOnMouseClicked(e -> showTeamInfoDialog());
@@ -644,4 +647,8 @@ public class PrincipalController {
         createDecisionTreeInfoPanel();
     }
 
+    @FXML
+    private void onMenuSuperiorClick(){
+        SoundManager.playEffect("/sound/button_09-190435.mp3");
+    }
 }
