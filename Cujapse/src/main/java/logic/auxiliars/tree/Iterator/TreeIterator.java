@@ -1,25 +1,25 @@
 package logic.auxiliars.tree.Iterator;
 
 import logic.auxiliars.tree.DecisionNode;
-/// Esta clase itera por el arbol que se ha creado para poder alternar entre las situaciones
+/// Esta clase itera por el árbol que se ha creado para poder alternar entre las situaciones
 public class TreeIterator<E> {
-    private DecisionNode<E> actual;
+    private DecisionNode<E> current;
 
     public TreeIterator(DecisionNode<E> root) throws NullPointerException{
         if (root == null) {
             throw new NullPointerException("No existe nada para recorrer el árbol");
         }
-        this.actual = root;
+        this.current = root;
     }
 
     /** Devuelve el nodo actual del iterador. */
     public DecisionNode<E> getNode() {
-        return actual;
+        return current;
     }
 
     /** Devuelve la información del nodo actual. */
     public E getNodeInfo() {
-        return actual.getInfo();
+        return current.getInfo();
     }
 
     /**
@@ -30,18 +30,18 @@ public class TreeIterator<E> {
 
     public DecisionNode<E> choose(int branch) throws IllegalArgumentException{
         if (branch == 1) {
-            if (actual.getLeft() == null) {
+            if (current.getLeft() == null) {
                 throw new IllegalArgumentException("No existe rama izquierda desde este nodo");
             }
-            actual = actual.getLeft();
+            current = current.getLeft();
         } else if (branch == 2) {
-            if (actual.getRight() == null) {
+            if (current.getRight() == null) {
                 throw new IllegalArgumentException("No existe rama derecha desde este nodo");
             }
-            actual = actual.getRight();
+            current = current.getRight();
         } else {
             throw new IllegalArgumentException("Solo se permite 1 (izquierda) o 2 (derecha)");
         }
-        return actual;
+        return current;
     }
 }

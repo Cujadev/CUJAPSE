@@ -9,11 +9,11 @@ public class Dialogue implements Serializable {
 
     //====Constructor=======
     public Dialogue(String id, String contenido) {
-        setContenido(contenido);
+        setContent(contenido);
         setId(id);
     }
 
-    //=====Guetters y Setters========
+    //=====Getters and Setters========
     public String getId() {
         return id;
     }
@@ -27,8 +27,8 @@ public class Dialogue implements Serializable {
         return contenido;
     }
 
-    public void setContenido(String contenido) {
-        if(!contenido.trim().isEmpty()){// Verifica si la cadena no está vacia
+    public void setContent(String contenido) {
+        if(!contenido.trim().isEmpty()){// Verifica si la cadena no está vacía
             this.contenido = contenido;
         }
     }

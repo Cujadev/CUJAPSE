@@ -1,7 +1,6 @@
 package logic.auxiliars.tree;
-import logic.clases.event.Situation;
 
-/// Es la clase que representa un nodo del arbol
+/// Es la clase que representa un nodo del árbol
 public class DecisionNode<E>{
     private E info;
     private DecisionNode <E> left;

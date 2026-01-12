@@ -51,8 +51,29 @@
     <!-- LEFT: PANEL IZQUIERDO -->
     <!-- ========================================================= -->
     <left>
-        <VBox fx:id="panelIzquierdo" maxWidth="70" minWidth="70" styleClass="panel-izquierdo" />
+        <VBox fx:id="panelIzquierdo"
+              alignment="TOP_CENTER"
+              spacing="10" maxWidth="70"
+              minWidth="70"
+              styleClass="panel-izquierdo">
+
+            <!-- ⭐ Padding para separar del borde superior -->
+            <padding>
+            <Insets top="20"/>
+            </padding>
+            <Button fx:id="infoTeamIcon" onAction="#onInfoTeamClick" styleClass="info-btn">
+                <graphic>
+                    <ImageView fitHeight="24" preserveRatio="true">
+                        <image>
+                            <Image url="@../visualResources/iconos/info.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+        </VBox>
     </left>
+
 
     <!-- ========================================================= -->
     <!-- RIGHT: ÁRBOL DE DECISIONES -->
@@ -62,7 +83,20 @@
 
             <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
 
-            <Label styleClass="titulo-arbol" text="Árbol de decisiones" />
+            <HBox alignment="CENTER_LEFT" spacing="6">
+                <Label styleClass="titulo-arbol" text="Árbol de decisiones" />
+
+                <Button fx:id="infoArbolIcon" onAction="#onInfoArbolClick" styleClass="info-btn">
+                    <graphic>
+                        <ImageView fitHeight="20" preserveRatio="true">
+                            <image>
+                                <Image url="@../visualResources/iconos/info.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+            </HBox>
 
             <!-- ScrollPane específico para el árbol -->
             <ScrollPane fx:id="scrollArbol" fitToHeight="true" fitToWidth="true" styleClass="scroll-pane-arbol" VBox.vgrow="ALWAYS">
@@ -128,8 +162,8 @@
             <!-- =================== -->
             <ScrollPane fx:id="scrollChat" fitToWidth="true" prefHeight="54.0" prefWidth="472.0" styleClass="scroll-chat" VBox.vgrow="ALWAYS">
                 <content>
-                    <VBox fx:id="vboxMensajes" prefHeight="55.0" prefWidth="471.0" spacing="15" styleClass="panel-chat" VBox.vgrow="ALWAYS">
-                        <padding><Insets bottom="15" left="20" right="20" top="15" /></padding>
+                    <VBox fx:id="vboxMensajes" spacing="15" styleClass="panel-chat" VBox.vgrow="ALWAYS">
+                    <padding><Insets bottom="15" left="20" right="20" top="15" /></padding>
                     </VBox>
                 </content>
             </ScrollPane>

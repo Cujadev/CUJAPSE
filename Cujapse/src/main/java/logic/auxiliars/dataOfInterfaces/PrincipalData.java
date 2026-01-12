@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrincipalData {
-    List <Menssage> messages;
-    ArrayList<Integer> stats;
-    String pathEscenary;
+    private List <Menssage> messages;
+    private ArrayList<Integer> stats;
+    private String pathEscenary;
 
     public PrincipalData(List<Menssage> messages, ArrayList<Integer> stats, String pathEscenary) {
         this.messages = messages;
