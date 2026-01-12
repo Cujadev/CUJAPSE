@@ -84,4 +84,10 @@ public class TutorialController {
             }
         });
     }
+    @FXML
+    private void onSkipClick() {
+        SoundManager.playEffect("/sound/button_09-190435.mp3");
+        if (listener != null) listener.onTutorialFinished();
+    }
+
 }

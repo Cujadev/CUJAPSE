@@ -22,13 +22,13 @@
     <!-- TOP: MENÚ SUPERIOR -->
     <!-- ========================================================= -->
     <top>
-        <HBox fx:id="menuSuperior" alignment="CENTER_LEFT" prefHeight="45" styleClass="menu-superior">
+        <HBox fx:id="menuSuperior"  alignment="CENTER_LEFT" prefHeight="45" styleClass="menu-superior">
 
             <padding>
                 <Insets left="15" right="15" />
             </padding>
 
-            <MenuBar fx:id="menuBar" styleClass="menu-bar">
+            <MenuBar fx:id="menuBar" onMouseClicked="#onMenuSuperiorClick" styleClass="menu-bar">
                 <menus>
                     <Menu fx:id="menuOpciones">
                         <graphic>
@@ -63,9 +63,9 @@
             </padding>
             <Button fx:id="infoTeamIcon" onAction="#onInfoTeamClick" styleClass="info-btn">
                 <graphic>
-                    <ImageView fitHeight="24" preserveRatio="true">
+                    <ImageView fitHeight="36" fitWidth="36" preserveRatio="true">
                         <image>
-                            <Image url="@../visualResources/iconos/info.png"/>
+                            <Image url="@../visualResources/iconos/desarrolladores.png"/>
                         </image>
                     </ImageView>
                 </graphic>
@@ -88,7 +88,7 @@
 
                 <Button fx:id="infoArbolIcon" onAction="#onInfoArbolClick" styleClass="info-btn">
                     <graphic>
-                        <ImageView fitHeight="20" preserveRatio="true">
+                        <ImageView fitHeight="33" fitWidth="33" preserveRatio="true">
                             <image>
                                 <Image url="@../visualResources/iconos/info.png"/>
                             </image>
@@ -123,7 +123,7 @@
 
                 <!-- 1. CAFEÍNA -->
                 <HBox fx:id="labelCafeina" alignment="CENTER" spacing="8" styleClass="stat-box">
-                    <ImageView fitHeight="26" preserveRatio="true" smooth="true">
+                    <ImageView fitHeight="50" fitWidth="50" preserveRatio="true" smooth="true">
                         <image><Image url="@../visualResources/estadisticas/cafeina.png" /></image>
                     </ImageView>
                     <Label fx:id="labelCafeinaTexto" styleClass="stat-label" text="0%" />
@@ -131,7 +131,7 @@
 
                 <!-- 2. ESTUDIOS -->
                 <HBox fx:id="labelEstudios" alignment="CENTER" spacing="8" styleClass="stat-box">
-                    <ImageView fitHeight="26" preserveRatio="true" smooth="true">
+                    <ImageView fitHeight="50" fitWidth="50" preserveRatio="true" smooth="true">
                         <image><Image url="@../visualResources/estadisticas/estudios.png" /></image>
                     </ImageView>
                     <Label fx:id="labelEstudiosTexto" styleClass="stat-label" text="0%" />
@@ -139,7 +139,7 @@
 
                 <!-- 3. POPULARIDAD -->
                 <HBox fx:id="labelPopularidad" alignment="CENTER" spacing="8" styleClass="stat-box">
-                    <ImageView fitHeight="26" preserveRatio="true" smooth="true">
+                    <ImageView fitHeight="50" fitWidth="50" preserveRatio="true" smooth="true">
                         <image><Image url="@../visualResources/estadisticas/popularidad.png" /></image>
                     </ImageView>
                     <Label fx:id="labelPopularidadTexto" styleClass="stat-label" text="0%" />
@@ -147,7 +147,7 @@
 
                 <!-- 4. DINERO -->
                 <HBox fx:id="labelDinero" alignment="CENTER" spacing="8" styleClass="stat-box">
-                    <ImageView fitHeight="26" preserveRatio="true" smooth="true">
+                    <ImageView fitHeight="50" fitWidth="50" preserveRatio="true" smooth="true">
                         <image><Image url="@../visualResources/estadisticas/dinero.png" /></image>
                     </ImageView>
                     <Label fx:id="labelDineroTexto" styleClass="stat-label" text="0%" />

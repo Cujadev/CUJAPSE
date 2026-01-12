@@ -70,7 +70,7 @@ public class VisualTree extends Canvas {
         gc.fillRect(0, 0, getWidth(), getHeight());
 
 
-        layout(root, getWidth()/2,40);
+        layoutTree(root, getWidth()/2,40);
         drawConnections(root, currentNode, highlightPath);
         drawNodes(root, currentNode);
     }
@@ -181,14 +181,22 @@ public class VisualTree extends Canvas {
     // ============================================================
     //                       LAYOUT DEL ÁRBOL
     // ============================================================
-    private double layout(DecisionNode<?> n, double x, double y) {
+    private double computeWidth(DecisionNode<?> n) {
         if (n == null) return 0;
+        if (n.getLeft() == null && n.getRight() == null) return H_SPACING;
+        return computeWidth(n.getLeft()) + computeWidth(n.getRight());
+    }
 
-        double leftWidth = layout(n.getLeft(), x - H_SPACING, y + V_SPACING);
-        double rightWidth = layout(n.getRight(), x + H_SPACING, y + V_SPACING);
+    private void layoutTree(DecisionNode<?> n, double x, double y) {
+        if (n == null) return;
+
+        double leftWidth = computeWidth(n.getLeft());
+        double rightWidth = computeWidth(n.getRight());
 
         positions.put(n, new double[]{x, y});
 
-        return Math.max(leftWidth + rightWidth, NODE_RADIUS * 2);
+        layoutTree(n.getLeft(), x - rightWidth / 2, y + V_SPACING);
+        layoutTree(n.getRight(), x + leftWidth / 2, y + V_SPACING);
     }
+
 }

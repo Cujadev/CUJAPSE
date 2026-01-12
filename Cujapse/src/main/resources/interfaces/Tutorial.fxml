@@ -19,31 +19,65 @@
     <!-- CENTRO: CONTENIDO PRINCIPAL -->
     <!-- ========================= -->
     <center>
-        <StackPane fx:id="stackCenter">
-            <!-- CONTENIDO SUPERIOR (PERSONAJE + CAJA) -->
-            <AnchorPane fx:id="contentLayer">
+        <AnchorPane fx:id="contentLayer">
 
-                <!-- PERSONAJE -->
-                <ImageView fx:id="personaje" fitHeight="461.0" fitWidth="362.0" layoutX="10.0" layoutY="141.0" preserveRatio="true" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="10.0">
-                    <image>
-                        <Image url="@../visualResources/characters/Omar_tutorial.png" />
-                    </image>
-                </ImageView>
+            <!-- ⭐ PERSONAJE PEGADO ARRIBA DEL DIALOGO -->
+            <ImageView fx:id="personaje"
+                       fitHeight="461"
+                       fitWidth="362"
+                       layoutX="10.0"
+                       layoutY="150.0"
+                       preserveRatio="true"
+                       AnchorPane.bottomAnchor="210"
+                       AnchorPane.leftAnchor="10">
+                <image>
+                    <Image url="@../visualResources/characters/Omar_tutorial.png"/>
+                </image>
+            </ImageView>
 
-                <!-- CAJA DE DIÁLOGO -->
-                <AnchorPane fx:id="dialogBox" layoutX="4.0" minHeight="150" opacity="0.94" prefHeight="219.0" prefWidth="1170.0" styleClass="dialogo-caja" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="10">
+            <!-- ⭐ BOTÓN FUERA DEL DIALOGBOX, PEGADO AL BORDE SUPERIOR DERECHO -->
+            <Button fx:id="btnSkip"
+                    text="Saltar Tutorial"
+                    onAction="#onSkipClick"
+                    styleClass="btn-menu-principal"
+                    AnchorPane.rightAnchor="20"
+                    AnchorPane.bottomAnchor="219"/>
 
-                    <VBox alignment="TOP_LEFT" spacing="8" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="15" AnchorPane.rightAnchor="15" AnchorPane.topAnchor="10">
+            <!-- ⭐ CAJA DE DIÁLOGO PEGADA ABAJO Y ESTIRADA -->
+            <AnchorPane fx:id="dialogBox"
+                        minHeight="150"
+                        prefHeight="219"
+                        opacity="0.94"
+                        styleClass="dialogo-caja"
+                        AnchorPane.bottomAnchor="0"
+                        AnchorPane.leftAnchor="0"
+                        AnchorPane.rightAnchor="0">
 
-                        <Label fx:id="labelDialogo" styleClass="tutorial-text" wrapText="true" VBox.vgrow="ALWAYS" />
-                    </VBox>
+                <VBox alignment="TOP_LEFT"
+                      spacing="8"
+                      AnchorPane.bottomAnchor="10"
+                      AnchorPane.leftAnchor="15"
+                      AnchorPane.rightAnchor="15"
+                      AnchorPane.topAnchor="10">
 
-                          <Button fx:id="btnContinuar" onAction="#onContinuarClick" prefHeight="60.0" prefWidth="60.0" styleClass="btn-continue-arrow" text="▶" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="40.0" />
-                </AnchorPane>
+                    <Label fx:id="labelDialogo"
+                           styleClass="tutorial-text"
+                           wrapText="true"
+                           VBox.vgrow="ALWAYS"/>
+                </VBox>
 
+                <Button fx:id="btnContinuar"
+                        onAction="#onContinuarClick"
+                        prefHeight="60"
+                        prefWidth="60"
+                        styleClass="btn-continue-arrow"
+                        text="▶"
+                        AnchorPane.bottomAnchor="20"
+                        AnchorPane.rightAnchor="40"/>
             </AnchorPane>
 
-        </StackPane>
+        </AnchorPane>
+
     </center>
 
 </BorderPane>
