@@ -1,7 +1,9 @@
 package logic.clases.character;
 
+import java.io.Serializable;
+
 ///Esta clase es lo que tiene todo lo referente a las respuestas del personaje principal con su respectivas consecuencias
-public class Answer {
+public class Answer  implements Serializable {
     private String id;
     private Dialogue[] answers;
     private Consecuence consecuence;

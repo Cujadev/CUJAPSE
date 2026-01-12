@@ -2,6 +2,7 @@ package logic.auxiliars.initializers;
 
 import logic.auxiliars.chargers.ChargerSituation_Dialogue;
 import logic.auxiliars.files.FileReaders;
+import logic.auxiliars.files.ProgressManager;
 import logic.auxiliars.tree.DecisionNode;
 import logic.clases.character.Dialogue;
 import logic.clases.character.GameCharacter;
@@ -168,7 +169,7 @@ public class InitNewGame {
     }
 
 
-    public static ArrayList<Event> generateEvents() {
+    public static ArrayList<Event> generateNewEvents() {
         ArrayList<Event> result = new ArrayList<>();
         result.add(createFirstEvent());
         ArrayList<Event> omarEvents = generateEventsOmar();
@@ -185,6 +186,26 @@ public class InitNewGame {
         }
         if (result.isEmpty()) {
             throw new IllegalStateException("No se generaron eventos iniciales");
+        }
+        return result;
+    }
+    public static ArrayList<Event>  generateEvents() {
+        ArrayList<Event> result = new ArrayList<>();
+
+        ArrayList<Event> omarEvents = generateEventsOmar();
+        if (omarEvents != null && !omarEvents.isEmpty()) {
+            result.addAll(omarEvents);
+        }
+        ArrayList <Event> miguelEvents = generateEventsMiguel();
+        if (miguelEvents != null && !miguelEvents.isEmpty()) {
+            result.addAll(miguelEvents);
+        }
+        ArrayList <Event> nataliaEvents = generateEventsNatalia();
+        if (nataliaEvents != null && !nataliaEvents.isEmpty()) {
+            result.addAll(nataliaEvents);
+        }
+        if (result.isEmpty()) {
+            throw new IllegalStateException("No se generaron eventos");
         }
         return result;
     }
@@ -384,7 +405,7 @@ public class InitNewGame {
         events.add(e1);
 
         Situation situation10 = generateSituation("10",character);
-        Event e2 = new Event("10", situation10);
+        Event e2 = new Event("6", situation10);
 
         Situation situation11 = generateSituation("11",character);
         DecisionNode<Situation> node11 = new DecisionNode<>(situation11);

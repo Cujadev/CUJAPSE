@@ -36,7 +36,6 @@ public class MenuInicioController {
     public void initialize() {
 
         rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            btnCargarPartida.setVisible(false);
             if (newScene != null && !initialized) {
                 initialized = true;
 
@@ -79,6 +78,10 @@ public class MenuInicioController {
 
     public interface MenuInicioListener {
         void onMenuOptionSelected(int codigo);
+    }
+
+    public Button getBtnCargarPartida() {
+        return btnCargarPartida;
     }
 }
 
