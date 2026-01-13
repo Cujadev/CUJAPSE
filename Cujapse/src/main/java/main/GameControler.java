@@ -469,7 +469,8 @@ public class GameControler extends Application implements MenuInicioController.M
     private void showIntroScreen(Runnable onFinish) {
         // Texto a mostrar
         String mensaje = "Este es un juego desarrollado por estudiantes de 2do año \n" + "de la carrera Ingeniería Informática\n" +
-                "en la Universidad Tecnológica de La Habana,\n" + "José Antonio Echevarría, CUJAE.";
+                "en la Universidad Tecnológica de La Habana,\n" + "José Antonio Echeverría, CUJAE.\n\n"+"\nLos hechos y personajes mostrados a continuación\n"+"no son reales." +
+                "\nCualquier parecido a la realidad es pura coincidencia." +"\nAtte: El Guionista.";
 
         Label label = new Label();
         label.setStyle(
