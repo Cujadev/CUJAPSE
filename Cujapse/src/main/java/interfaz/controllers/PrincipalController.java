@@ -183,10 +183,22 @@ public class PrincipalController {
                         "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.4, 0, 3);"
         );
 
-        // ⭐ ScrollPane para que se pueda leer todo el contenido
+        // ⭐ ScrollPane con estilo de barra personalizada
         ScrollPane scrollPane = new ScrollPane(contentBox);
         scrollPane.setFitToWidth(true);
-        scrollPane.setStyle("-fx-background: transparent; -fx-border-color: transparent;");
+        scrollPane.setStyle(
+                "-fx-background: transparent;" +
+                        "-fx-border-color: transparent;" +
+                        /* Fondo de la barra */
+                        ".scroll-bar:vertical { -fx-background-color: linear-gradient(to bottom, #FFC46A, #F0A64D); }" +
+                        ".scroll-bar:horizontal { -fx-background-color: linear-gradient(to bottom, #FFC46A, #F0A64D); }" +
+                        /* Color del thumb (parte que se mueve) */
+                        ".scroll-bar:vertical .thumb { -fx-background-color: linear-gradient(to bottom, #FFC46A, #F0A64D); -fx-background-radius: 5; }" +
+                        ".scroll-bar:horizontal .thumb { -fx-background-color: linear-gradient(to right, #FFC46A, #F0A64D); -fx-background-radius: 5; }" +
+                        /* Hover */
+                        ".scroll-bar:vertical .thumb:hover { -fx-background-color: #FF8C1A; }" +
+                        ".scroll-bar:horizontal .thumb:hover { -fx-background-color: #FF8C1A; }"
+        );
 
         // Crear el diálogo modal
         Stage dialog = new Stage();
@@ -197,6 +209,7 @@ public class PrincipalController {
 
         dialog.showAndWait(); // no se puede salir hasta cerrarlo
     }
+
 
 
     private void createDecisionTreeInfoPanel() {
@@ -213,7 +226,7 @@ public class PrincipalController {
                         "• Cómo se modelan decisiones mediante nodos y ramas\n" +
                         "• Cómo se propagan las consecuencias a través del árbol\n" +
                         "• Cómo se implementa un recorrido para avanzar en la narrativa\n\n" +
-                        "El objetivo usuario pueda visualizar la lógica interna\n" +
+                        "El objetivo es que el usuario pueda visualizar la lógica interna\n" +
                         "del juego como una estructura de datos real, aplicando conceptos de\n" +
                         "árboles, recorridos y nodos enlazados."
         );
